@@ -512,7 +512,7 @@ def _extract_and_clean_blocks(parsed_documents: list) -> list:
                                 continue
                             rows.append([cell.strip() for cell in r_str.split("|")[1:-1]])
 
-                    title_final = caption if caption else (f"Table {len(raw_blocks)+1}" if headers else "Structured Table")
+                    title_final = caption if (caption and (_TABLE_CAPTION_PAT.match(caption) or len(caption) > 5)) else "UNKNOWN"
                     raw_blocks.append({
                         "type": "table",
                         "text": "\n".join(tbl_lines),
@@ -895,19 +895,18 @@ def validate_hierarchy(doc: DocumentNode) -> Tuple[bool, List[str]]:
                 count += _count_leaves(c)
         return count
 
-    seen_heading_titles = set()
-
     def _check_tree(node, parent_heading: Optional[HeadingNode] = None):
         children = getattr(node, "children", [])
+        seen_sibling_titles = set()
 
         for c in children:
             if isinstance(c, HeadingNode):
                 title = c.title.strip()
 
-                # 1. Duplicated Heading Check
-                if title in seen_heading_titles and len(title) > 15:
-                    warnings.append(f"⚠️ Duplicated heading detected at [p.{c.page_number}]: '{title}'")
-                seen_heading_titles.add(title)
+                # 1. Duplicated Sibling Heading Check (under same parent node)
+                if title in seen_sibling_titles and len(title) > 15:
+                    warnings.append(f"⚠️ Duplicated sibling heading under same parent detected at [p.{c.page_number}]: '{title}'")
+                seen_sibling_titles.add(title)
 
                 # 2. Accidental Nesting Check
                 if parent_heading:
