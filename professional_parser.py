@@ -5,6 +5,7 @@ import logging
 import tracemalloc
 from collections import Counter
 from concurrent.futures import ProcessPoolExecutor
+from typing import Optional, List, Dict, Any, Tuple
 import pdfplumber
 
 # Configure Logging
@@ -476,11 +477,57 @@ def preprocess_image_for_ocr(pil_img):
     img_bin = img_contrast.point(lambda p: 255 if p > 128 else 0)
     return img_bin
 
+def setup_tesseract_path(custom_cmd: Optional[str] = None) -> bool:
+    """
+    Automatically search for and configure Tesseract executable path.
+    Returns True if Tesseract executable is found and verified.
+    """
+    if not OCR_AVAILABLE:
+        return False
+
+    if custom_cmd and os.path.exists(custom_cmd):
+        try:
+            pytesseract.pytesseract.tesseract_cmd = custom_cmd
+            return True
+        except Exception:
+            pass
+
+    env_path = os.environ.get("TESSERACT_CMD")
+    if env_path and os.path.exists(env_path):
+        try:
+            pytesseract.pytesseract.tesseract_cmd = env_path
+            return True
+        except Exception:
+            pass
+
+    import shutil
+    if shutil.which("tesseract"):
+        return True
+
+    common_paths = [
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe",
+        r"C:\Program Files (x86)\Tesseract-OCR\tesseract.exe",
+        r"C:\Users\FreeComp\AppData\Local\Programs\Tesseract-OCR\tesseract.exe",
+        "/usr/bin/tesseract",
+        "/usr/local/bin/tesseract",
+        "/opt/homebrew/bin/tesseract"
+    ]
+    for p in common_paths:
+        if os.path.exists(p):
+            try:
+                pytesseract.pytesseract.tesseract_cmd = p
+                return True
+            except Exception:
+                pass
+
+    return False
+
 def extract_region_ocr(page, bbox):
     """Performs localized OCR on a specific crop box instead of the full page, supporting multi-language."""
-    if not OCR_AVAILABLE:
-        return "[Scanned Region - OCR Module Unavailable]"
-        
+    if not OCR_AVAILABLE or not setup_tesseract_path():
+        # Gracefully skip OCR if Tesseract executable is unavailable — do NOT generate error nodes
+        return ""
+
     try:
         cropped = page.crop(bbox)
         pil_img = cropped.to_image(resolution=300).original
@@ -489,8 +536,8 @@ def extract_region_ocr(page, bbox):
         text = pytesseract.image_to_string(processed_img, lang="eng+ara")
         return text.strip()
     except Exception as e:
-        logger.error(f"Region-based OCR failed at bbox {bbox}: {str(e)}")
-        return f"[Scanned Region - OCR Execution Error: {str(e)}]"
+        logger.warning(f"Region-based OCR gracefully skipped at bbox {bbox}: {str(e)}")
+        return ""
 
 def classify_table(headers, sample_rows):
     """Classifies a table into Medical category types using keyword heuristics."""

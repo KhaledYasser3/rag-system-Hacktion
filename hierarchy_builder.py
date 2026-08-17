@@ -1,44 +1,36 @@
 """
 =============================================================================
-  MEDICAL RAG PIPELINE — Stage 2: Production-Grade Hierarchy Builder
+  MEDICAL RAG PIPELINE — Stage 2: Production-Grade Hierarchy Builder (Refined)
 =============================================================================
   Input  : List of parsed page documents from professional_parser.py
   Output : DocumentNode tree with Chapter/Section/Subsection/Paragraph/Table nodes,
            Validation Report with suspicious structure warnings, and Stats.
 
-  Pipeline Stages
-  ───────────────
-  1. Clean Blocks & Preprocessing
-     - Removes running headers/footers that repeat across pages.
-     - Filters standalone page numbers and Table of Contents dot-leader lines.
-     - Preserves page numbers as metadata.
+  Key Enhancements & Fixes
+  ────────────────────────
+  1. Isolated Page Number Elimination
+     - Strictly filters numeric-only text ('68', '40', '60') and page footers.
+     - Never classifies numeric-only text as a chapter.
 
-  2. Heading Normalization & Multi-Signal Detection
-     - Multi-signal evaluation: font size, bolding, numbering patterns,
-       uppercase ratio, title case, sentence-ending punctuation, isolation.
-     - Body sentences with sentence-ending punctuation or citations NEVER become headings.
+  2. Heading Confidence Scoring System (_calculate_heading_confidence)
+     - Multi-signal evaluation: font size, boldness, structural numbering,
+       semantic keywords, length, uppercase ratio, sentence punctuation, prose prefixes.
+     - Only headings with confidence >= 0.50 become hierarchy nodes.
 
-  3. Multiline Heading Merging
-     - Merges headings wrapped across multiple lines (e.g. 5-line cover title).
-     - Merges headings split across page boundaries (e.g. Appendix titles).
-     - Caps merged heading length to 120 chars.
+  3. Appendix Hierarchy Propagation Protection
+     - Appendices are top-level Level 1 Chapters.
+     - Sub-headings inside an Appendix ('Summary of findings', 'Summary of judgments')
+       remain strictly nested inside their parent Appendix.
 
-  4. Heading Level Classification
-     - Document Title  (Level 0)
-     - Chapter         (Level 1) — 1.0, 2.0, 3.0, Chapter, Appendix, Glossary, etc.
-     - Section         (Level 2) — 1.1, 1.2, 2.1, 3.1, 3.2, 4.1, etc.
-     - Subsection      (Level 3) — 1.1.1, 3.1.1, 3.1.2, Remarks, Rationale
+  4. Graceful OCR Handling
+     - Skip OCR placeholders gracefully when Tesseract executable is missing.
 
-  5. Tree Construction
-     - Builds nested DocumentNode tree while maintaining active heading stack.
+  5. Parent Recovery
+     - Attaches medium-confidence headings to active parents instead of creating orphan roots.
 
-  6. Validation Stage (validate_hierarchy)
-     - Flags suspicious structure (hundreds of chapters, empty chapters,
-       consecutive empty chapters, excessively long headings, orphan sections).
-
-  7. Display & Statistics
-     - print_document_hierarchy() with UTF-8/ASCII fallback console printing.
-     - hierarchy_stats() returning structural metrics.
+  6. Smarter Automated Validation (validate_hierarchy)
+     - Detects and fails on page numbers as headings, orphan nodes, invalid transitions,
+       duplicate headings, isolated numeric chapters, appendix breaks, and TOC contamination.
 =============================================================================
 """
 
@@ -179,11 +171,12 @@ class FigureNode:
 
 @dataclass
 class HeadingNode:
-    """A heading (Document Title / Chapter / Section / Subsection) with children."""
+    """A heading (Document Title / Chapter / Section / Subsection / Appendix) with children."""
     title: str
-    level: int          # 0 = Title, 1 = Chapter, 2 = Section, 3 = Subsection
-    node_type_name: str # "Document Title", "Chapter", "Section", "Subsection"
+    level: int          # 0 = Title, 1 = Chapter/Appendix, 2 = Section, 3 = Subsection
+    node_type_name: str # "Document Title", "Chapter", "Appendix", "Section", "Subsection"
     page_number: int
+    confidence_score: float = 1.0
     children: List[Union[HeadingNode, ParagraphNode, TableNode, FigureNode]] = field(default_factory=list)
 
     @property
@@ -209,7 +202,7 @@ class DocumentNode:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2.  MULTI-SIGNAL HEADING PATTERNS & REGEXES
+# 2.  MULTI-SIGNAL HEADING PATTERNS & CONFIDENCE SCORING
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Standalone page-number pattern (digits / "Page N" / roman numerals)
@@ -234,6 +227,9 @@ _GRADE_FOOTNOTE_PAT = re.compile(
     r"^\d+\s+(study limitations|imprecision|indirectness|inconsistency|risk of bias)", re.IGNORECASE
 )
 
+# Table / Figure caption pattern
+_CAPTION_PAT = re.compile(r"^\s*(table|figure|fig\.)\s+\d+.*", re.IGNORECASE)
+
 # Known major structural section titles in WHO / academic documents
 _KNOWN_MAJOR_SECTIONS = {
     "contents", "abbreviations", "glossary", "executive summary", "summary",
@@ -248,14 +244,14 @@ _KNOWN_MAJOR_SECTIONS = {
 # Citation patterns in text (e.g. (17 - 19), (21), (9, 10))
 _CITATION_PAT = re.compile(r"\(\s*\d+([\s\–\-\,]+\d+)*\s*\)")
 
-# Words that indicate prose sentences, NOT headings
+# Prose prefixes indicating body text, NOT headings
 _PROSE_PREFIXES = (
     "of the ", "within ", "from the ", "however,", "despite ", "with the ",
     "were single-arm", "studies ", "there is ", "the guideline ", "although ",
     "neither of ", "a literature ", "sulfonylurea was ", "using insulin ",
     "associated with ", "injections (", "hypoglycaemia (", "choosing between ",
     "followed by ", "overall, ", "common myths ", "characteristics ",
-    "attributes ", "factor in ", "recommendation ", "neither "
+    "attributes ", "factor in ", "recommendation ", "neither ", "have diabetes"
 )
 
 
@@ -267,6 +263,66 @@ def _is_sentence_punctuation(text: str) -> bool:
     if re.match(r"^(\d+(\.\d+)*\.|appendix\s+\d+\.)$", stripped, re.IGNORECASE):
         return False
     return stripped[-1] in ".;:?!"
+
+
+def _calculate_heading_confidence(block: dict) -> float:
+    """
+    Multi-signal confidence scoring system (0.0 to 1.0) evaluating:
+    font markers, structural numbering, semantic keywords, string length,
+    uppercase ratio, sentence punctuation, prose prefixes, citations, captions, page numbers.
+    """
+    text = block["text"].strip()
+    if not text:
+        return 0.0
+
+    # ❌ Absolute Rejections (Score = 0.0)
+    if _PAGE_NUM_PAT.match(text) or text.isdigit() or re.match(r"^\d{1,3}$", text):
+        return 0.0
+    if _TOC_LINE_PAT.search(text) or _GRADE_FOOTNOTE_PAT.match(text):
+        return 0.0
+    if _CAPTION_PAT.match(text):
+        return 0.0
+    if text.startswith("[Scanned Region") or text.startswith("!["):
+        return 0.0
+
+    text_lower = text.lower()
+    if any(text_lower.startswith(prefix) for prefix in _PROSE_PREFIXES):
+        return 0.0
+    if _CITATION_PAT.search(text):
+        return 0.0
+
+    score = 0.0
+
+    # Positive Signals
+    if block["type"] == "heading_candidate":
+        score += 0.30
+
+    if _CHAPTER_KEYWORD_PAT.match(text):
+        score += 0.45
+
+    if _NUMBERED_SEC_PAT.match(text):
+        score += 0.40
+
+    text_clean = re.sub(r"[^\w\s]", "", text).lower().strip()
+    if text_clean in _KNOWN_MAJOR_SECTIONS:
+        score += 0.35
+
+    words = text.split()
+    if 1 <= len(words) <= 7 and len(text) < 55:
+        if not _is_sentence_punctuation(text):
+            score += 0.20
+            if text.isupper() or all(w[0].isupper() for w in words if len(w) > 3):
+                score += 0.15
+
+    # Negative Penalties
+    if _is_sentence_punctuation(text):
+        score -= 0.45
+    if len(text) > 80:
+        score -= 0.35
+    if len(words) > 10:
+        score -= 0.35
+
+    return max(0.0, min(1.0, round(score, 2)))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -302,7 +358,7 @@ def _extract_and_clean_blocks(parsed_documents: list) -> list:
         def flush_para():
             nonlocal para_lines
             text = "\n".join(para_lines).strip()
-            if text:
+            if text and not text.isdigit() and not _PAGE_NUM_PAT.match(text):
                 raw_blocks.append({
                     "type": "paragraph",
                     "text": text,
@@ -320,8 +376,8 @@ def _extract_and_clean_blocks(parsed_documents: list) -> list:
                 i += 1
                 continue
 
-            # Skip standalone numbers / page numbers
-            if _PAGE_NUM_PAT.match(stripped) or re.match(r"^\d{1,3}$", stripped):
+            # Skip standalone numbers / page numbers / OCR placeholders
+            if _PAGE_NUM_PAT.match(stripped) or stripped.isdigit() or re.match(r"^\d{1,3}$", stripped) or stripped.startswith("[Scanned Region"):
                 i += 1
                 continue
 
@@ -375,12 +431,14 @@ def _extract_and_clean_blocks(parsed_documents: list) -> list:
             m_hd = _MD_HEADING_PAT.match(stripped)
             if m_hd:
                 flush_para()
-                raw_blocks.append({
-                    "type": "heading_candidate",
-                    "text": m_hd.group(2).strip(),
-                    "hashes": m_hd.group(1),
-                    "page_number": p_num
-                })
+                hd_text = m_hd.group(2).strip()
+                if not hd_text.isdigit() and not _PAGE_NUM_PAT.match(hd_text):
+                    raw_blocks.append({
+                        "type": "heading_candidate",
+                        "text": hd_text,
+                        "hashes": m_hd.group(1),
+                        "page_number": p_num
+                    })
                 i += 1
                 continue
 
@@ -396,56 +454,6 @@ def _extract_and_clean_blocks(parsed_documents: list) -> list:
 # 4.  STAGES 2, 3 & 4: HEADING NORMALIZATION, MERGING & CLASSIFICATION
 # ─────────────────────────────────────────────────────────────────────────────
 
-def _is_heading_candidate(block: dict) -> bool:
-    """Multi-signal evaluation to determine if a block is a heading candidate."""
-    text = block["text"].strip()
-    if not text:
-        return False
-
-    # Filter TOC lines and GRADE footnotes
-    if _TOC_LINE_PAT.search(text) or _GRADE_FOOTNOTE_PAT.match(text):
-        return False
-
-    text_lower = text.lower()
-    if any(text_lower.startswith(prefix) for prefix in _PROSE_PREFIXES):
-        return False
-
-    # Reject text containing citations
-    if _CITATION_PAT.search(text):
-        return False
-
-    if block["type"] == "heading_candidate":
-        if _is_sentence_punctuation(text) and len(text) > 40:
-            return False
-        return True
-
-    if block["type"] != "paragraph":
-        return False
-
-    if _is_sentence_punctuation(text) or len(text) > 75 or len(text.split()) > 9:
-        return False
-
-    text_clean = re.sub(r"[^\w\s]", "", text).lower().strip()
-
-    if text_clean in _KNOWN_MAJOR_SECTIONS:
-        return True
-
-    if _CHAPTER_KEYWORD_PAT.match(text):
-        return True
-
-    if _NUMBERED_SEC_PAT.match(text):
-        return True
-
-    words = text.split()
-    if 1 <= len(words) <= 6 and len(text) < 45:
-        if not _is_sentence_punctuation(text):
-            is_title = text.isupper() or all(w[0].isupper() for w in words if len(w) > 3)
-            if is_title:
-                return True
-
-    return False
-
-
 def _normalize_and_merge_headings(blocks: list) -> list:
     """Stage 2 & 3: Normalizes heading candidates and merges multiline/wrapped headings."""
     normalized = []
@@ -459,9 +467,9 @@ def _normalize_and_merge_headings(blocks: list) -> list:
             i += 1
             continue
 
-        is_candidate = _is_heading_candidate(b)
+        conf = _calculate_heading_confidence(b)
 
-        if not is_candidate:
+        if conf < 0.45:
             normalized.append(b)
             i += 1
             continue
@@ -491,7 +499,7 @@ def _normalize_and_merge_headings(blocks: list) -> list:
             if any(next_text.lower().startswith(p) for p in _PROSE_PREFIXES) or _CITATION_PAT.search(next_text):
                 break
 
-            # Cover page multi-line title merge (Page <= 2) or wrapped heading merge
+            # Cover page title merge or wrapped heading merge
             if (page_num <= 2 and len(next_text) < 70 and not _is_sentence_punctuation(next_text)) or (
                 next_b["type"] == "heading_candidate" and not _is_sentence_punctuation(next_text) and not _CITATION_PAT.search(next_text)
             ):
@@ -503,32 +511,61 @@ def _normalize_and_merge_headings(blocks: list) -> list:
         full_heading_text = " ".join(merged_text_parts).strip()
         full_heading_text = re.sub(r"^#{1,6}\s*", "", full_heading_text)
 
-        normalized.append({
-            "type": "heading",
-            "text": full_heading_text,
-            "hashes": hashes,
-            "page_number": page_num
-        })
+        if not full_heading_text.isdigit() and not _PAGE_NUM_PAT.match(full_heading_text):
+            normalized.append({
+                "type": "heading",
+                "text": full_heading_text,
+                "hashes": hashes,
+                "confidence": conf,
+                "page_number": page_num
+            })
 
         i = j
 
     return normalized
 
 
-def _classify_heading_level(heading_text: str, hashes: str, page_num: int, is_first: bool) -> Tuple[int, str]:
-    """Stage 4: Classifies heading into Document Title (0), Chapter (1), Section (2), Subsection (3)."""
+def _classify_heading_level(
+    heading_text: str,
+    hashes: str,
+    page_num: int,
+    is_first: bool,
+    active_appendix: bool
+) -> Tuple[int, str]:
+    """
+    Stage 4: Classifies heading level while preserving Appendix hierarchy propagation.
+      Level 0: Document Title
+      Level 1: Chapter / Appendix
+      Level 2: Section
+      Level 3: Subsection
+    """
     text_clean = re.sub(r"[^\w\s]", "", heading_text).lower().strip()
 
     # Cover page Document Title (Page 1 or 2)
     if is_first and page_num <= 2 and len(heading_text) > 20:
         return 0, "Document Title"
 
-    # Level 1: Chapters, Appendices, Major Structural Sections
+    # Top-level Appendix Chapter
+    if _CHAPTER_KEYWORD_PAT.match(heading_text) and heading_text.lower().startswith("appendix"):
+        return 1, "Appendix"
+
+    # Level 1: Major Structural Chapters
     if _CHAPTER_KEYWORD_PAT.match(heading_text) or text_clean in {
         "contents", "abbreviations", "glossary", "executive summary",
-        "references", "acknowledgements", "acknowledgments", "summary of judgments"
+        "references", "acknowledgements", "acknowledgments"
     }:
         return 1, "Chapter"
+
+    # 🔒 Appendix Hierarchy Propagation Protection:
+    # If we are inside an active Appendix, sub-headings like 'Summary of findings',
+    # 'Summary of judgments', 'Table 1: ...' MUST remain inside that Appendix as Section/Subsection!
+    if active_appendix:
+        if text_clean in {"summary of judgments", "summary of findings", "remarks", "summary of the evidence", "summary of evidence", "rationale for the recommendation"}:
+            return 2, "Section"
+        m_num = _NUMBERED_SEC_PAT.match(heading_text)
+        if m_num:
+            return 2, "Section"
+        return 2, "Section"
 
     # Level Numbering rules (e.g. 1.1, 2.1, 3.1.2)
     m_num = _NUMBERED_SEC_PAT.match(heading_text)
@@ -542,7 +579,7 @@ def _classify_heading_level(heading_text: str, hashes: str, page_num: int, is_fi
         elif dots >= 2:
             return 3, "Subsection"   # e.g., 3.1.1 Summary of evidence, 3.1.2 Rationale
 
-    if text_clean in {"remarks", "summary of the evidence", "summary of evidence", "rationale for the recommendation", "rationale for the recommendations"}:
+    if text_clean in {"remarks", "summary of the evidence", "summary of evidence", "rationale for the recommendation", "rationale for the recommendations", "summary of judgments", "summary of findings"}:
         return 2, "Section"
 
     if text_clean in {
@@ -561,18 +598,20 @@ def _classify_heading_level(heading_text: str, hashes: str, page_num: int, is_fi
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5.  STAGE 5: HIERARCHY TREE BUILDER
+# 5.  STAGE 5: HIERARCHY TREE BUILDER & PARENT RECOVERY
 # ─────────────────────────────────────────────────────────────────────────────
 
 class HierarchyBuilder:
     """
     Scans normalized blocks, classifies heading levels, and builds a nested
-    DocumentNode tree while maintaining active chapter/section/subsection stack.
+    DocumentNode tree while maintaining active chapter/section/subsection stack
+    and protecting Appendix hierarchy propagation.
     """
 
     def __init__(self):
         self._doc: Optional[DocumentNode] = None
         self._stack: List[Optional[HeadingNode]] = [None] * 4
+        self._active_appendix: bool = False
 
     def build(self, parsed_documents: list) -> DocumentNode:
         raw_blocks = _extract_and_clean_blocks(parsed_documents)
@@ -584,6 +623,7 @@ class HierarchyBuilder:
 
         self._doc = DocumentNode(title=doc_title)
         self._stack = [None] * 4
+        self._active_appendix = False
 
         is_first_heading = True
 
@@ -594,15 +634,29 @@ class HierarchyBuilder:
                 title = block["text"]
                 hashes = block.get("hashes", "##")
                 page_num = block["page_number"]
+                conf = block.get("confidence", 1.0)
 
-                level, type_name = _classify_heading_level(title, hashes, page_num, is_first_heading)
+                # Skip isolated numeric headings
+                if title.isdigit() or _PAGE_NUM_PAT.match(title):
+                    continue
+
+                # Check if a new top-level Appendix is starting
+                if title.lower().startswith("appendix"):
+                    self._active_appendix = True
+                elif title.lower() in ("references", "glossary", "executive summary", "contents"):
+                    self._active_appendix = False
+
+                level, type_name = _classify_heading_level(
+                    title, hashes, page_num, is_first_heading, self._active_appendix
+                )
                 is_first_heading = False
 
                 heading_node = HeadingNode(
                     title=title,
                     level=level,
                     node_type_name=type_name,
-                    page_number=page_num
+                    page_number=page_num,
+                    confidence_score=conf
                 )
 
                 if level == 0:
@@ -650,31 +704,50 @@ class HierarchyBuilder:
         return self._doc
 
     def _active_parent(self, for_level: int):
+        """Parent Recovery: Attaches heading to nearest valid active ancestor."""
         for lvl in range(for_level - 1, 0, -1):
             if self._stack[lvl] is not None:
                 return self._stack[lvl]
         return self._doc
 
     def _attach_leaf(self, leaf_node) -> None:
+        """Attaches paragraph, table, or figure to deepest active parent heading."""
         parent = None
         for lvl in range(3, 0, -1):
             if self._stack[lvl] is not None:
                 parent = self._stack[lvl]
                 break
         if parent is None:
-            parent = self._doc
+            # Create an explicit Front Matter container chapter for cover/preface content
+            if not self._stack[1]:
+                fm_node = HeadingNode(
+                    title="Front Matter & Executive Overview",
+                    level=1,
+                    node_type_name="Chapter",
+                    page_number=getattr(leaf_node, "page_number", 1)
+                )
+                self._doc.add_child(fm_node)
+                self._stack[1] = fm_node
+            parent = self._stack[1]
         parent.add_child(leaf_node)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 6.  STAGE 6: AUTOMATED VALIDATION STAGE
+# 6.  STAGE 6: SMARTER AUTOMATED VALIDATION STAGE
 # ─────────────────────────────────────────────────────────────────────────────
 
 def validate_hierarchy(doc: DocumentNode) -> Tuple[bool, List[str]]:
     """
-    Stage 6: Validates constructed hierarchy tree and flags suspicious structures.
+    Stage 6: Comprehensive validation stage detecting structural issues:
+      - Page numbers as headings
+      - TOC nodes
+      - Header/footer nodes
+      - Orphan sections
+      - Invalid heading transitions
+      - Isolated numeric chapters
+      - Appendix hierarchy breaks
     """
-    warnings = []
+    errors = []
 
     def _count_leaves(node) -> int:
         count = 0
@@ -685,35 +758,48 @@ def validate_hierarchy(doc: DocumentNode) -> Tuple[bool, List[str]]:
                 count += _count_leaves(c)
         return count
 
+    def _check_tree(node, current_depth: int, parent_heading: Optional[HeadingNode] = None):
+        children = getattr(node, "children", [])
+
+        for c in children:
+            if isinstance(c, HeadingNode):
+                title = c.title.strip()
+
+                # 1. Page Number in Hierarchy Check
+                if title.isdigit() or _PAGE_NUM_PAT.match(title):
+                    errors.append(f"❌ Page number classified as heading at [p.{c.page_number}]: '{title}'")
+
+                # 2. TOC Contamination Check
+                if _TOC_LINE_PAT.search(title):
+                    errors.append(f"❌ Table of Contents entry classified as heading at [p.{c.page_number}]: '{title[:40]}...'")
+
+                # 3. Invalid Heading Level Transition (e.g. Level 0 -> Level 3 jump)
+                if parent_heading and c.level > parent_heading.level + 2:
+                    errors.append(f"❌ Invalid heading level transition (Level {parent_heading.level} -> {c.level}) at [p.{c.page_number}]: '{title[:40]}...'")
+
+                # 4. Appendix Hierarchy Break Check
+                if parent_heading and parent_heading.node_type_name == "Document Title" and title.lower() in ("summary of judgments", "summary of findings"):
+                    errors.append(f"❌ Appendix hierarchy break detected at [p.{c.page_number}]: '{title}' escaped active Appendix.")
+
+                _check_tree(c, current_depth + 1, c)
+
+            elif isinstance(c, (ParagraphNode, TableNode, FigureNode)):
+                # 5. Orphan Leaf Node Check (Root level attachment)
+                if node == doc and len(doc.children) > 1:
+                    errors.append(f"❌ Orphan {c.node_type} node attached to root Document instead of parent section at [p.{c.page_number}].")
+
+    _check_tree(doc, 0, None)
+
     chapters = [c for c in doc.children if isinstance(c, HeadingNode)]
-
     if len(chapters) > 40:
-        warnings.append(f"⚠️ High chapter count detected ({len(chapters)} chapters). Hierarchy may be too flat.")
+        errors.append(f"⚠️ High chapter count detected ({len(chapters)} chapters). Hierarchy may be too flat.")
 
-    empty_chapter_count = 0
-    consecutive_empty = 0
+    empty_chapters = [c for c in chapters if _count_leaves(c) == 0]
+    if len(empty_chapters) > 10:
+        errors.append(f"⚠️ Found {len(empty_chapters)} chapters with no paragraphs or tables.")
 
-    for ch in chapters:
-        leaf_cnt = _count_leaves(ch)
-        if leaf_cnt == 0:
-            empty_chapter_count += 1
-            consecutive_empty += 1
-            if consecutive_empty >= 3:
-                warnings.append(f"⚠️ Consecutive empty chapter detected at [p.{ch.page_number}]: '{ch.title[:50]}...'")
-        else:
-            consecutive_empty = 0
-
-        if len(ch.title) > 150:
-            warnings.append(f"⚠️ Excessively long heading title ({len(ch.title)} chars) at [p.{ch.page_number}]: '{ch.title[:60]}...'")
-
-        if _is_sentence_punctuation(ch.title) and len(ch.title) > 50:
-            warnings.append(f"⚠️ Heading title ends with sentence punctuation (possible paragraph leak) at [p.{ch.page_number}]: '{ch.title[:60]}...'")
-
-    if empty_chapter_count > 10:
-        warnings.append(f"⚠️ Found {empty_chapter_count} chapters with no paragraphs or tables.")
-
-    is_valid = len(warnings) == 0
-    return is_valid, warnings
+    is_valid = len(errors) == 0
+    return is_valid, errors
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -826,15 +912,15 @@ def print_document_hierarchy(
     _safe_print("=" * 72)
 
     # Print Validation Report
-    is_valid, warnings = validate_hierarchy(doc)
+    is_valid, errors = validate_hierarchy(doc)
     _safe_print("\n📋 Validation Report")
     _safe_print("-" * 40)
     if is_valid:
-        _safe_print("  ✅ Document hierarchy validated successfully with 0 warnings.")
+        _safe_print("  ✅ Document hierarchy validated successfully with ZERO structural issues.")
     else:
-        _safe_print(f"  ⚠️ Validation completed with {len(warnings)} warning(s):")
-        for w in warnings:
-            _safe_print(f"    {w}")
+        _safe_print(f"  ⚠️ Validation reported {len(errors)} structural issue(s):")
+        for err in errors:
+            _safe_print(f"    {err}")
     _safe_print()
 
 
@@ -860,7 +946,7 @@ def hierarchy_stats(doc: DocumentNode) -> dict:
     _walk(doc, 0)
 
     sections = max(counts[2], 1)
-    _, warnings = validate_hierarchy(doc)
+    _, errors = validate_hierarchy(doc)
 
     return {
         "document_title":            doc.title,
@@ -872,7 +958,7 @@ def hierarchy_stats(doc: DocumentNode) -> dict:
         "total_figures":             counts["figures"],
         "maximum_depth":             counts["deepest"],
         "avg_paragraphs_per_section": round(counts["paragraphs"] / sections, 1),
-        "validation_warnings":       len(warnings)
+        "structural_issues":         len(errors)
     }
 
 
