@@ -33,9 +33,101 @@
 from __future__ import annotations
 
 import re
+import sys
 import textwrap
 from dataclasses import dataclass, field
 from typing import List, Optional
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 0.  CONSOLE ENCODING  (rendering layer — does NOT touch parsing / hierarchy)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _configure_utf8_console() -> None:
+    """
+    Attempt to switch stdout/stderr to UTF-8 at the process level.
+    Works on Python 3.7+ when the stream has a reconfigure() method
+    (CPython on Windows with a real console or VS Code terminal).
+    Safe to call even when stdout is redirected to a file or pipe.
+    """
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
+    if hasattr(sys.stderr, "reconfigure"):
+        try:
+            sys.stderr.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
+
+
+def _detect_unicode_support() -> bool:
+    """
+    Return True when the current stdout can encode the box-drawing characters
+    used by the tree renderer (├ └ │ ─).
+    """
+    enc = getattr(sys.stdout, "encoding", "") or ""
+    if enc.lower().replace("-", "").replace("_", "") in ("utf8", "utf16", "utf32"):
+        return True
+    probe = "├──└──│─"
+    try:
+        probe.encode(enc)
+        return True
+    except (UnicodeEncodeError, LookupError, AttributeError):
+        return False
+
+
+def _get_tree_symbols() -> tuple[str, str, str, str]:
+    """
+    Return (_BRANCH, _LAST, _PIPE, _SPACE) based on current console capabilities.
+    """
+    if _detect_unicode_support():
+        return "├── ", "└── ", "│   ", "    "
+    else:
+        return "|-- ", "+-- ", "|   ", "    "
+
+
+def _safe_print(*args, **kwargs) -> None:
+    """
+    Drop-in replacement for print() that never crashes on encoding errors.
+
+    Pass 1 — try the normal print() call.
+    Pass 2 — if a UnicodeEncodeError is raised (e.g. cp1256 console), convert
+              every box-drawing & special character to its ASCII equivalent and retry.
+    Pass 3 — if it still fails, encode to ASCII with 'replace' and write bytes.
+    """
+    _UNI_TO_ASCII = str.maketrans({
+        "├": "|",
+        "└": "+",
+        "│": "|",
+        "─": "-",
+        "…": "...",
+        "–": "-",
+        "—": "--",
+        "“": '"',
+        "”": '"',
+        "‘": "'",
+        "’": "'",
+    })
+    sep = kwargs.get("sep", " ")
+    end = kwargs.get("end", "\n")
+    file = kwargs.get("file", sys.stdout)
+
+    try:
+        print(*args, **kwargs)
+    except UnicodeEncodeError:
+        try:
+            ascii_args = [str(a).translate(_UNI_TO_ASCII) for a in args]
+            print(*ascii_args, **kwargs)
+        except Exception:
+            try:
+                msg = sep.join(str(a).translate(_UNI_TO_ASCII) for a in args) + end
+                enc = getattr(file, "encoding", "ascii") or "ascii"
+                file.buffer.write(msg.encode(enc, errors="replace"))
+            except Exception:
+                pass
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -360,15 +452,8 @@ class HierarchyBuilder:
             parent.add_child(block)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# 5.  DEBUG PRINTER
-# ─────────────────────────────────────────────────────────────────────────────
-
-# Tree drawing characters
-_BRANCH = "├── "
-_LAST   = "└── "
-_PIPE   = "│    "
-_SPACE  = "     "
+# Tree drawing characters are already defined in section 0 above.
+# (_BRANCH, _LAST, _PIPE, _SPACE are set based on _UNICODE_OK)
 
 
 def _node_label(node, show_page: bool = True) -> str:
@@ -391,7 +476,7 @@ def _node_label(node, show_page: bool = True) -> str:
 
 def _print_tree(node, prefix: str = "", is_last: bool = True, show_page: bool = True) -> None:
     connector = _LAST if is_last else _BRANCH
-    print(prefix + connector + _node_label(node, show_page))
+    _safe_print(prefix + connector + _node_label(node, show_page))
     child_prefix = prefix + (_SPACE if is_last else _PIPE)
 
     children = getattr(node, "children", [])
@@ -420,12 +505,17 @@ def print_document_hierarchy(
     max_depth : int
         Stop printing children beyond this depth (0 = root only).
     """
+    _configure_utf8_console()
+    branch_str, last_str, pipe_str, space_str = _get_tree_symbols()
+    unicode_active = _detect_unicode_support()
 
-    print()
-    print("=" * 72)
-    print(f"  DOCUMENT HIERARCHY")
-    print(f"  Title : {doc.title}")
-    print("=" * 72)
+    _safe_print()
+    _safe_print("=" * 72)
+    _safe_print(f"  DOCUMENT HIERARCHY")
+    _safe_print(f"  Title : {doc.title}")
+    _safe_print(f"  Console encoding : {getattr(sys.stdout, 'encoding', 'unknown')}  "
+                f"| Unicode tree chars : {'yes' if unicode_active else 'no (ASCII fallback)'}")
+    _safe_print("=" * 72)
 
     def _count(node) -> dict:
         """Quick stats: total headings, paragraphs, tables."""
@@ -444,20 +534,20 @@ def print_document_hierarchy(
         return stats
 
     stats = _count(doc)
-    print(f"  Headings: {stats['headings']}  |  Paragraphs: {stats['paragraphs']}  |  Tables: {stats['tables']}")
-    print("=" * 72)
-    print()
+    _safe_print(f"  Headings: {stats['headings']}  |  Paragraphs: {stats['paragraphs']}  |  Tables: {stats['tables']}")
+    _safe_print("=" * 72)
+    _safe_print()
 
     def _render(node, prefix: str, is_last: bool, depth: int) -> None:
-        connector    = _LAST if is_last else _BRANCH
-        child_prefix = prefix + (_SPACE if is_last else _PIPE)
+        connector    = last_str if is_last else branch_str
+        child_prefix = prefix + (space_str if is_last else pipe_str)
 
-        print(prefix + connector + _node_label(node, show_pages))
+        _safe_print(prefix + connector + _node_label(node, show_pages))
 
         if depth >= max_depth:
             children = getattr(node, "children", [])
             if children:
-                print(child_prefix + _LAST + f"… ({len(children)} children hidden)")
+                _safe_print(child_prefix + last_str + f"... ({len(children)} children hidden)")
             return
 
         children = getattr(node, "children", [])
@@ -468,9 +558,8 @@ def print_document_hierarchy(
                             if isinstance(c, (ParagraphNode, TableNode))]
 
         # Show limited content nodes
-        shown   = content_children[:max_paragraphs] if max_paragraphs >= 0 else content_children
-        hidden  = len(content_children) - len(shown)
-        all_vis = shown + heading_children
+        shown  = content_children[:max_paragraphs] if max_paragraphs >= 0 else content_children
+        hidden = len(content_children) - len(shown)
         # Re-interleave to preserve original order
         all_visible = [c for c in children
                        if c in shown or isinstance(c, HeadingNode)]
@@ -480,19 +569,19 @@ def print_document_hierarchy(
             _render(child, child_prefix, is_final, depth + 1)
 
         if hidden > 0:
-            print(child_prefix + _LAST +
-                  f"… +{hidden} more paragraph/table node(s) not shown")
+            _safe_print(child_prefix + last_str +
+                        f"... +{hidden} more paragraph/table node(s) not shown")
 
     # Print each top-level child of the document
     top_children = doc.children
     for idx, child in enumerate(top_children):
         _render(child, "", idx == len(top_children) - 1, depth=1)
-        print()
+        _safe_print()
 
-    print("=" * 72)
-    print("  END OF HIERARCHY")
-    print("=" * 72)
-    print()
+    _safe_print("=" * 72)
+    _safe_print("  END OF HIERARCHY")
+    _safe_print("=" * 72)
+    _safe_print()
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -548,12 +637,14 @@ if __name__ == "__main__":
     import os
     sys.path.insert(0, os.path.dirname(__file__))
 
+    _configure_utf8_console()
+
     from professional_parser import advanced_parse_pdf
 
     PDF = "9789241550284-eng.pdf"
-    print(f"[Hierarchy Builder] Parsing PDF: {PDF} …")
+    _safe_print(f"[Hierarchy Builder] Parsing PDF: {PDF} ...")
     parsed_docs, _ = advanced_parse_pdf(PDF)
-    print(f"[Hierarchy Builder] Pages received: {len(parsed_docs)}")
+    _safe_print(f"[Hierarchy Builder] Pages received: {len(parsed_docs)}")
 
     builder = HierarchyBuilder()
     doc     = builder.build(parsed_docs)
@@ -568,8 +659,9 @@ if __name__ == "__main__":
 
     # ── Print statistics ────────────────────────────────────────────────────
     stats = hierarchy_stats(doc)
-    print("\nHierarchy Statistics")
-    print("─" * 40)
+    _safe_print("\nHierarchy Statistics")
+    _safe_print("-" * 40)
     for k, v in stats.items():
-        print(f"  {k:<35} {v}")
-    print()
+        _safe_print(f"  {k:<35} {v}")
+    _safe_print()
+
