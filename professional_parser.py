@@ -678,38 +678,43 @@ def parse_inline_elements(page, tracker, outline_stack, header_footer_metadata):
     for idx, t in enumerate(tables):
         try:
             raw_data = t.extract()
-            headers = [str(x) for x in raw_data[0]] if raw_data else []
-            sample_rows = raw_data[1:4] if len(raw_data) > 1 else []
-            table_class = classify_table(headers, sample_rows)
+            headers = [str(cell or "").strip() for cell in raw_data[0]] if raw_data else []
+            rows = [[str(cell or "").strip() for cell in row] for row in raw_data[1:]] if len(raw_data) > 1 else []
+            table_class = classify_table(headers, rows[:3])
             tracker.tables_by_class[table_class] += 1
             tracker.tables_extracted += 1
-            
+
             md_table = format_table_as_markdown(raw_data)
-            
+
             caption = ""
             for tb in text_blocks:
-                if (abs(tb["bottom"] - t.bbox[1]) < 25 or abs(tb["top"] - t.bbox[3]) < 25) and "table" in tb["content"].lower():
+                if (abs(tb["bottom"] - t.bbox[1]) < 35 or abs(tb["top"] - t.bbox[3]) < 35) and "table" in tb["content"].lower():
                     caption = tb["content"].lstrip("# ")
                     break
-                    
+
             table_content = ""
             if caption:
                 table_content += f"\n**Table Caption**: *{caption}* (Class: {table_class})\n"
             table_content += md_table
-            
+
             table_blocks.append({
                 "type": "table",
-                "top": t.bbox[1],
-                "bottom": t.bbox[3],
-                "x0": t.bbox[0],
-                "x1": t.bbox[2],
+                "top": round(t.bbox[1], 2),
+                "bottom": round(t.bbox[3], 2),
+                "x0": round(t.bbox[0], 2),
+                "x1": round(t.bbox[2], 2),
+                "bbox": (round(t.bbox[0], 2), round(t.bbox[1], 2), round(t.bbox[2], 2), round(t.bbox[3], 2)),
+                "headers": headers,
+                "rows": rows,
+                "caption": caption,
+                "table_class": table_class,
                 "content": table_content
             })
         except Exception as e:
             err_msg = f"Table {idx+1} parse failed: {str(e)}"
             logger.error(err_msg)
             tracker.errors.append({"page": page_num, "type": "table_error", "message": err_msg})
-            
+
     # Process Figures
     figure_blocks = []
     for idx, im in enumerate(images):
@@ -733,19 +738,29 @@ def parse_inline_elements(page, tracker, outline_stack, header_footer_metadata):
 
                     caption = ""
                     for tb in text_blocks:
-                        if (abs(tb["bottom"] - clamped_box[1]) < 30 or abs(tb["top"] - clamped_box[3]) < 30) and any(kw in tb["content"].lower() for kw in ["figure", "fig.", "chart"]):
+                        if (abs(tb["bottom"] - clamped_box[1]) < 35 or abs(tb["top"] - clamped_box[3]) < 35) and any(kw in tb["content"].lower() for kw in ["figure", "fig.", "chart", "image"]):
                             caption = tb["content"].lstrip("# ")
                             break
 
                     caption_str = caption if caption else f"Figure extracted from Page {page_num}, Area {idx+1}"
+                    fig_number = f"Figure {idx+1}"
+                    if "fig." in caption_str.lower() or "figure" in caption_str.lower():
+                        m_f = re.search(r"((?:figure|fig\.)\s*[\dA-Z]+)", caption_str, re.IGNORECASE)
+                        if m_f:
+                            fig_number = m_f.group(1)
+
                     fig_content = f"\n![{caption_str}]({fig_path})\n*Caption*: *{caption_str}*\n"
 
                     figure_blocks.append({
                         "type": "figure",
-                        "top": clamped_box[1],
-                        "bottom": clamped_box[3],
-                        "x0": clamped_box[0],
-                        "x1": clamped_box[2],
+                        "top": round(clamped_box[1], 2),
+                        "bottom": round(clamped_box[3], 2),
+                        "x0": round(clamped_box[0], 2),
+                        "x1": round(clamped_box[2], 2),
+                        "bbox": (round(clamped_box[0], 2), round(clamped_box[1], 2), round(clamped_box[2], 2), round(clamped_box[3], 2)),
+                        "figure_number": fig_number,
+                        "caption": caption_str,
+                        "image_path": fig_path,
                         "content": fig_content
                     })
             except Exception as e:
