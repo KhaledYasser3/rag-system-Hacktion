@@ -665,33 +665,45 @@ def parse_inline_elements(page, tracker, outline_stack, header_footer_metadata):
             
     # Process Figures
     figure_blocks = []
-    for idx, im_box in enumerate(image_bboxes):
-        try:
-            fig_path = f"media/figure_page_{page_num}_{idx+1}.png"
-            cropped_im = page.crop(im_box)
-            cropped_im.to_image(resolution=150).save(fig_path)
-            tracker.figures_extracted += 1
-            
-            caption = ""
-            for tb in text_blocks:
-                if (abs(tb["bottom"] - im_box[1]) < 30 or abs(tb["top"] - im_box[3]) < 30) and any(kw in tb["content"].lower() for kw in ["figure", "fig.", "chart"]):
-                    caption = tb["content"].lstrip("# ")
-                    break
-                    
-            caption_str = caption if caption else f"Figure extracted from Page {page_num}, Area {idx+1}"
-            fig_content = f"\n![{caption_str}]({fig_path})\n*Caption*: *{caption_str}*\n"
-            
-            figure_blocks.append({
-                "type": "figure",
-                "top": im_box[1],
-                "bottom": im_box[3],
-                "x0": im_box[0],
-                "x1": im_box[2],
-                "content": fig_content
-            })
-        except Exception as e:
-            logger.warning(f"Failed to render figure crop at page {page_num}, box {im_box}: {str(e)}")
-            
+    for idx, im in enumerate(images):
+        # Filter: Only extract images/figures that have width and height > 50 pt
+        if im.get("width", 0) > 50 and im.get("height", 0) > 50:
+            try:
+                raw_box = (im["x0"], im["top"], im["x1"], im["bottom"])
+                # Clamp coordinates strictly within parent page bounds
+                clamped_box = (
+                    max(0.0, min(width - 1.0, raw_box[0])),
+                    max(0.0, min(height - 1.0, raw_box[1])),
+                    max(1.0, min(width, raw_box[2])),
+                    max(1.0, min(height, raw_box[3]))
+                )
+                if (clamped_box[2] - clamped_box[0]) > 20 and (clamped_box[3] - clamped_box[1]) > 20:
+                    fig_path = f"media/figure_page_{page_num}_{idx+1}.png"
+                    os.makedirs("media", exist_ok=True)
+                    cropped_im = page.crop(clamped_box)
+                    cropped_im.to_image(resolution=150).save(fig_path)
+                    tracker.figures_extracted += 1
+
+                    caption = ""
+                    for tb in text_blocks:
+                        if (abs(tb["bottom"] - clamped_box[1]) < 30 or abs(tb["top"] - clamped_box[3]) < 30) and any(kw in tb["content"].lower() for kw in ["figure", "fig.", "chart"]):
+                            caption = tb["content"].lstrip("# ")
+                            break
+
+                    caption_str = caption if caption else f"Figure extracted from Page {page_num}, Area {idx+1}"
+                    fig_content = f"\n![{caption_str}]({fig_path})\n*Caption*: *{caption_str}*\n"
+
+                    figure_blocks.append({
+                        "type": "figure",
+                        "top": clamped_box[1],
+                        "bottom": clamped_box[3],
+                        "x0": clamped_box[0],
+                        "x1": clamped_box[2],
+                        "content": fig_content
+                    })
+            except Exception as e:
+                logger.warning(f"Failed to render figure crop at page {page_num}, box {im}: {str(e)}")
+
     # Filter text falling inside table bboxes
     filtered_text_blocks = []
     for tb in text_blocks:
@@ -702,16 +714,16 @@ def parse_inline_elements(page, tracker, outline_stack, header_footer_metadata):
                 break
         if not inside_table:
             filtered_text_blocks.append(tb)
-            
+
     all_blocks = sorted(filtered_text_blocks + table_blocks + figure_blocks, key=lambda x: x["top"])
-    
+
     final_markdown = ""
     for block in all_blocks:
         final_markdown += block["content"] + "\n"
-        
+
     # Apply intra-page hyphenation post-processing (e.g. glu-\ncose -> glucose)
     final_markdown = re.sub(r"(\w+)-\n(\w+)", r"\1\2", final_markdown)
-    
+
     return final_markdown
 
 def semantic_section_classifier(page_content):
@@ -727,34 +739,39 @@ def semantic_section_classifier(page_content):
 
 def process_page_worker(pdf_path, page_num, margin_meta, doc_title, outline_hierarchy_map):
     """Worker function executed in parallel child processes to process a single page."""
-    # Instantiates its own pdfplumber to be process-safe
     try:
         with pdfplumber.open(pdf_path) as pdf:
             page = pdf.pages[page_num - 1]
             width = page.width
             height = page.height
-            
+
             # Apply dynamic margin cropping
             page_height_ref = margin_meta.get("page_height", 842.0)
             h_ratio = margin_meta.get("header_limit", 50.0) / page_height_ref
             f_ratio = (page_height_ref - margin_meta.get("footer_limit", 790.0)) / page_height_ref
-            
+
             page_header_limit = height * h_ratio
             page_footer_limit = height * (1 - f_ratio)
-            
+
             cropped = page.crop((0, page_header_limit, width, page_footer_limit))
             raw_text = cropped.extract_text() or ""
             raw_clean = re.sub(r"\s+", " ", raw_text).strip()
-            
+
             # Check for scanned page
             if len(raw_clean) < 120 and (page.images or page.rects):
                 ocr_texts = []
                 for img in page.images:
-                    box = (img["x0"], img["top"], img["x1"], img["bottom"])
-                    ocr_result = extract_region_ocr(page, box)
+                    raw_box = (img["x0"], img["top"], img["x1"], img["bottom"])
+                    clamped_box = (
+                        max(0.0, min(width - 1.0, raw_box[0])),
+                        max(0.0, min(height - 1.0, raw_box[1])),
+                        max(1.0, min(width, raw_box[2])),
+                        max(1.0, min(height, raw_box[3]))
+                    )
+                    ocr_result = extract_region_ocr(page, clamped_box)
                     ocr_texts.append(ocr_result)
                 ocr_content = "\n\n".join(ocr_texts) if ocr_texts else "[Empty Scanned Page Content]"
-                
+
                 return {
                     "page_number": page_num,
                     "content": ocr_content,
@@ -765,28 +782,30 @@ def process_page_worker(pdf_path, page_num, margin_meta, doc_title, outline_hier
                     "figures_detected": len(page.images),
                     "columns_processed": 0
                 }
-                
+
             # Process normal layout
             tracker_mock = AdvancedQualityTracker()
             outline_stack = HierarchicalOutlineStack()
             outline_stack.set_document_title(doc_title)
-            
+
             # Extract bookmarks hierarchy dynamically
             h_info = outline_hierarchy_map.get(page_num, {"chapter": "Unknown", "section": "Unknown", "subsection": "Unknown"})
             outline_stack.update_heading(1, h_info["chapter"])
             outline_stack.update_heading(2, h_info["section"])
             outline_stack.update_heading(3, h_info["subsection"])
-            
+
             md_content = parse_inline_elements(page, tracker_mock, outline_stack, margin_meta)
-            
+
             hierarchy = outline_stack.get_metadata()
             arabic_chars = len(re.findall(r'[\u0600-\u06FF]', md_content))
             language = "Arabic" if arabic_chars > len(md_content) * 0.1 else "English"
             sem_class = semantic_section_classifier(md_content)
-            
+
             col_split = detect_columns(cropped)
             layout_type = "two_column" if col_split else "single_column"
-            
+
+            is_fm = (page_num <= 6 and ("copyright" in md_content.lower() or "isbn" in md_content.lower() or "contents" in md_content.lower() or page_num <= 2))
+
             return {
                 "page_number": page_num,
                 "content": md_content,
@@ -795,7 +814,7 @@ def process_page_worker(pdf_path, page_num, margin_meta, doc_title, outline_hier
                 "error_msg": "",
                 "tables_detected": len(page.find_tables()),
                 "tables_by_class": dict(tracker_mock.tables_by_class),
-                "figures_detected": len([im for im in page.images if im["width"] > 150 and im["height"] > 150]),
+                "figures_detected": len([im for im in page.images if im.get("width", 0) > 50 and im.get("height", 0) > 50]),
                 "columns_processed": tracker_mock.columns_processed,
                 "metadata_fields": {
                     "document_title": hierarchy["document_title"],
@@ -804,7 +823,8 @@ def process_page_worker(pdf_path, page_num, margin_meta, doc_title, outline_hier
                     "subsection": hierarchy["subsection"],
                     "language": language,
                     "layout_type": layout_type,
-                    "semantic_class": sem_class
+                    "semantic_class": sem_class,
+                    "is_front_matter": is_fm
                 }
             }
     except Exception as e:
