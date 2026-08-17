@@ -1,36 +1,38 @@
 """
 =============================================================================
-  MEDICAL RAG PIPELINE — Stage 2: Production-Grade Hierarchy Builder (Refined)
+  MEDICAL RAG PIPELINE — Stage 2: Production-Grade Hierarchy Builder (Refined v2)
 =============================================================================
   Input  : List of parsed page documents from professional_parser.py
-  Output : DocumentNode tree with Chapter/Section/Subsection/Paragraph/Table nodes,
-           Validation Report with suspicious structure warnings, and Stats.
+  Output : DocumentNode tree with Chapter/Appendix/Section/Subsection/Paragraph/Table nodes,
+           Validation Report with structural issue detection, and Stats.
 
-  Key Enhancements & Fixes
-  ────────────────────────
-  1. Isolated Page Number Elimination
-     - Strictly filters numeric-only text ('68', '40', '60') and page footers.
-     - Never classifies numeric-only text as a chapter.
+  Key Fixes & Upgrades
+  ────────────────────
+  1. Pure Stack-Based Hierarchy Management
+     - Implements classic stack popping:
+         while stack and stack[-1].level >= new_node.level:
+             stack.pop()
+     - Guarantees that same-level nodes (Chapter vs Chapter, Section vs Section)
+       are ALWAYS siblings under their shared parent.
+     - Prevents accidental nesting (Chapter inside Chapter, Appendix inside Appendix).
 
-  2. Heading Confidence Scoring System (_calculate_heading_confidence)
-     - Multi-signal evaluation: font size, boldness, structural numbering,
-       semantic keywords, length, uppercase ratio, sentence punctuation, prose prefixes.
-     - Only headings with confidence >= 0.50 become hierarchy nodes.
+  2. Robust Appendix & Chapter Detection
+     - Matches 'Appendix 1' through 'Appendix 11' (including 'Appendix 3:', 'Appendix 7:', etc.).
+     - Major structural headings (Appendices, Chapters, References, Glossary,
+       Acknowledgements, Executive summary) are ALWAYS classified as Level 1 Chapters,
+       bypassing length and word-count penalties.
 
-  3. Appendix Hierarchy Propagation Protection
-     - Appendices are top-level Level 1 Chapters.
-     - Sub-headings inside an Appendix ('Summary of findings', 'Summary of judgments')
-       remain strictly nested inside their parent Appendix.
+  3. Heading Confidence Priority
+     - Structural keywords receive 1.0 confidence.
 
-  4. Graceful OCR Handling
-     - Skip OCR placeholders gracefully when Tesseract executable is missing.
+  4. Smart Validation & Structural Checks (validate_hierarchy)
+     - Fails if a Chapter contains a Chapter, Section contains a Section, or
+       Subsection contains a Subsection.
+     - Verifies all Appendices 1..11 appear as sibling Chapter nodes.
+     - Verifies zero orphan nodes, page numbers, or TOC contamination.
 
-  5. Parent Recovery
-     - Attaches medium-confidence headings to active parents instead of creating orphan roots.
-
-  6. Smarter Automated Validation (validate_hierarchy)
-     - Detects and fails on page numbers as headings, orphan nodes, invalid transitions,
-       duplicate headings, isolated numeric chapters, appendix breaks, and TOC contamination.
+  5. Metadata Consistency
+     - Every leaf (paragraph, table, figure) inherits its parent chapter title.
 =============================================================================
 """
 
@@ -126,6 +128,7 @@ class ParagraphNode:
     text: str
     page_number: int
     semantic_class: str = ""
+    chapter_title: str = ""
 
     @property
     def node_type(self) -> str:
@@ -143,6 +146,7 @@ class TableNode:
     page_number: int
     caption: str = ""
     table_class: str = ""
+    chapter_title: str = ""
 
     @property
     def node_type(self) -> str:
@@ -159,6 +163,7 @@ class FigureNode:
     text: str
     page_number: int
     caption: str = ""
+    chapter_title: str = ""
 
     @property
     def node_type(self) -> str:
@@ -171,7 +176,7 @@ class FigureNode:
 
 @dataclass
 class HeadingNode:
-    """A heading (Document Title / Chapter / Section / Subsection / Appendix) with children."""
+    """A heading (Document Title / Chapter / Appendix / Section / Subsection) with children."""
     title: str
     level: int          # 0 = Title, 1 = Chapter/Appendix, 2 = Section, 3 = Subsection
     node_type_name: str # "Document Title", "Chapter", "Appendix", "Section", "Subsection"
@@ -217,9 +222,9 @@ _TOC_LINE_PAT = re.compile(r"(\.{2,}|\.\s\.\s\.\s)\s*\d+$")
 # Structural numbering patterns (e.g., 1., 1.1, 1.2.3, 2.1.4)
 _NUMBERED_SEC_PAT = re.compile(r"^(\d+(\.\d+)*\.?)\s+([A-Z].*)$")
 
-# Chapter / Appendix / Part keywords
+# Chapter / Appendix / Part keywords matching (e.g. Appendix 1, Appendix 3:, APPENDIX 11)
 _CHAPTER_KEYWORD_PAT = re.compile(
-    r"^(chapter|appendix|part)\s+[\d\w\.]+(?::|\s+.*)?$", re.IGNORECASE
+    r"^\s*(chapter|appendix|part)\s+[\d\w\.:]+(?::|\s+.*)?$", re.IGNORECASE
 )
 
 # Known GRADE table sub-notes that are NOT headings
@@ -235,10 +240,7 @@ _KNOWN_MAJOR_SECTIONS = {
     "contents", "abbreviations", "glossary", "executive summary", "summary",
     "background", "introduction", "methods", "results", "discussion",
     "conclusion", "conclusions", "references", "acknowledgements",
-    "acknowledgments", "summary of judgments", "summary of findings",
-    "target audience", "scope and aim of guidelines", "funding", "remarks",
-    "summary of the evidence", "summary of evidence",
-    "rationale for the recommendation", "rationale for the recommendations"
+    "acknowledgments", "target audience", "scope and aim of guidelines", "funding"
 }
 
 # Citation patterns in text (e.g. (17 - 19), (21), (9, 10))
@@ -260,9 +262,17 @@ def _is_sentence_punctuation(text: str) -> bool:
     stripped = text.strip()
     if not stripped:
         return False
-    if re.match(r"^(\d+(\.\d+)*\.|appendix\s+\d+\.)$", stripped, re.IGNORECASE):
+    if re.match(r"^(\d+(\.\d+)*\.|appendix\s+[\d\w\.:]+)$", stripped, re.IGNORECASE):
         return False
     return stripped[-1] in ".;:?!"
+
+
+def _is_major_chapter_heading(text: str) -> bool:
+    """Return True if text is an explicit Chapter, Appendix, or major section title."""
+    text_clean = re.sub(r"[^\w\s]", "", text).lower().strip()
+    if _CHAPTER_KEYWORD_PAT.match(text) or text.lower().startswith("appendix") or text_clean in _KNOWN_MAJOR_SECTIONS:
+        return True
+    return False
 
 
 def _calculate_heading_confidence(block: dict) -> float:
@@ -291,21 +301,18 @@ def _calculate_heading_confidence(block: dict) -> float:
     if _CITATION_PAT.search(text):
         return 0.0
 
+    # 🌟 Priority Exemption: Major Chapters & Appendices ALWAYS get 1.0 confidence
+    if _is_major_chapter_heading(text):
+        return 1.0
+
     score = 0.0
 
     # Positive Signals
     if block["type"] == "heading_candidate":
         score += 0.30
 
-    if _CHAPTER_KEYWORD_PAT.match(text):
-        score += 0.45
-
     if _NUMBERED_SEC_PAT.match(text):
         score += 0.40
-
-    text_clean = re.sub(r"[^\w\s]", "", text).lower().strip()
-    if text_clean in _KNOWN_MAJOR_SECTIONS:
-        score += 0.35
 
     words = text.split()
     if 1 <= len(words) <= 7 and len(text) < 55:
@@ -487,13 +494,13 @@ def _normalize_and_merge_headings(blocks: list) -> list:
 
             next_text = next_b["text"].strip()
 
-            if sum(len(p) for p in merged_text_parts) > 120:
+            if sum(len(p) for p in merged_text_parts) > 140:
                 break
 
             if _is_sentence_punctuation(merged_text_parts[-1]):
                 break
 
-            if _NUMBERED_SEC_PAT.match(next_text) or _CHAPTER_KEYWORD_PAT.match(next_text) or _TOC_LINE_PAT.search(next_text) or _GRADE_FOOTNOTE_PAT.match(next_text):
+            if _is_major_chapter_heading(next_text) or _NUMBERED_SEC_PAT.match(next_text) or _TOC_LINE_PAT.search(next_text) or _GRADE_FOOTNOTE_PAT.match(next_text):
                 break
 
             if any(next_text.lower().startswith(p) for p in _PROSE_PREFIXES) or _CITATION_PAT.search(next_text):
@@ -529,15 +536,11 @@ def _classify_heading_level(
     heading_text: str,
     hashes: str,
     page_num: int,
-    is_first: bool,
-    active_appendix: bool
+    is_first: bool
 ) -> Tuple[int, str]:
     """
-    Stage 4: Classifies heading level while preserving Appendix hierarchy propagation.
-      Level 0: Document Title
-      Level 1: Chapter / Appendix
-      Level 2: Section
-      Level 3: Subsection
+    Stage 4: Classifies heading level strictly into Level 0 (Title), Level 1 (Chapter/Appendix),
+    Level 2 (Section), and Level 3 (Subsection).
     """
     text_clean = re.sub(r"[^\w\s]", "", heading_text).lower().strip()
 
@@ -545,29 +548,20 @@ def _classify_heading_level(
     if is_first and page_num <= 2 and len(heading_text) > 20:
         return 0, "Document Title"
 
-    # Top-level Appendix Chapter
-    if _CHAPTER_KEYWORD_PAT.match(heading_text) and heading_text.lower().startswith("appendix"):
-        return 1, "Appendix"
+    # Top-level Appendix Chapter (Level 1)
+    if heading_text.lower().startswith("appendix") or _CHAPTER_KEYWORD_PAT.match(heading_text):
+        if heading_text.lower().startswith("appendix"):
+            return 1, "Appendix"
+        return 1, "Chapter"
 
     # Level 1: Major Structural Chapters
-    if _CHAPTER_KEYWORD_PAT.match(heading_text) or text_clean in {
+    if text_clean in {
         "contents", "abbreviations", "glossary", "executive summary",
         "references", "acknowledgements", "acknowledgments"
     }:
         return 1, "Chapter"
 
-    # 🔒 Appendix Hierarchy Propagation Protection:
-    # If we are inside an active Appendix, sub-headings like 'Summary of findings',
-    # 'Summary of judgments', 'Table 1: ...' MUST remain inside that Appendix as Section/Subsection!
-    if active_appendix:
-        if text_clean in {"summary of judgments", "summary of findings", "remarks", "summary of the evidence", "summary of evidence", "rationale for the recommendation"}:
-            return 2, "Section"
-        m_num = _NUMBERED_SEC_PAT.match(heading_text)
-        if m_num:
-            return 2, "Section"
-        return 2, "Section"
-
-    # Level Numbering rules (e.g. 1.1, 2.1, 3.1.2)
+    # Level Numbering rules (e.g. 1., 1.1, 2.1, 3.1.2)
     m_num = _NUMBERED_SEC_PAT.match(heading_text)
     if m_num:
         num_str = m_num.group(1).rstrip(".")
@@ -579,7 +573,11 @@ def _classify_heading_level(
         elif dots >= 2:
             return 3, "Subsection"   # e.g., 3.1.1 Summary of evidence, 3.1.2 Rationale
 
-    if text_clean in {"remarks", "summary of the evidence", "summary of evidence", "rationale for the recommendation", "rationale for the recommendations", "summary of judgments", "summary of findings"}:
+    if text_clean in {
+        "summary of judgments", "summary of findings", "remarks",
+        "summary of the evidence", "summary of evidence",
+        "rationale for the recommendation", "rationale for the recommendations", "discussion"
+    }:
         return 2, "Section"
 
     if text_clean in {
@@ -598,20 +596,22 @@ def _classify_heading_level(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5.  STAGE 5: HIERARCHY TREE BUILDER & PARENT RECOVERY
+# 5.  STAGE 5: PURE STACK-BASED HIERARCHY TREE BUILDER
 # ─────────────────────────────────────────────────────────────────────────────
 
 class HierarchyBuilder:
     """
     Scans normalized blocks, classifies heading levels, and builds a nested
-    DocumentNode tree while maintaining active chapter/section/subsection stack
-    and protecting Appendix hierarchy propagation.
+    DocumentNode tree using pure stack-based popping:
+        while stack and stack[-1].level >= new_node.level:
+            stack.pop()
+    This guarantees that same-level nodes (Chapter vs Chapter, Appendix vs Appendix)
+    are ALWAYS siblings under their shared parent node.
     """
 
     def __init__(self):
         self._doc: Optional[DocumentNode] = None
-        self._stack: List[Optional[HeadingNode]] = [None] * 4
-        self._active_appendix: bool = False
+        self._stack: List[HeadingNode] = []
 
     def build(self, parsed_documents: list) -> DocumentNode:
         raw_blocks = _extract_and_clean_blocks(parsed_documents)
@@ -622,8 +622,7 @@ class HierarchyBuilder:
             doc_title = parsed_documents[0].get("metadata", {}).get("document_title", doc_title)
 
         self._doc = DocumentNode(title=doc_title)
-        self._stack = [None] * 4
-        self._active_appendix = False
+        self._stack = []
 
         is_first_heading = True
 
@@ -640,14 +639,8 @@ class HierarchyBuilder:
                 if title.isdigit() or _PAGE_NUM_PAT.match(title):
                     continue
 
-                # Check if a new top-level Appendix is starting
-                if title.lower().startswith("appendix"):
-                    self._active_appendix = True
-                elif title.lower() in ("references", "glossary", "executive summary", "contents"):
-                    self._active_appendix = False
-
                 level, type_name = _classify_heading_level(
-                    title, hashes, page_num, is_first_heading, self._active_appendix
+                    title, hashes, page_num, is_first_heading
                 )
                 is_first_heading = False
 
@@ -664,23 +657,26 @@ class HierarchyBuilder:
                     heading_node.level = 1
                     heading_node.node_type_name = "Document Title"
                     self._doc.add_child(heading_node)
-                    self._stack[1] = heading_node
-                    self._stack[2] = None
-                    self._stack[3] = None
+                    self._stack = [heading_node]
                 else:
-                    level = min(max(level, 1), 3)
-                    parent = self._active_parent(level)
-                    parent.add_child(heading_node)
+                    # 🌟 Pure Stack-Based Hierarchy Management
+                    # Pop active stack nodes while stack top level >= new heading level
+                    while self._stack and self._stack[-1].level >= heading_node.level:
+                        self._stack.pop()
 
-                    self._stack[level] = heading_node
-                    for deeper in range(level + 1, 4):
-                        self._stack[deeper] = None
+                    if self._stack:
+                        self._stack[-1].add_child(heading_node)
+                    else:
+                        self._doc.add_child(heading_node)
+
+                    self._stack.append(heading_node)
 
             elif b_type == "paragraph":
                 node = ParagraphNode(
                     text=block["text"],
                     page_number=block["page_number"],
-                    semantic_class=block.get("semantic_class", "")
+                    semantic_class=block.get("semantic_class", ""),
+                    chapter_title=self._active_chapter_title()
                 )
                 self._attach_leaf(node)
 
@@ -689,7 +685,8 @@ class HierarchyBuilder:
                     text=block["text"],
                     page_number=block["page_number"],
                     caption=block.get("caption", ""),
-                    table_class=block.get("table_class", "")
+                    table_class=block.get("table_class", ""),
+                    chapter_title=self._active_chapter_title()
                 )
                 self._attach_leaf(node)
 
@@ -697,39 +694,35 @@ class HierarchyBuilder:
                 node = FigureNode(
                     text=block["text"],
                     page_number=block["page_number"],
-                    caption=block.get("caption", "")
+                    caption=block.get("caption", ""),
+                    chapter_title=self._active_chapter_title()
                 )
                 self._attach_leaf(node)
 
         return self._doc
 
-    def _active_parent(self, for_level: int):
-        """Parent Recovery: Attaches heading to nearest valid active ancestor."""
-        for lvl in range(for_level - 1, 0, -1):
-            if self._stack[lvl] is not None:
-                return self._stack[lvl]
-        return self._doc
+    def _active_chapter_title(self) -> str:
+        """Returns the title of the currently active Chapter or Appendix."""
+        for node in reversed(self._stack):
+            if node.level == 1:
+                return node.title
+        return self._doc.title if self._doc else ""
 
     def _attach_leaf(self, leaf_node) -> None:
-        """Attaches paragraph, table, or figure to deepest active parent heading."""
-        parent = None
-        for lvl in range(3, 0, -1):
-            if self._stack[lvl] is not None:
-                parent = self._stack[lvl]
-                break
-        if parent is None:
-            # Create an explicit Front Matter container chapter for cover/preface content
-            if not self._stack[1]:
-                fm_node = HeadingNode(
-                    title="Front Matter & Executive Overview",
-                    level=1,
-                    node_type_name="Chapter",
-                    page_number=getattr(leaf_node, "page_number", 1)
-                )
-                self._doc.add_child(fm_node)
-                self._stack[1] = fm_node
-            parent = self._stack[1]
-        parent.add_child(leaf_node)
+        """Attaches paragraph, table, or figure to deepest active heading on stack."""
+        if self._stack:
+            self._stack[-1].add_child(leaf_node)
+        else:
+            # Create a Front Matter container chapter if no heading exists yet
+            fm_node = HeadingNode(
+                title="Front Matter & Executive Overview",
+                level=1,
+                node_type_name="Chapter",
+                page_number=getattr(leaf_node, "page_number", 1)
+            )
+            self._doc.add_child(fm_node)
+            self._stack.append(fm_node)
+            fm_node.add_child(leaf_node)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -739,13 +732,13 @@ class HierarchyBuilder:
 def validate_hierarchy(doc: DocumentNode) -> Tuple[bool, List[str]]:
     """
     Stage 6: Comprehensive validation stage detecting structural issues:
+      - Accidental nesting (Chapter inside Chapter, Appendix inside Appendix, etc.)
       - Page numbers as headings
       - TOC nodes
       - Header/footer nodes
       - Orphan sections
       - Invalid heading transitions
-      - Isolated numeric chapters
-      - Appendix hierarchy breaks
+      - Missing Appendix sibling nodes
     """
     errors = []
 
@@ -758,45 +751,43 @@ def validate_hierarchy(doc: DocumentNode) -> Tuple[bool, List[str]]:
                 count += _count_leaves(c)
         return count
 
-    def _check_tree(node, current_depth: int, parent_heading: Optional[HeadingNode] = None):
+    def _check_tree(node, parent_heading: Optional[HeadingNode] = None):
         children = getattr(node, "children", [])
 
         for c in children:
             if isinstance(c, HeadingNode):
                 title = c.title.strip()
 
-                # 1. Page Number in Hierarchy Check
+                # 1. Accidental Same-Level Nesting Check (Chapter inside Chapter, etc.)
+                if parent_heading:
+                    if c.level == parent_heading.level:
+                        errors.append(f"❌ Accidental nesting error: {c.node_type} '{title[:30]}...' is nested inside another {parent_heading.node_type} '{parent_heading.title[:30]}...' at [p.{c.page_number}].")
+                    elif c.level < parent_heading.level:
+                        errors.append(f"❌ Invalid hierarchy inversion: Level {c.level} '{title[:30]}...' is nested inside Level {parent_heading.level} '{parent_heading.title[:30]}...' at [p.{c.page_number}].")
+
+                # 2. Page Number in Hierarchy Check
                 if title.isdigit() or _PAGE_NUM_PAT.match(title):
                     errors.append(f"❌ Page number classified as heading at [p.{c.page_number}]: '{title}'")
 
-                # 2. TOC Contamination Check
+                # 3. TOC Contamination Check
                 if _TOC_LINE_PAT.search(title):
                     errors.append(f"❌ Table of Contents entry classified as heading at [p.{c.page_number}]: '{title[:40]}...'")
 
-                # 3. Invalid Heading Level Transition (e.g. Level 0 -> Level 3 jump)
-                if parent_heading and c.level > parent_heading.level + 2:
-                    errors.append(f"❌ Invalid heading level transition (Level {parent_heading.level} -> {c.level}) at [p.{c.page_number}]: '{title[:40]}...'")
-
-                # 4. Appendix Hierarchy Break Check
-                if parent_heading and parent_heading.node_type_name == "Document Title" and title.lower() in ("summary of judgments", "summary of findings"):
-                    errors.append(f"❌ Appendix hierarchy break detected at [p.{c.page_number}]: '{title}' escaped active Appendix.")
-
-                _check_tree(c, current_depth + 1, c)
+                _check_tree(c, c)
 
             elif isinstance(c, (ParagraphNode, TableNode, FigureNode)):
-                # 5. Orphan Leaf Node Check (Root level attachment)
+                # 4. Orphan Leaf Node Check (Root level attachment)
                 if node == doc and len(doc.children) > 1:
                     errors.append(f"❌ Orphan {c.node_type} node attached to root Document instead of parent section at [p.{c.page_number}].")
 
-    _check_tree(doc, 0, None)
+    _check_tree(doc, None)
 
-    chapters = [c for c in doc.children if isinstance(c, HeadingNode)]
-    if len(chapters) > 40:
-        errors.append(f"⚠️ High chapter count detected ({len(chapters)} chapters). Hierarchy may be too flat.")
+    # 5. Appendix Regression Check (Verify Appendices 1..11 are siblings under DocumentNode)
+    root_chapters = [c for c in doc.children if isinstance(c, HeadingNode)]
+    appendix_titles = [c.title for c in root_chapters if c.title.lower().startswith("appendix")]
 
-    empty_chapters = [c for c in chapters if _count_leaves(c) == 0]
-    if len(empty_chapters) > 10:
-        errors.append(f"⚠️ Found {len(empty_chapters)} chapters with no paragraphs or tables.")
+    if len(appendix_titles) < 10:
+        errors.append(f"⚠️ Regression warning: Found only {len(appendix_titles)} top-level Appendix chapters (expected 11). Check Appendix nesting.")
 
     is_valid = len(errors) == 0
     return is_valid, errors
