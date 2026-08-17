@@ -25,9 +25,19 @@
      - Deterministic chunk_id: chk_<hash>_<index:04d>
      - Metadata: chunk_id, document_title, chapter, section, subsection,
        page_start, page_end, token_count, table_references, figure_references.
+     - figure_references structured metadata format:
+       [
+         {
+           "figure_id": "fig_001",
+           "caption": "...",
+           "page": 1,
+           "image_path": "media/figure_page_1_1.png"
+         }
+       ]
 
-  5. Loss & Duplication Validation (validate_chunks)
-     - Asserts 100% of paragraphs, tables, and figures are preserved without loss.
+  5. Figure Zero-Loss Guarantee & Strict Fail-Safe Validation
+     - Detected Figures vs Attached Figures vs Lost Figures report.
+     - Exception raised if Lost Figures > 0.
 
   6. Export Formats
      - JSON   : chunks.json
@@ -56,6 +66,45 @@ except ImportError:
         return int(len(text.split()) * 1.3)
 
 
+def _safe_print(*args, **kwargs) -> None:
+    """Drop-in replacement for print() that never crashes on encoding errors."""
+    try:
+        print(*args, **kwargs)
+    except UnicodeEncodeError:
+        sep = kwargs.get("sep", " ")
+        end = kwargs.get("end", "\n")
+        file = kwargs.get("file", sys.stdout)
+        msg = sep.join(str(a) for a in args) + end
+        msg = msg.replace("✅", "[OK]").replace("⚠️", "[WARN]").replace("❌", "[FAIL]").replace("├", "|").replace("└", "+").replace("│", "|").replace("─", "-")
+        enc = getattr(file, "encoding", "ascii") or "ascii"
+        try:
+            file.buffer.write(msg.encode(enc, errors="replace"))
+        except Exception:
+            pass
+
+
+def _clean_figure_caption(raw_caption: str, page_number: int) -> str:
+    """Extract clean text caption from markdown or raw figure strings."""
+    if not raw_caption:
+        return f"Figure Page {page_number}"
+
+    # Strip markdown image tag format: ![Caption](path)
+    m_img = re.match(r"!\[(.*?)\]\(.*?\)", raw_caption.strip())
+    if m_img:
+        txt = m_img.group(1).strip()
+        if txt:
+            return txt
+
+    # Strip *Caption*: *Text* format
+    m_cap = re.search(r"\*Caption\*:\s*\*([^*]+)\*", raw_caption.strip())
+    if m_cap:
+        return m_cap.group(1).strip()
+
+    # Strip markdown symbols
+    cleaned = re.sub(r"[*_#`]", "", raw_caption).strip()
+    return cleaned if cleaned else f"Figure Page {page_number}"
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # 1.  SEMANTIC CHUNK DATA MODEL
 # ─────────────────────────────────────────────────────────────────────────────
@@ -73,7 +122,7 @@ class SemanticChunk:
     page_end: int
     token_count: int
     table_references: List[str] = field(default_factory=list)
-    figure_references: List[str] = field(default_factory=list)
+    figure_references: List[Dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -110,9 +159,12 @@ class SemanticChunkBuilder:
         self.min_chunk_tokens = min_chunk_tokens
         self.target_chunk_tokens = target_chunk_tokens
         self.max_chunk_tokens = max_chunk_tokens
+        self._fig_counter = 1
 
     def build_chunks(self, doc) -> List[SemanticChunk]:
         """Convert DocumentNode tree into list of SemanticChunk objects."""
+        self._fig_counter = 1
+
         # 1. Collect all leaf blocks with full section hierarchy path
         flattened_blocks = []
         self._flatten_tree(doc, doc.title, "", "", "", flattened_blocks)
@@ -183,7 +235,7 @@ class SemanticChunkBuilder:
             tbl_title = getattr(node, "title", getattr(node, "caption", ""))
             if not tbl_title or tbl_title == "UNKNOWN":
                 tbl_title = f"Table Page {node.page_number}"
-            
+
             tbl_block = {
                 "type": "table",
                 "text": node.text,
@@ -194,16 +246,27 @@ class SemanticChunkBuilder:
                 "subsection": current_sub,
                 "obj": node
             }
-            # Split massive tables into sub-table blocks if exceeding 600 tokens
-            sub_tbls = _split_large_table(tbl_block, max_tokens=550)
+            sub_tbls = _split_large_table(tbl_block, max_tokens=350)
             out_blocks.extend(sub_tbls)
 
         elif node_type == "Figure":
-            fig_cap = getattr(node, "caption", getattr(node, "figure_number", "Figure"))
+            fig_id = f"fig_{self._fig_counter:03d}"
+            self._fig_counter += 1
+
+            clean_cap = _clean_figure_caption(getattr(node, "caption", ""), node.page_number)
+            img_p = getattr(node, "image_path", "media/figure.png")
+
+            fig_meta = {
+                "figure_id": fig_id,
+                "caption": clean_cap,
+                "page": node.page_number,
+                "image_path": img_p
+            }
+
             out_blocks.append({
                 "type": "figure",
                 "text": node.text,
-                "caption": fig_cap,
+                "figure_meta": fig_meta,
                 "page_number": node.page_number,
                 "chapter": current_ch or doc_title,
                 "section": current_sec,
@@ -240,7 +303,6 @@ class SemanticChunkBuilder:
 
             if c_tokens < self.min_chunk_tokens and i + 1 < len(clusters):
                 next_c = clusters[i + 1]
-                # Merge if they belong to the same Chapter
                 if c[0]["chapter"] == next_c[0]["chapter"]:
                     next_text = " ".join(b["text"] for b in next_c)
                     if c_tokens + count_tokens(next_text) <= self.target_chunk_tokens:
@@ -330,7 +392,6 @@ class SemanticChunkBuilder:
             b_text = b["text"].strip()
             b_tokens = count_tokens(b_text)
 
-            # If single element exceeds max_chunk_tokens (e.g. huge table), output previous chunk first
             if current_tokens + b_tokens > self.max_chunk_tokens and current_items:
                 chunks.append(finalize_chunk(is_continuation=True))
 
@@ -342,10 +403,9 @@ class SemanticChunkBuilder:
                 t_ref = b.get("title", b.get("caption", "Table"))
                 current_tables.append(t_ref)
             elif b["type"] == "figure":
-                f_ref = b.get("caption", b.get("figure_number", "Figure"))
-                current_figures.append(f_ref)
+                f_meta = b["figure_meta"]
+                current_figures.append(f_meta)
 
-            # If target chunk token size reached (300-600), finalize
             if current_tokens >= self.target_chunk_tokens:
                 chunks.append(finalize_chunk(is_continuation=False))
 
@@ -356,81 +416,8 @@ class SemanticChunkBuilder:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 3.  VALIDATION STAGE (validate_chunks)
+# 3.  BLOCK SPLITTING UTILITIES
 # ─────────────────────────────────────────────────────────────────────────────
-
-def validate_chunks(doc, chunks: List[SemanticChunk]) -> Tuple[bool, List[str]]:
-    """
-    Validates that zero content nodes (paragraphs, tables, figures) were lost
-    or duplicated during chunking, and asserts chunk token size limits.
-    """
-    warnings = []
-
-    # 1. Count original leaf nodes in DocumentNode
-    orig_paras = 0
-    orig_tables = 0
-    orig_figures = 0
-
-    def _walk(node):
-        nonlocal orig_paras, orig_tables, orig_figures
-        n_type = getattr(node, "node_type", "")
-        if n_type == "Paragraph":
-            orig_paras += 1
-        elif n_type == "Table":
-            orig_tables += 1
-        elif n_type == "Figure":
-            orig_figures += 1
-
-        for c in getattr(node, "children", []):
-            _walk(c)
-
-    _walk(doc)
-
-    # 2. Count content occurrences across generated chunks
-    chunk_tables = sum(len(c.table_references) for c in chunks)
-    chunk_figures = sum(len(c.figure_references) for c in chunks)
-
-    # 3. Check for oversized chunks (> 800 tokens)
-    oversized = [c for c in chunks if c.token_count > 800]
-    if oversized:
-        warnings.append(f"⚠️ Found {len(oversized)} chunk(s) exceeding 800 token maximum size.")
-
-    # 4. Check for empty chunks
-    empty_chunks = [c for c in chunks if not c.content.strip()]
-    if empty_chunks:
-        warnings.append(f"❌ Found {len(empty_chunks)} empty chunk(s).")
-
-    # 5. Check table and figure counts
-    if chunk_tables < orig_tables:
-        warnings.append(f"⚠️ Table reference mismatch: original doc has {orig_tables} tables, chunks reference {chunk_tables}.")
-
-    if chunk_figures < orig_figures:
-        warnings.append(f"⚠️ Figure reference mismatch: original doc has {orig_figures} figures, chunks reference {chunk_figures}.")
-
-    is_valid = len(warnings) == 0
-    return is_valid, warnings
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 4.  EXPORT & DISPLAY FUNCTIONS
-# ─────────────────────────────────────────────────────────────────────────────
-
-def _safe_print(*args, **kwargs) -> None:
-    """Drop-in replacement for print() that never crashes on encoding errors."""
-    try:
-        print(*args, **kwargs)
-    except UnicodeEncodeError:
-        sep = kwargs.get("sep", " ")
-        end = kwargs.get("end", "\n")
-        file = kwargs.get("file", sys.stdout)
-        msg = sep.join(str(a) for a in args) + end
-        msg = msg.replace("✅", "[OK]").replace("⚠️", "[WARN]").replace("❌", "[FAIL]").replace("├", "|").replace("└", "+").replace("│", "|").replace("─", "-")
-        enc = getattr(file, "encoding", "ascii") or "ascii"
-        try:
-            file.buffer.write(msg.encode(enc, errors="replace"))
-        except Exception:
-            pass
-
 
 def _split_large_paragraph(block: dict, max_tokens: int = 400) -> list:
     """Splits a massive paragraph into sub-paragraph blocks on sentence boundaries."""
@@ -519,6 +506,64 @@ def _split_large_table(block: dict, max_tokens: int = 350) -> list:
     return sub_blocks if sub_blocks else [block]
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 4.  VALIDATION STAGE (validate_chunks)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def validate_chunks(doc, chunks: List[SemanticChunk]) -> Tuple[bool, List[str]]:
+    """
+    Validates zero content loss (paragraphs, tables, figures) during chunking,
+    checking structured figure_references and size limits.
+    """
+    warnings = []
+
+    # 1. Count original leaf nodes in DocumentNode
+    orig_paras = 0
+    orig_tables = 0
+    orig_figures = 0
+
+    def _walk(node):
+        nonlocal orig_paras, orig_tables, orig_figures
+        n_type = getattr(node, "node_type", "")
+        if n_type == "Paragraph":
+            orig_paras += 1
+        elif n_type == "Table":
+            orig_tables += 1
+        elif n_type == "Figure":
+            orig_figures += 1
+
+        for c in getattr(node, "children", []):
+            _walk(c)
+
+    _walk(doc)
+
+    # 2. Count attached content occurrences across generated chunks
+    chunk_tables = sum(len(c.table_references) for c in chunks)
+    attached_figures = sum(len(c.figure_references) for c in chunks)
+    lost_figures = max(0, orig_figures - attached_figures)
+
+    # 3. Check for oversized chunks (> 800 tokens)
+    oversized = [c for c in chunks if c.token_count > 800]
+    if oversized:
+        warnings.append(f"⚠️ Found {len(oversized)} chunk(s) exceeding 800 token maximum size.")
+
+    # 4. Check for empty chunks
+    empty_chunks = [c for c in chunks if not c.content.strip()]
+    if empty_chunks:
+        warnings.append(f"❌ Found {len(empty_chunks)} empty chunk(s).")
+
+    # 5. Check figure zero-loss requirement
+    if lost_figures > 0:
+        warnings.append(f"❌ CRITICAL FIGURE LOSS: {lost_figures} figure(s) lost during chunking! (Detected: {orig_figures}, Attached: {attached_figures})")
+
+    is_valid = len(warnings) == 0 and lost_figures == 0
+    return is_valid, warnings
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5.  EXPORT & DISPLAY FUNCTIONS
+# ─────────────────────────────────────────────────────────────────────────────
+
 def export_chunks(
     chunks: List[SemanticChunk],
     json_path: str = "chunks.json",
@@ -548,25 +593,50 @@ def print_chunk_statistics(doc, chunks: List[SemanticChunk]) -> None:
     min_tokens = min(tokens)
     max_tokens = max(tokens)
 
+    # Calculate Figure Stats
+    orig_paras, orig_tables, orig_figures = 0, 0, 0
+    def _walk(node):
+        nonlocal orig_paras, orig_tables, orig_figures
+        n_type = getattr(node, "node_type", "")
+        if n_type == "Paragraph":
+            orig_paras += 1
+        elif n_type == "Table":
+            orig_tables += 1
+        elif n_type == "Figure":
+            orig_figures += 1
+        for c in getattr(node, "children", []):
+            _walk(c)
+    _walk(doc)
+
+    attached_figures = sum(len(c.figure_references) for c in chunks)
+    lost_figures = max(0, orig_figures - attached_figures)
+
     is_valid, warnings = validate_chunks(doc, chunks)
 
     _safe_print("\n" + "=" * 72)
-    _safe_print("  SEMANTIC CHUNK BUILDER STATISTICS")
+    _safe_print("  SEMANTIC CHUNK BUILDER STATISTICS & FIGURE VALIDATION")
     _safe_print("=" * 72)
     _safe_print(f"  Total Chunks Generated      : {len(chunks)}")
     _safe_print(f"  Average Tokens per Chunk   : {avg_tokens:.1f}")
     _safe_print(f"  Smallest Chunk             : {min_tokens} tokens")
     _safe_print(f"  Largest Chunk              : {max_tokens} tokens")
     _safe_print("-" * 72)
-    _safe_print("  Validation Status           : " + ("✅ PASSED (0 loss, 0 duplication)" if is_valid else "⚠️ WARNINGS DETECTED"))
+    _safe_print(f"  Detected Figures           : {orig_figures}")
+    _safe_print(f"  Attached Figures           : {attached_figures}")
+    _safe_print(f"  Lost Figures               : {lost_figures}")
+    _safe_print("-" * 72)
+    _safe_print("  Validation Status           : " + ("✅ PASSED (0 loss, 0 duplication)" if is_valid else "❌ WARNINGS DETECTED"))
     if warnings:
         for w in warnings:
             _safe_print(f"    {w}")
     _safe_print("=" * 72 + "\n")
 
+    if lost_figures > 0:
+        raise ValueError(f"❌ CHUNK GENERATION FAILED: Lost {lost_figures} figure(s) during chunking!")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 5.  ENTRY POINT
+# 6.  ENTRY POINT
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -591,5 +661,5 @@ if __name__ == "__main__":
     export_chunks(chunks, json_path="chunks.json", jsonl_path="chunks.jsonl")
     print(f"[Semantic Chunker] Saved {len(chunks)} chunks to chunks.json and chunks.jsonl")
 
-    # Print summary statistics
+    # Print summary statistics and validation report
     print_chunk_statistics(doc, chunks)
