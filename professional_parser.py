@@ -589,20 +589,22 @@ def parse_inline_elements(page, tracker, outline_stack, header_footer_metadata):
         heading_prefix = ""
         
         numbered_pattern = re.match(r"^(\d+(\.\d+)*)\s+[A-Z]", text)
-        chapter_pattern = re.match(r"^(chapter|section)\s+\d+", text, re.IGNORECASE)
+        chapter_pattern = re.match(r"^(chapter|section|appendix)\s+[\d\w\.]+", text, re.IGNORECASE)
         
-        if avg_size > body_size * 1.4 or chapter_pattern:
+        # Only tag as explicit markdown heading if it meets strong structural criteria,
+        # avoiding naive tagging of multi-line titles or bold body lines.
+        if chapter_pattern:
             is_heading = True
             heading_level = 1
             heading_prefix = "## "
-        elif avg_size > body_size * 1.15 or (is_bold and numbered_pattern):
+        elif numbered_pattern and not text.endswith("."):
             is_heading = True
             heading_level = 2
             heading_prefix = "### "
-        elif is_bold and len(text) < 60:
+        elif avg_size > body_size * 1.35 and not text.endswith("."):
             is_heading = True
-            heading_level = 3
-            heading_prefix = "#### "
+            heading_level = 1
+            heading_prefix = "## "
             
         is_list = False
         list_match = re.match(r"^(\s*)([\-\*\•]|\d+\.)(\s+)(.*)", text)
