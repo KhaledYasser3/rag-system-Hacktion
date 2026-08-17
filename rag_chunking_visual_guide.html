@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Chunking Strategies — Visual Guide</title>
+<style>
+:root{
+  --bg:#f6f7fb; --card:#fff; --text:#172033; --muted:#667085;
+  --line:#e6e8ef; --accent:#635bff; --accent2:#0ea5e9;
+  --good:#16a34a; --bad:#dc2626; --soft:#f0efff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+.container{max-width:1180px;margin:auto;padding:32px 22px 70px}
+.hero{background:linear-gradient(135deg,#171c31,#302b63);color:white;border-radius:26px;padding:44px 42px;margin-bottom:28px;box-shadow:0 18px 50px #171c3122}
+.hero h1{font-size:42px;line-height:1.1;margin:0 0 12px}
+.hero p{margin:0;color:#d9dcf2;max-width:780px;font-size:17px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.badge{padding:7px 11px;border:1px solid #ffffff2e;border-radius:999px;background:#ffffff12;color:#eef0ff;font-size:13px}
+h2{font-size:27px;margin:42px 0 16px}
+h3{margin:0 0 8px;font-size:20px}
+.section-intro{color:var(--muted);margin-top:-6px}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px 0}
+.node{background:white;border:1px solid var(--line);border-radius:14px;padding:13px 18px;text-align:center;font-weight:700;box-shadow:0 5px 18px #1720330b}
+.arrow{font-size:22px;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 8px 28px #17203308}
+.card.wide{grid-column:1/-1}
+.card-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}
+.number{background:var(--soft);color:var(--accent);font-weight:800;padding:6px 10px;border-radius:9px;font-size:13px}
+.tag{font-size:12px;padding:5px 9px;border-radius:999px;background:#eef6ff;color:#0875b5;white-space:nowrap}
+.desc{color:var(--muted);margin:6px 0 18px}
+.diagram{background:#f8f9fc;border:1px solid var(--line);border-radius:14px;padding:17px;margin:14px 0 18px;overflow:auto}
+.diagram pre{margin:0;font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;color:#344054}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.columns h4{margin:0 0 7px}
+.pros h4{color:var(--good)} .cons h4{color:var(--bad)}
+ul{margin:7px 0 0;padding-left:19px}
+li{margin:5px 0}
+.metric{display:flex;align-items:center;gap:10px;margin:8px 0}
+.metric label{width:105px;font-size:13px;color:var(--muted)}
+.bar{height:8px;background:#e9ebf2;border-radius:99px;flex:1;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:99px}
+table{width:100%;border-collapse:collapse;background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f8f9fc;font-size:13px}
+td{font-size:14px}
+tr:last-child td{border-bottom:0}
+.note{border-left:4px solid var(--accent);background:#f1f0ff;padding:15px 17px;border-radius:0 12px 12px 0;margin:18px 0}
+.retrieval{background:#111827;color:#eef2ff;border-radius:22px;padding:28px;margin-top:22px}
+.retrieval .node{background:#20283b;border-color:#3a455d;color:#eef2ff}
+.retrieval .arrow{color:#a9a3ff}
+.retrieval p{color:#b9c1d2}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.highlight{background:linear-gradient(135deg,#eef0ff,#edf8ff);border:1px solid #dfe2ff;border-radius:18px;padding:22px}
+.footer{text-align:center;color:var(--muted);padding-top:36px;font-size:13px}
+@media(max-width:760px){.grid,.two,.columns{grid-template-columns:1fr}.hero h1{font-size:32px}.hero{padding:30px 24px}.container{padding:20px 14px 50px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<section class="hero">
+  <h1>RAG Chunking Strategies</h1>
+  <p>A visual guide to the main ways of splitting documents before embedding and retrieval — with trade-offs, retrieval behavior, and when each strategy makes sense.</p>
+  <div class="badges">
+    <span class="badge">Fixed-size</span><span class="badge">Sentence</span><span class="badge">Paragraph</span>
+    <span class="badge">Recursive</span><span class="badge">Semantic</span><span class="badge">Structure-aware</span>
+    <span class="badge">Parent-child</span><span class="badge">Sliding window</span><span class="badge">Late chunking</span>
+  </div>
+</section>
+
+<h2>First: where chunking fits</h2>
+<div class="flow">
+  <div class="node">Document</div><div class="arrow">→</div>
+  <div class="node">Chunking</div><div class="arrow">→</div>
+  <div class="node">Embeddings</div><div class="arrow">→</div>
+  <div class="node">Vector DB</div><div class="arrow">→</div>
+  <div class="node">Retrieval</div><div class="arrow">→</div>
+  <div class="node">LLM</div>
+</div>
+
+<div class="note"><b>Core idea:</b> chunking determines the unit that retrieval can find. Small chunks usually improve precision; larger chunks preserve more context. Good RAG systems often separate the <b>retrieval unit</b> from the <b>generation context</b>.</div>
+
+<h2>1. Fixed-size chunking</h2>
+<div class="grid">
+<div class="card wide">
+  <div class="card-top"><div><h3>Split by a fixed number of tokens/characters</h3><div class="desc">The document is cut every N tokens, without considering meaning.</div></div><span class="tag">Simple baseline</span></div>
+  <div class="diagram"><pre>
+Document
+┌──────────────────────────────────────────────────────────┐
+│ A B C D E F G H I J K L M N O P Q R S T U V W X ...    │
+└──────────────────────────────────────────────────────────┘
+       ↓  fixed size
+┌───────────────┐ ┌───────────────┐ ┌───────────────┐
+│ Chunk 1       │ │ Chunk 2       │ │ Chunk 3       │
+│ A ... H       │ │ I ... P       │ │ Q ... X       │
+└───────────────┘ └───────────────┘ └───────────────┘</pre></div>
+  <div class="columns">
+    <div class="pros"><h4>✓ Pros</h4><ul><li>Very simple and fast</li><li>Predictable chunk size</li><li>Cheap to index</li><li>Good baseline for experiments</li></ul></div>
+    <div class="cons"><h4>✕ Cons</h4><ul><li>Can cut concepts in half</li><li>Ignores document structure</li><li>Large chunks may mix unrelated topics</li><li>Small chunks can lose context</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <h3>Retrieval behavior</h3>
+  <div class="metric"><label>Precision</label><div class="bar"><div class="fill" style="width:65%"></div></div></div>
+  <div class="metric"><label>Context</label><div class="bar"><div class="fill" style="width:55%"></div></div></div>
+  <div class="metric"><label>Simplicity</label><div class="bar"><div class="fill" style="width:100%"></div></div></div>
+  <p class="desc">A useful starting point, but boundary problems can cause relevant information to be split across chunks.</p>
+  <b>Typical:</b> 300–800 tokens
+</div>
+</div>
+
+<h2>2. Fixed-size + overlap</h2>
+<div class="grid">
+<div class="card">
+  <div class="card-top"><h3>Overlapping windows</h3><span class="tag">Common baseline</span></div>
+  <div class="diagram"><pre>
+Chunk 1: ███████████████
+Chunk 2:       ███████████████
+Chunk 3:             ███████████████
+             ↑
+          overlap</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Reduces boundary loss</li><li>Easy to implement</li><li>Usually better recall than no overlap</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>More chunks</li><li>Duplicate information</li><li>Top-k can contain near-duplicates</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Retrieval</h3>
+  <p>Overlap increases the chance that a concept near a boundary appears in at least one complete chunk.</p>
+  <div class="highlight"><b>Good starting point:</b><br>10–20% overlap, then benchmark.</div>
+</div>
+</div>
+
+<h2>3. Sentence-based chunking</h2>
+<div class="grid">
+<div class="card">
+  <h3>Split by sentences</h3>
+  <div class="diagram"><pre>
+S1 ─ S2 ─ S3  → Chunk 1
+S4 ─ S5 ─ S6  → Chunk 2
+S7 ─ S8 ─ S9  → Chunk 3</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Doesn't break sentences</li><li>Natural language boundary</li><li>Simple</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Sentence lengths vary</li><li>A sentence isn't always a complete idea</li><li>Can produce very large or tiny chunks</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Best fit</h3>
+  <p class="desc">Articles, prose, FAQs, and normal documentation where sentences are meaningful units.</p>
+  <b>Better than:</b> blindly cutting characters.<br>
+  <b>Not enough when:</b> document structure carries important meaning.
+</div>
+</div>
+
+<h2>4. Paragraph-based chunking</h2>
+<div class="grid">
+<div class="card">
+  <h3>Use paragraphs as semantic-ish units</h3>
+  <div class="diagram"><pre>
+┌───────────────┐
+│ Paragraph 1   │ → Chunk
+└───────────────┘
+┌────────────────────────┐
+│ Paragraph 2            │ → Chunk
+└────────────────────────┘
+┌──────────────┐
+│ Paragraph 3  │ → Chunk
+└──────────────┘</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Often coherent</li><li>Preserves author organization</li><li>Easy</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Paragraph size varies</li><li>A paragraph can contain multiple ideas</li><li>Long paragraphs need secondary splitting</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Best fit</h3>
+  <p>Good for articles, reports, manuals, and prose. In practice, combine it with a maximum token limit.</p>
+</div>
+</div>
+
+<h2>5. Recursive chunking</h2>
+<div class="grid">
+<div class="card">
+  <div class="card-top"><h3>Split from coarse → fine</h3><span class="tag">Strong general baseline</span></div>
+  <div class="diagram"><pre>
+Try paragraph
+    │ too large?
+    ↓
+Try line / section
+    │ too large?
+    ↓
+Try sentence
+    │ too large?
+    ↓
+Try words / smaller units</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Preserves natural boundaries when possible</li><li>Controls maximum size</li><li>Works across many document types</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Still not truly semantic</li><li>Depends on separator order</li><li>Can struggle with unusual formats</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Why it is popular</h3>
+  <p>It gives you a practical compromise: don't split a paragraph unless you need to; don't split sentences unless you have to.</p>
+  <div class="highlight"><b>Recommended baseline:</b> benchmark this before jumping to more sophisticated methods.</div>
+</div>
+</div>
+
+<h2>6. Semantic chunking</h2>
+<div class="grid">
+<div class="card">
+  <div class="card-top"><h3>Split when meaning changes</h3><span class="tag">Embedding-based</span></div>
+  <div class="diagram"><pre>
+Sentence embeddings:
+
+S1 ─── S2 ─── S3 ───────── S4 ─── S5
+      similar             ↑
+                          semantic break
+
+Chunk 1: S1 S2 S3
+Chunk 2: S4 S5</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Better semantic coherence</li><li>Less arbitrary boundaries</li><li>Useful for mixed-topic documents</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>More expensive ingestion</li><li>Requires embeddings</li><li>Threshold tuning matters</li><li>Not automatically better for every dataset</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Retrieval impact</h3>
+  <p>Chunks tend to represent complete ideas, which can improve precision. But evaluate with your actual queries rather than assuming semantic chunking wins.</p>
+</div>
+</div>
+
+<h2>7. Structure-aware chunking</h2>
+<div class="grid">
+<div class="card">
+  <div class="card-top"><h3>Respect document hierarchy</h3><span class="tag">Highly useful</span></div>
+  <div class="diagram"><pre>
+Document
+├── Authentication
+│   ├── Login
+│   ├── JWT
+│   └── Refresh
+└── Deployment
+
+Chunk metadata:
+{
+  section: "Authentication",
+  subsection: "JWT",
+  page: 42
+}</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Preserves context</li><li>Excellent for manuals/docs</li><li>Metadata enables filtering</li><li>Can combine with other chunkers</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Needs document parsing</li><li>Bad PDFs may have broken structure</li><li>Format-specific logic may be required</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Retrieval becomes richer</h3>
+  <div class="flow"><div class="node">Vector similarity</div><div class="arrow">+</div><div class="node">Metadata filter</div></div>
+  <p>Example: retrieve semantically similar chunks but restrict results to a specific document, section, module, or page.</p>
+</div>
+</div>
+
+<h2>8. Parent-child chunking</h2>
+<div class="grid">
+<div class="card wide">
+  <div class="card-top"><div><h3>Retrieve small, provide large</h3><div class="desc">The child is optimized for retrieval; its parent is used to restore context.</div></div><span class="tag">Advanced</span></div>
+  <div class="diagram"><pre>
+                    PARENT
+        ┌──────────────────────────────┐
+        │     ~800–1500 tokens         │
+        │                              │
+        │  ┌──────┐ ┌──────┐ ┌──────┐ │
+        │  │Child │ │Child │ │Child │ │
+        │  │ 250  │ │ 250  │ │ 250  │ │
+        │  └──────┘ └──────┘ └──────┘ │
+        └──────────────────────────────┘
+
+Query → retrieve Child 2 → resolve Parent → send Parent to LLM</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Excellent precision/context balance</li><li>Small retrieval units</li><li>Large generation context</li><li>Very useful for technical documentation</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>More implementation complexity</li><li>Requires parent-child IDs</li><li>Parent can contain irrelevant information</li></ul></div></div>
+</div>
+</div>
+
+<h2>9. Sliding-window chunking</h2>
+<div class="grid">
+<div class="card">
+  <h3>Move a window across the document</h3>
+  <div class="diagram"><pre>
+S1 S2 S3 S4 S5
+      S3 S4 S5 S6 S7
+            S5 S6 S7 S8 S9</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Strong continuity</li><li>Reduces boundary problems</li><li>Useful for sequential information</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>High duplication</li><li>More storage/embeddings</li><li>Top-k can be redundant</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Difference from ordinary overlap</h3>
+  <p>Conceptually they're closely related. Sliding windows emphasize the moving window and step size; fixed chunks with overlap emphasize fixed chunk size plus shared tokens.</p>
+</div>
+</div>
+
+<h2>10. Late chunking</h2>
+<div class="grid">
+<div class="card">
+  <div class="card-top"><h3>Encode context first, chunk later</h3><span class="tag">Advanced</span></div>
+  <div class="diagram"><pre>
+Traditional:
+Document → chunks → embed each chunk
+
+Late chunking:
+Document → contextual encoder
+                  ↓
+          chunk representations
+                  ↓
+             embeddings</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Chunk representations can retain broader context</li><li>Can reduce ambiguity of isolated text</li><li>Useful for long-context embedding models</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Model/architecture dependent</li><li>More complex</li><li>Higher compute requirements</li><li>Not available in every embedding stack</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Key idea</h3>
+  <p>A chunk doesn't have to be embedded as if it exists in isolation. The encoder can first see broader context and then produce chunk-level representations.</p>
+</div>
+</div>
+
+<h2>How chunking affects retrieval</h2>
+<div class="retrieval">
+  <h3>Typical retrieval pipeline</h3>
+  <div class="flow">
+    <div class="node">User query</div><div class="arrow">→</div>
+    <div class="node">Query embedding</div><div class="arrow">→</div>
+    <div class="node">Vector search</div><div class="arrow">→</div>
+    <div class="node">Top-K</div><div class="arrow">→</div>
+    <div class="node">Reranker</div><div class="arrow">→</div>
+    <div class="node">Context</div>
+  </div>
+  <p>Chunking changes what the retriever can match. A small, focused chunk can be highly relevant but lack context; a large chunk can contain context but dilute the semantic signal.</p>
+</div>
+
+<h2>Retrieval strategies to pair with chunking</h2>
+<div class="two">
+<div class="card">
+  <h3>Dense / vector retrieval</h3>
+  <div class="diagram"><pre>
+Query → embedding ──┐
+                    ├→ similarity → top chunks
+Chunk → embedding ──┘</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Semantic matching</li><li>Finds related wording</li><li>Strong for natural-language questions</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Can miss exact identifiers</li><li>Embedding quality matters</li></ul></div></div>
+</div>
+<div class="card">
+  <h3>Sparse / BM25</h3>
+  <div class="diagram"><pre>
+Query: "ERR_CONNECTION_RESET"
+             ↓
+       exact-term search
+             ↓
+        matching chunks</pre></div>
+  <div class="columns"><div class="pros"><h4>✓ Pros</h4><ul><li>Excellent exact matching</li><li>Great for IDs, errors, names, symbols</li></ul></div><div class="cons"><h4>✕ Cons</h4><ul><li>Weak semantic understanding</li><li>Synonyms may be missed</li></ul></div></div>
+</div>
+</div>
+
+<div class="card wide" style="margin-top:18px">
+  <h3>Hybrid retrieval</h3>
+  <div class="flow">
+    <div class="node">Vector search</div><div class="arrow">+</div>
+    <div class="node">BM25</div><div class="arrow">→</div>
+    <div class="node">Fusion / RRF</div><div class="arrow">→</div>
+    <div class="node">Reranker</div><div class="arrow">→</div>
+    <div class="node">Top-N</div>
+  </div>
+  <p><b>Why?</b> Vector retrieval understands meaning; BM25 is excellent at exact words. Combining them is especially useful for technical content.</p>
+</div>
+
+<h2>Quick comparison</h2>
+<table>
+<thead><tr><th>Strategy</th><th>Context</th><th>Precision</th><th>Complexity</th><th>Best for</th></tr></thead>
+<tbody>
+<tr><td><b>Fixed-size</b></td><td>Medium</td><td>Medium</td><td>★</td><td>Simple baseline</td></tr>
+<tr><td><b>Fixed + overlap</b></td><td>Medium+</td><td>Medium+</td><td>★</td><td>General RAG</td></tr>
+<tr><td><b>Sentence</b></td><td>Medium</td><td>Medium</td><td>★</td><td>Prose</td></tr>
+<tr><td><b>Paragraph</b></td><td>Good</td><td>Good</td><td>★</td><td>Articles/reports</td></tr>
+<tr><td><b>Recursive</b></td><td>Good</td><td>Good</td><td>★★</td><td>General-purpose RAG</td></tr>
+<tr><td><b>Semantic</b></td><td>Good</td><td>High</td><td>★★★</td><td>Mixed-topic documents</td></tr>
+<tr><td><b>Structure-aware</b></td><td>High</td><td>High</td><td>★★★</td><td>Docs/manuals/code</td></tr>
+<tr><td><b>Parent-child</b></td><td>Very high</td><td>Very high</td><td>★★★★</td><td>Production RAG</td></tr>
+<tr><td><b>Sliding window</b></td><td>High</td><td>Medium</td><td>★★</td><td>Sequential content</td></tr>
+<tr><td><b>Late chunking</b></td><td>High</td><td>High</td><td>★★★★</td><td>Long-context retrieval</td></tr>
+</tbody>
+</table>
+
+<h2>Practical decision tree</h2>
+<div class="card">
+  <div class="flow"><div class="node">Start</div><div class="arrow">→</div><div class="node">Structured document?</div></div>
+  <div class="two">
+    <div class="highlight"><b>YES</b><br><br>Use structure-aware chunking.<br>Add metadata such as heading, page, symbol, file, and section.<br><br><b>Then:</b> consider recursive splitting for oversized sections.</div>
+    <div class="highlight"><b>NO</b><br><br>Start with recursive chunking.<br>Benchmark against fixed-size + overlap.<br><br><b>Then:</b> try semantic chunking if boundaries remain a problem.</div>
+  </div>
+  <div class="note"><b>Need precise retrieval + context?</b> Try parent-child: retrieve small children, then expand to their parent before sending context to the LLM.</div>
+</div>
+
+<h2>The big picture</h2>
+<div class="card">
+  <div class="flow">
+    <div class="node">Chunk boundaries</div><div class="arrow">→</div>
+    <div class="node">Embedding quality</div><div class="arrow">→</div>
+    <div class="node">Retrieval quality</div><div class="arrow">→</div>
+    <div class="node">Context quality</div><div class="arrow">→</div>
+    <div class="node">Answer quality</div>
+  </div>
+  <p><b>Don't choose a chunking strategy by reputation.</b> Build a representative evaluation set and measure retrieval metrics such as Recall@K, Precision@K, MRR, and nDCG, plus end-to-end answer quality.</p>
+</div>
+
+<div class="footer">RAG Chunking Visual Guide • Excludes LLM-based chunking and atomic/proposition chunking</div>
+</div>
+</body>
+</html>

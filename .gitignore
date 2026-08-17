@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Logs
+*.log
+parser.log
+
+# Large binary files
+*.pdf
+*.pptx
+
+# Media output (generated at runtime)
+media/
+
+# ChromaDB / vector store data (generated at runtime)
+chroma_db/
+*.db
+
+# OS
+.DS_Store
+Thumbs.db

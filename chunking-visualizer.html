@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chunking Methods — Visual Lab</title>
+<style>
+  :root{
+    --paper:#f6f3ec;
+    --ink:#1f2420;
+    --ink-soft:#5c6259;
+    --line:#d9d3c4;
+    --accent:#c4622d;
+    --accent-soft:#e8c9b3;
+    --mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+    --serif: 'Source Serif Pro', Georgia, serif;
+    --sans: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+    --c1:#e07a5f; --c2:#3d8f8a; --c3:#c9a227; --c4:#5b7fbf; --c5:#8a5fbf;
+    --c6:#3f9d4c; --c7:#d1495b; --c8:#4b6a5a; --c9:#b06fae; --c10:#c78b3d;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); padding:32px 20px 60px;
+  }
+  .wrap{max-width:1080px; margin:0 auto;}
+  header{margin-bottom:28px; border-bottom:2px solid var(--ink); padding-bottom:16px;}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
+  h1{font-family:var(--serif); font-size:34px; margin:0 0 6px; font-weight:600; letter-spacing:-0.01em;}
+  .sub{color:var(--ink-soft); font-size:14.5px; max-width:640px; line-height:1.5; margin:0;}
+
+  .panel{
+    background:#fffdf8; border:1px solid var(--line); border-radius:10px;
+    padding:20px 22px; margin-bottom:22px;
+  }
+  .panel h2{font-family:var(--serif); font-size:16px; margin:0 0 14px; font-weight:600;}
+
+  .methods{display:grid; grid-template-columns:repeat(5,1fr); gap:10px;}
+  @media (max-width:900px){.methods{grid-template-columns:repeat(3,1fr);}}
+  @media (max-width:600px){.methods{grid-template-columns:repeat(2,1fr);}}
+  .method-btn{
+    border:1.5px solid var(--line); background:#fff; border-radius:8px;
+    padding:12px 10px; cursor:pointer; text-align:left; transition:.15s;
+    font-family:var(--sans);
+  }
+  .method-btn:hover{border-color:var(--accent);}
+  .method-btn.active{border-color:var(--accent); background:#fdf3ec; box-shadow:0 0 0 2px var(--accent-soft) inset;}
+  .method-btn .m-name{font-weight:600; font-size:13px; display:block; margin-bottom:3px;}
+  .method-btn .m-tag{font-family:var(--mono); font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:.06em;}
+  .method-btn .m-desc{font-size:11.5px; color:var(--ink-soft); margin-top:5px; line-height:1.35;}
+
+  .controls{display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end; margin-top:16px;}
+  .ctrl{display:flex; flex-direction:column; gap:5px;}
+  .ctrl label{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);}
+  .ctrl input[type=range]{width:150px; accent-color:var(--accent);}
+  .ctrl .val{font-family:var(--mono); font-size:12px; color:var(--ink);}
+  .ctrl select{font-family:var(--sans); font-size:13px; padding:6px 8px; border:1px solid var(--line); border-radius:6px; background:#fff;}
+
+  textarea{
+    width:100%; min-height:150px; font-family:var(--serif); font-size:15px;
+    line-height:1.6; border:1px solid var(--line); border-radius:8px; padding:14px;
+    resize:vertical; background:#fff; color:var(--ink);
+  }
+  .doc-actions{display:flex; gap:8px; margin-top:10px;}
+  .doc-actions button{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    border:1px solid var(--line); background:#fff; padding:6px 12px; border-radius:6px; cursor:pointer;
+  }
+  .doc-actions button:hover{border-color:var(--accent); color:var(--accent);}
+
+  .stats{display:flex; gap:22px; flex-wrap:wrap; margin-top:14px; font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+  .stats b{color:var(--ink); font-weight:600;}
+
+  .viz{white-space:pre-wrap; font-family:var(--serif); font-size:15.5px; line-height:1.85; padding:18px 20px; border:1px solid var(--line); border-radius:8px; background:#fff;}
+  .chunk{border-radius:3px; padding:1px 1px; box-decoration-break:clone; -webkit-box-decoration-break:clone; position:relative;}
+  .overlap{outline:2px dashed rgba(0,0,0,.35); outline-offset:-1px;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .chip{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; padding:4px 9px; border-radius:20px; border:1px solid var(--line); background:#fff;}
+  .chip .dot{width:9px; height:9px; border-radius:50%; flex:none;}
+
+  footer{margin-top:34px; font-size:12px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:14px; font-family:var(--mono);}
+  footer a{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">Text Splitting / LangChain</p>
+    <h1>Chunking Methods, Visualized</h1>
+    <p class="sub">Pick a splitting strategy, tune its parameters, and watch the same document get cut apart differently. Colors mark chunk boundaries; dashed outlines mark overlapping text shared by two neighboring chunks.</p>
+  </header>
+
+  <div class="panel">
+    <h2>1 — Choose a chunking method</h2>
+    <div class="methods" id="methods"></div>
+
+    <div class="controls" id="controls"></div>
+  </div>
+
+  <div class="panel">
+    <h2>2 — Source document</h2>
+    <textarea id="docInput"></textarea>
+    <div class="doc-actions">
+      <button id="sampleProse">Sample: prose</button>
+      <button id="sampleMd">Sample: markdown</button>
+      <button id="sampleCode">Sample: code-ish</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>3 — Result</h2>
+    <div id="noteBox" style="display:none; font-family:var(--mono); font-size:12px; color:var(--ink-soft); background:#fdf3ec; border:1px solid var(--accent-soft); border-radius:8px; padding:10px 12px; margin-bottom:14px; line-height:1.5;"></div>
+    <div class="stats" id="stats"></div>
+    <div class="legend" id="legend"></div>
+    <div class="viz" id="viz" style="margin-top:14px;"></div>
+  </div>
+
+  <footer>
+    Ten strategies, reimplemented in-browser: Character, Recursive Character, Token-based, Markdown Headers, Sentence Window, Paragraph, Semantic (approximated via word-overlap), Sliding Window, Parent-Child, and Late Chunking (conceptual). Mirrors LangChain splitters where they exist (<code>CharacterTextSplitter</code>, <code>RecursiveCharacterTextSplitter</code>, <code>TokenTextSplitter</code>, <code>MarkdownHeaderTextSplitter</code>) and approximates the rest for teaching purposes — not the library itself.
+  </footer>
+</div>
+
+<script>
+const COLORS = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10'].map(v=>getComputedStyle(document.documentElement).getPropertyValue('--'+v).trim());
+
+const SAMPLES = {
+  prose: `Large language models don't read a whole book in one gulp. Before any retrieval or embedding happens, long documents get broken into smaller pieces called chunks. How you cut the text matters enormously: cut too small and you lose context; cut too large and the model gets a wall of irrelevant text along with the useful bit.
+
+There are several common strategies. The simplest just counts characters and cuts every N of them, ignoring sentence or paragraph boundaries entirely. A smarter version tries several separators in order of preference — paragraphs first, then sentences, then words — falling back only when a section is still too big.
+
+Some teams instead chunk by estimated token count, since that's what the model actually bills and limits against, rather than raw character count. Others split along document structure itself, like Markdown headers, so each chunk maps to one logical section of the source. Finally, for very narrative or conversational text, a sentence-window approach groups a small number of whole sentences together, preserving grammatical completeness above all else.
+
+Overlap is the other big lever. A little repeated text between neighboring chunks helps preserve context that would otherwise be severed right at a cut point, at the cost of some duplicated storage and slightly noisier retrieval.`,
+
+  md: `# Retrieval-Augmented Generation
+
+## Why chunk at all
+Embedding models and context windows both have limits. You cannot hand a 400-page manual to a model as one string and expect useful retrieval.
+
+## Splitting strategies
+
+### Fixed-size
+Cuts every N characters. Fast, predictable, but blind to meaning.
+
+### Recursive
+Tries paragraph breaks, then sentences, then words, only falling back when a piece is still oversized.
+
+## Evaluation
+Chunk quality is usually judged indirectly, through downstream retrieval accuracy rather than any intrinsic score.
+
+### Metrics people use
+Precision@k, recall@k, and answer faithfulness are the most common.`,
+
+  code: `def chunk_text(text, size=200, overlap=20):
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = start + size
+        chunks.append(text[start:end])
+        start = end - overlap
+    return chunks
+
+class Document:
+    def __init__(self, text, metadata=None):
+        self.text = text
+        self.metadata = metadata or {}
+
+    def __repr__(self):
+        return f"Document(len={len(self.text)})"
+
+def load_and_split(path, splitter):
+    with open(path) as f:
+        raw = f.read()
+    return splitter(raw)`
+};
+
+const METHODS = [
+  {
+    id:'fixed',
+    name:'Character (Fixed-Size)',
+    tag:'CharacterTextSplitter',
+    desc:'Cuts every N characters, blind to word or sentence boundaries.',
+    params:['size','overlap']
+  },
+  {
+    id:'recursive',
+    name:'Recursive Character',
+    tag:'RecursiveCharacterTextSplitter',
+    desc:'Tries \\n\\n, then \\n, then space, then char — falls back only when needed.',
+    params:['size','overlap']
+  },
+  {
+    id:'token',
+    name:'Token-based',
+    tag:'TokenTextSplitter',
+    desc:'Splits by an approximate token count instead of raw characters.',
+    params:['tokenSize','tokenOverlap']
+  },
+  {
+    id:'markdown',
+    name:'Markdown Headers',
+    tag:'MarkdownHeaderTextSplitter',
+    desc:'Splits along #, ##, ### headers — one chunk per section.',
+    params:[]
+  },
+  {
+    id:'sentence',
+    name:'Sentence Window',
+    tag:'Sentence splitter',
+    desc:'Groups a fixed number of whole sentences per chunk, no mid-sentence cuts.',
+    params:['sentPerChunk','sentOverlap']
+  },
+  {
+    id:'paragraph',
+    name:'Paragraph-based',
+    tag:'Paragraph splitter',
+    desc:'One chunk per blank-line-separated paragraph — preserves author organization.',
+    params:[]
+  },
+  {
+    id:'semantic',
+    name:'Semantic (approx.)',
+    tag:'SemanticChunker-style',
+    desc:'Breaks between sentences when shared vocabulary drops — a lightweight stand-in for embedding-distance breaks.',
+    params:['semThreshold']
+  },
+  {
+    id:'sliding',
+    name:'Sliding Window',
+    tag:'Sliding window',
+    desc:'Moves a fixed-width window forward by a smaller step, word by word — heavy, deliberate overlap.',
+    params:['windowWords','stepWords']
+  },
+  {
+    id:'parentchild',
+    name:'Parent-Child',
+    tag:'ParentDocumentRetriever-style',
+    desc:'Large parent sections (grey bands) each hold several small child chunks (colored) — retrieve the child, send the parent.',
+    params:['parentSize','childSize']
+  },
+  {
+    id:'late',
+    name:'Late Chunking',
+    tag:'Conceptual — encoder-dependent',
+    desc:'Boundaries look identical to recursive splitting; what differs is invisible here — each chunk is embedded *after* seeing the whole document, not in isolation.',
+    params:['size','overlap'],
+    note:'Late chunking changes how embeddings are computed, not where the text is cut. The visual below reuses recursive boundaries on purpose — the real difference happens inside the embedding model, downstream of this diagram.'
+  }
+];
+
+const PARAM_DEFS = {
+  size:      {label:'Chunk size (chars)', min:40, max:400, step:10, def:160},
+  overlap:   {label:'Overlap (chars)',    min:0,  max:100, step:5,  def:30},
+  tokenSize: {label:'Chunk size (tokens)',min:10, max:120, step:5,  def:40},
+  tokenOverlap:{label:'Overlap (tokens)', min:0,  max:30,  step:2,  def:8},
+  sentPerChunk:{label:'Sentences / chunk',min:1,  max:8,   step:1,  def:3},
+  sentOverlap: {label:'Sentence overlap', min:0,  max:4,   step:1,  def:1},
+  semThreshold:{label:'Break sensitivity (%)', min:5, max:80, step:5, def:30},
+  windowWords: {label:'Window size (words)', min:10, max:80, step:5, def:35},
+  stepWords:   {label:'Step size (words)', min:2, max:40, step:2, def:12},
+  parentSize:  {label:'Parent size (chars)', min:200, max:800, step:20, def:420},
+  childSize:   {label:'Child size (chars)', min:40, max:200, step:10, def:110}
+};
+
+let state = { method:'recursive', params:{} };
+
+function initParams(method){
+  const m = METHODS.find(x=>x.id===method);
+  state.params = {};
+  m.params.forEach(p=>{ state.params[p] = PARAM_DEFS[p].def; });
+}
+
+// ---------- Splitters ----------
+
+function splitFixed(text, size, overlap){
+  const chunks = [];
+  let start = 0;
+  const step = Math.max(1, size - overlap);
+  while (start < text.length){
+    const end = Math.min(start+size, text.length);
+    chunks.push({start, end});
+    if (end === text.length) break;
+    start += step;
+  }
+  return chunks;
+}
+
+function recursiveSplit(text, size, overlap){
+  const seps = ['\n\n','\n',' ',''];
+  function helper(t, offset, sepIdx){
+    if (t.length <= size || sepIdx >= seps.length-1 && seps[sepIdx]===''){
+      if (t.length <= size) return [{start:offset, end:offset+t.length}];
+    }
+    const sep = seps[sepIdx];
+    let pieces;
+    if (sep === ''){
+      // char fallback
+      return splitFixed(t, size, overlap).map(c=>({start:c.start+offset, end:c.end+offset}));
+    }
+    pieces = t.split(sep);
+    // merge pieces into chunks up to size
+    const out = [];
+    let curStart = 0, curText = '';
+    let cursor = 0;
+    for (let i=0;i<pieces.length;i++){
+      const piece = pieces[i] + (i<pieces.length-1?sep:'');
+      if (curText.length + piece.length <= size || curText.length===0){
+        curText += piece;
+      } else {
+        out.push({start:offset+curStart, end:offset+curStart+curText.length});
+        // overlap: back up
+        const backUp = Math.min(overlap, curText.length);
+        curStart = curStart + curText.length - backUp;
+        curText = curText.slice(curText.length-backUp) + piece;
+      }
+      cursor += piece.length;
+    }
+    if (curText.length>0) out.push({start:offset+curStart, end:offset+curStart+curText.length});
+    // recurse on any still-too-big chunk with next separator
+    let final = [];
+    out.forEach(c=>{
+      const sub = text.slice(c.start, c.end);
+      if (sub.length > size && sepIdx < seps.length-1){
+        final = final.concat(helper(sub, c.start, sepIdx+1));
+      } else {
+        final.push(c);
+      }
+    });
+    return final;
+  }
+  return helper(text, 0, 0);
+}
+
+function approxTokenize(text){
+  // token = word-ish chunk, matches \S+ but keep offsets
+  const tokens = [];
+  const re = /\S+/g;
+  let m;
+  while ((m = re.exec(text))){
+    tokens.push({start:m.index, end:m.index+m[0].length});
+  }
+  return tokens;
+}
+
+function splitToken(text, size, overlap){
+  const tokens = approxTokenize(text);
+  const chunks = [];
+  let i = 0;
+  const step = Math.max(1, size-overlap);
+  while (i < tokens.length){
+    const j = Math.min(i+size, tokens.length)-1;
+    if (j < i) break;
+    chunks.push({start:tokens[i].start, end:tokens[j].end});
+    if (j >= tokens.length-1) break;
+    i += step;
+  }
+  return chunks;
+}
+
+function splitMarkdown(text){
+  const lines = text.split('\n');
+  const chunks = [];
+  let curStart = 0, offset = 0, sawHeader=false;
+  for (let li=0; li<lines.length; li++){
+    const line = lines[li];
+    if (/^#{1,3}\s/.test(line)){
+      if (sawHeader && offset > curStart){
+        chunks.push({start:curStart, end:offset});
+      }
+      curStart = offset;
+      sawHeader = true;
+    }
+    offset += line.length + 1;
+  }
+  chunks.push({start:curStart, end:Math.min(offset-1, text.length)});
+  return chunks.filter(c=>c.end>c.start);
+}
+
+function splitSentences(text, perChunk, overlap){
+  const re = /[^.!?]+[.!?]+(\s+|$)|[^.!?]+$/g;
+  const sentences = [];
+  let m;
+  while ((m = re.exec(text))){
+    if (m[0].trim().length===0) continue;
+    sentences.push({start:m.index, end:m.index+m[0].length});
+  }
+  const chunks = [];
+  let i=0;
+  const step = Math.max(1, perChunk-overlap);
+  while (i < sentences.length){
+    const j = Math.min(i+perChunk, sentences.length)-1;
+    if (j<i) break;
+    chunks.push({start:sentences[i].start, end:sentences[j].end});
+    if (j>=sentences.length-1) break;
+    i += step;
+  }
+  return chunks;
+}
+
+function splitParagraphs(text){
+  const chunks = [];
+  const re = /[^\n]+(\n(?!\n)[^\n]*)*/g;
+  let m;
+  while ((m = re.exec(text))){
+    if (m[0].trim().length===0) continue;
+    chunks.push({start:m.index, end:m.index+m[0].length});
+  }
+  return chunks;
+}
+
+function sentenceList(text){
+  const re = /[^.!?]+[.!?]+(\s+|$)|[^.!?]+$/g;
+  const sentences = [];
+  let m;
+  while ((m = re.exec(text))){
+    if (m[0].trim().length===0) continue;
+    sentences.push({start:m.index, end:m.index+m[0].length});
+  }
+  return sentences;
+}
+
+function wordSet(s){
+  return new Set(s.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>2));
+}
+function jaccard(a,b){
+  if (a.size===0 || b.size===0) return 0;
+  let inter=0;
+  a.forEach(w=>{ if(b.has(w)) inter++; });
+  const union = a.size + b.size - inter;
+  return union===0?0:inter/union;
+}
+
+function splitSemantic(text, sensitivityPct){
+  const sentences = sentenceList(text);
+  if (sentences.length===0) return [];
+  const threshold = 1 - (sensitivityPct/100); // higher sensitivity => lower similarity needed to break
+  const chunks = [];
+  let curStart = sentences[0].start, curEnd = sentences[0].end;
+  let prevWords = wordSet(text.slice(sentences[0].start, sentences[0].end));
+  for (let i=1;i<sentences.length;i++){
+    const s = sentences[i];
+    const w = wordSet(text.slice(s.start, s.end));
+    const sim = jaccard(prevWords, w);
+    if (sim < threshold){
+      chunks.push({start:curStart, end:curEnd});
+      curStart = s.start;
+    }
+    curEnd = s.end;
+    prevWords = w;
+  }
+  chunks.push({start:curStart, end:curEnd});
+  return chunks;
+}
+
+function splitSliding(text, windowWords, stepWords){
+  const tokens = approxTokenize(text);
+  const chunks = [];
+  let i = 0;
+  const step = Math.max(1, stepWords);
+  while (i < tokens.length){
+    const j = Math.min(i+windowWords, tokens.length)-1;
+    if (j<i) break;
+    chunks.push({start:tokens[i].start, end:tokens[j].end});
+    if (j>=tokens.length-1) break;
+    i += step;
+  }
+  return chunks;
+}
+
+function splitParentChild(text, parentSize, childSize){
+  const parents = splitFixed(text, parentSize, 0);
+  const children = [];
+  parents.forEach((p, pi)=>{
+    const sub = splitFixed(text.slice(p.start,p.end), childSize, 0)
+      .map(c=>({start:c.start+p.start, end:c.end+p.start, parent:pi}));
+    children.push(...sub);
+  });
+  return {parents, children};
+}
+
+function computeChunks(text){
+  const p = state.params;
+  switch(state.method){
+    case 'fixed': return splitFixed(text, p.size, p.overlap);
+    case 'recursive': return recursiveSplit(text, p.size, p.overlap);
+    case 'token': return splitToken(text, p.tokenSize, p.tokenOverlap);
+    case 'markdown': return splitMarkdown(text);
+    case 'sentence': return splitSentences(text, p.sentPerChunk, p.sentOverlap);
+    case 'paragraph': return splitParagraphs(text);
+    case 'semantic': return splitSemantic(text, p.semThreshold);
+    case 'sliding': return splitSliding(text, p.windowWords, p.stepWords);
+    case 'late': return recursiveSplit(text, p.size, p.overlap);
+    case 'parentchild': return splitParentChild(text, p.parentSize, p.childSize);
+  }
+  return [];
+}
+
+// ---------- Rendering ----------
+
+function renderMethods(){
+  const el = document.getElementById('methods');
+  el.innerHTML = '';
+  METHODS.forEach(m=>{
+    const btn = document.createElement('div');
+    btn.className = 'method-btn' + (m.id===state.method?' active':'');
+    btn.innerHTML = `<span class="m-tag">${m.tag}</span><span class="m-name">${m.name}</span><span class="m-desc">${m.desc}</span>`;
+    btn.onclick = ()=>{ state.method = m.id; initParams(m.id); renderAll(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderControls(){
+  const el = document.getElementById('controls');
+  el.innerHTML = '';
+  const m = METHODS.find(x=>x.id===state.method);
+  if (m.params.length===0){
+    el.innerHTML = '<div style="font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);">This method has no tunable parameters — it follows document structure directly.</div>';
+    return;
+  }
+  m.params.forEach(p=>{
+    const def = PARAM_DEFS[p];
+    const wrap = document.createElement('div');
+    wrap.className = 'ctrl';
+    wrap.innerHTML = `<label>${def.label}</label>
+      <input type="range" min="${def.min}" max="${def.max}" step="${def.step}" value="${state.params[p]}">
+      <span class="val">${state.params[p]}</span>`;
+    const input = wrap.querySelector('input');
+    const val = wrap.querySelector('.val');
+    input.oninput = ()=>{ state.params[p] = Number(input.value); val.textContent = input.value; renderResult(); };
+    el.appendChild(wrap);
+  });
+}
+
+function paintChunks(text, chunks){
+  const n = text.length;
+  const membership = new Array(n).fill(null).map(()=>[]);
+  chunks.forEach((c,i)=>{
+    for (let k=c.start; k<c.end && k<n; k++) membership[k].push(i);
+  });
+  let html = '';
+  let i = 0;
+  while (i < n){
+    const owners = membership[i];
+    let j = i+1;
+    while (j<n && arraysEqual(membership[j], owners)) j++;
+    const segment = escapeHtml(text.slice(i,j));
+    if (owners.length===0){
+      html += segment;
+    } else if (owners.length===1){
+      html += `<span class="chunk" style="background:${hexToRgba(COLORS[owners[0]%COLORS.length],0.28)}">${segment}</span>`;
+    } else {
+      const c1 = COLORS[owners[0]%COLORS.length];
+      html += `<span class="chunk overlap" style="background:${hexToRgba(c1,0.45)}" title="Overlap between chunks ${owners.map(o=>o+1).join(' & ')}">${segment}</span>`;
+    }
+    i = j;
+  }
+  return html;
+}
+
+function paintParentChild(text, parents, children){
+  const n = text.length;
+  const childOwner = new Array(n).fill(null);
+  children.forEach((c,i)=>{
+    for (let k=c.start; k<c.end && k<n; k++) childOwner[k] = i;
+  });
+  const parentOwner = new Array(n).fill(null);
+  parents.forEach((p,i)=>{
+    for (let k=p.start; k<p.end && k<n; k++) parentOwner[k] = i;
+  });
+
+  let html = '';
+  let i = 0;
+  let openParent = -1;
+  while (i < n){
+    const pOwn = parentOwner[i];
+    if (pOwn !== openParent){
+      if (openParent !== -1) html += '</div>';
+      if (pOwn !== null) html += `<div class="chunk" style="display:block; border:1.5px dashed var(--ink-soft); border-radius:6px; padding:6px 8px; margin:6px 0; background:#f4f2ea;"><div style="font-family:var(--mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:4px;">Parent ${pOwn+1}</div>`;
+      openParent = pOwn;
+    }
+    const cOwn = childOwner[i];
+    let j = i+1;
+    while (j<n && parentOwner[j]===pOwn && childOwner[j]===cOwn) j++;
+    const segment = escapeHtml(text.slice(i,j));
+    if (cOwn===null){ html += segment; }
+    else { html += `<span class="chunk" style="background:${hexToRgba(COLORS[cOwn%COLORS.length],0.4)}" title="Child ${cOwn+1}">${segment}</span>`; }
+    i = j;
+  }
+  if (openParent !== -1) html += '</div>';
+  return html;
+}
+
+function renderResult(){
+  const text = document.getElementById('docInput').value;
+  const m = METHODS.find(x=>x.id===state.method);
+  const noteBox = document.getElementById('noteBox');
+  if (m.note){ noteBox.style.display='block'; noteBox.textContent = m.note; }
+  else { noteBox.style.display='none'; }
+
+  let result;
+  try { result = computeChunks(text); } catch(e){ result = state.method==='parentchild' ? {parents:[],children:[]} : []; }
+
+  const viz = document.getElementById('viz');
+  const stats = document.getElementById('stats');
+  const legend = document.getElementById('legend');
+
+  if (state.method === 'parentchild'){
+    const {parents, children} = result;
+    stats.innerHTML = `<span><b>${parents.length}</b> parents</span><span><b>${children.length}</b> children</span><span>doc length <b>${text.length}</b> chars</span>`;
+    legend.innerHTML = '';
+    children.slice(0,10).forEach((c,i)=>{
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.innerHTML = `<span class="dot" style="background:${COLORS[i%COLORS.length]}"></span> Child ${i+1} (parent ${c.parent+1})`;
+      legend.appendChild(chip);
+    });
+    if (!text.trim() || parents.length===0){
+      viz.innerHTML = '<span style="color:var(--ink-soft)">Nothing to show — add some document text above.</span>';
+      return;
+    }
+    viz.innerHTML = paintParentChild(text, parents, children);
+    return;
+  }
+
+  const chunks = result;
+  const avgLen = chunks.length ? Math.round(chunks.reduce((s,c)=>s+(c.end-c.start),0)/chunks.length) : 0;
+  stats.innerHTML = `<span><b>${chunks.length}</b> chunks</span><span>avg length <b>${avgLen}</b> chars</span><span>doc length <b>${text.length}</b> chars</span>`;
+
+  legend.innerHTML = '';
+  chunks.forEach((c,i)=>{
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.innerHTML = `<span class="dot" style="background:${COLORS[i%COLORS.length]}"></span> Chunk ${i+1} · ${c.end-c.start} chars`;
+    legend.appendChild(chip);
+  });
+
+  if (!text.trim() || chunks.length===0){
+    viz.innerHTML = '<span style="color:var(--ink-soft)">Nothing to show — add some document text above.</span>';
+    return;
+  }
+  viz.innerHTML = paintChunks(text, chunks);
+}
+
+function arraysEqual(a,b){ return a.length===b.length && a.every((v,i)=>v===b[i]); }
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function hexToRgba(hex, a){
+  const h = hex.replace('#','');
+  const r = parseInt(h.substring(0,2),16), g = parseInt(h.substring(2,4),16), b = parseInt(h.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function renderAll(){
+  renderMethods();
+  renderControls();
+  renderResult();
+}
+
+document.getElementById('docInput').value = SAMPLES.prose;
+document.getElementById('docInput').addEventListener('input', renderResult);
+document.getElementById('sampleProse').onclick = ()=>{ document.getElementById('docInput').value = SAMPLES.prose; renderResult(); };
+document.getElementById('sampleMd').onclick = ()=>{ document.getElementById('docInput').value = SAMPLES.md; state.method='markdown'; initParams('markdown'); renderAll(); };
+document.getElementById('sampleCode').onclick = ()=>{ document.getElementById('docInput').value = SAMPLES.code; renderResult(); };
+
+initParams(state.method);
+renderAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vector Index Search — Visual Lab</title>
+<style>
+  :root{
+    --paper:#f6f3ec; --ink:#1f2420; --ink-soft:#5c6259; --line:#d9d3c4;
+    --accent:#c4622d; --accent-soft:#e8c9b3;
+    --mono:'IBM Plex Mono', Consolas, monospace; --serif:'Source Serif Pro', Georgia, serif; --sans:'IBM Plex Sans', Helvetica, Arial, sans-serif;
+    --c1:#e07a5f; --c2:#3d8f8a; --c3:#c9a227; --c4:#5b7fbf; --c5:#8a5fbf; --c6:#3f9d4c; --c7:#d1495b; --c8:#b06fae;
+    --good:#3f8f52; --bad:#c1443c;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); padding:32px 20px 60px;}
+  .wrap{max-width:1100px; margin:0 auto;}
+  header{margin-bottom:26px; border-bottom:2px solid var(--ink); padding-bottom:16px;}
+  .eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
+  h1{font-family:var(--serif); font-size:32px; margin:0 0 6px; font-weight:600; letter-spacing:-0.01em;}
+  .sub{color:var(--ink-soft); font-size:14.5px; max-width:680px; line-height:1.5; margin:0;}
+
+  .methods{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px;}
+  @media (max-width:760px){.methods{grid-template-columns:repeat(1,1fr);}}
+  .method-btn{border:1.5px solid var(--line); background:#fff; border-radius:8px; padding:12px 12px; cursor:pointer; text-align:left; transition:.15s;}
+  .method-btn:hover{border-color:var(--accent);}
+  .method-btn.active{border-color:var(--accent); background:#fdf3ec; box-shadow:0 0 0 2px var(--accent-soft) inset;}
+  .method-btn .m-name{font-weight:700; font-size:13.5px; display:block; margin-bottom:2px;}
+  .method-btn .m-tag{font-family:var(--mono); font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:.05em;}
+
+  .layout{display:grid; grid-template-columns:1.15fr .85fr; gap:20px;}
+  @media (max-width:860px){.layout{grid-template-columns:1fr;}}
+
+  .panel{background:#fffdf8; border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:18px;}
+  .panel h2{font-family:var(--serif); font-size:16px; margin:0 0 10px; font-weight:600;}
+  .panel p{font-size:13.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 10px;}
+
+  .stage{width:100%; aspect-ratio:1/1; border:1px solid var(--line); border-radius:8px; background:#fffefb; cursor:crosshair; touch-action:none;}
+  .hint{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:8px;}
+
+  .controls{display:flex; flex-wrap:wrap; gap:18px; margin-top:14px;}
+  .ctrl{display:flex; flex-direction:column; gap:4px;}
+  .ctrl label{font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft);}
+  .ctrl input[type=range]{width:130px; accent-color:var(--accent);}
+  .ctrl .val{font-family:var(--mono); font-size:11.5px;}
+  .ctrl button{font-family:var(--mono); font-size:11px; text-transform:uppercase; border:1px solid var(--line); background:#fff; padding:6px 10px; border-radius:6px; cursor:pointer;}
+  .ctrl button:hover{border-color:var(--accent); color:var(--accent);}
+
+  .stats{font-family:var(--mono); font-size:12px; color:var(--ink-soft); display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;}
+  .stats b{color:var(--ink);}
+
+  table.pc{width:100%; border-collapse:collapse; font-size:12.5px; margin-top:6px;}
+  table.pc th, table.pc td{text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.pc th{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; color:var(--ink-soft); background:#f4f0e6;}
+  table.pc td.good{color:var(--good);} table.pc td.bad{color:var(--bad);}
+
+  .knobs{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .knob{font-family:var(--mono); font-size:11px; padding:5px 9px; border-radius:20px; border:1px solid var(--line); background:#fff;}
+
+  footer{margin-top:28px; font-size:12px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:14px; font-family:var(--mono);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Approximate Nearest Neighbor Search</p>
+    <h1>How Vector Indexes Search</h1>
+    <p class="sub">Points stand in for embedding vectors in 2D. Click anywhere on the canvas to drop a query, then switch strategies to see how each one decides which vectors to compare against it.</p>
+  </header>
+
+  <div class="methods" id="methods"></div>
+
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <h2 id="stageTitle">Flat / Brute Force</h2>
+        <p id="stageDesc"></p>
+        <canvas class="stage" id="stage" width="640" height="640"></canvas>
+        <div class="hint">Click / tap the canvas to move the query point (the orange ring).</div>
+        <div class="controls" id="controls"></div>
+        <div class="stats" id="stats"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h2>Pros / cons</h2>
+        <table class="pc" id="pcTable"></table>
+      </div>
+      <div class="panel">
+        <h2>Key knobs</h2>
+        <div class="knobs" id="knobsBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Flat, IVF, and HNSW reimplemented from scratch in-browser over a synthetic 2D point set, for teaching purposes — not a real vector index library.</footer>
+</div>
+
+<script>
+const canvas = document.getElementById('stage');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+const COLORS = ['c1','c2','c3','c4','c5','c6','c7','c8'].map(v=>getComputedStyle(document.documentElement).getPropertyValue('--'+v).trim());
+const INK = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+const INKSOFT = getComputedStyle(document.documentElement).getPropertyValue('--ink-soft').trim();
+const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+const LINE = getComputedStyle(document.documentElement).getPropertyValue('--line').trim();
+
+// ---- synthetic vectors: a few gaussian blobs ----
+function mulberry32(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0; let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+const rnd = mulberry32(42);
+function gauss(){ let u=0,v=0; while(u===0)u=rnd(); while(v===0)v=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+
+const BLOBS = [
+  {cx:150,cy:170,sd:70}, {cx:480,cy:130,sd:60}, {cx:120,cy:470,sd:65},
+  {cx:520,cy:500,sd:75}, {cx:330,cy:330,sd:90}
+];
+let points = [];
+BLOBS.forEach((b,bi)=>{
+  const n = 22;
+  for(let i=0;i<n;i++){
+    let x = b.cx + gauss()*b.sd, y = b.cy + gauss()*b.sd;
+    x = Math.max(20,Math.min(W-20,x)); y = Math.max(20,Math.min(H-20,y));
+    points.push({x,y,blob:bi});
+  }
+});
+
+let query = {x:330, y:330};
+
+const METHODS = [
+  {id:'flat', name:'Flat / Brute Force', tag:'Ground truth', params:['k']},
+  {id:'ivf', name:'IVF — Inverted File', tag:'Cluster & probe', params:['nlist','nprobe','k']},
+  {id:'hnsw', name:'HNSW — Graph Search', tag:'Navigable graph', params:['efSearch','k']}
+];
+
+const PARAM_DEFS = {
+  k:{label:'top-k', min:1, max:15, step:1, def:6},
+  nlist:{label:'clusters (nlist)', min:3, max:10, step:1, def:6},
+  nprobe:{label:'probe count', min:1, max:6, step:1, def:1},
+  efSearch:{label:'efSearch (candidates)', min:1, max:15, step:1, def:6}
+};
+
+const INFO = {
+  flat:{
+    desc:'Compares the query with every single vector and returns the true top-k. Correct by definition, but O(n) — the baseline everyone else is measured against.',
+    pros:'Perfect recall; no index to build or tune; trivial to implement.',
+    cons:'Too slow at scale — every query touches every vector.',
+    knobs:['k = how many results to return']
+  },
+  ivf:{
+    desc:'Vectors are pre-assigned to the nearest of nlist centroids (coarse regions). A query only searches inside its nprobe nearest regions instead of the whole dataset.',
+    pros:'Reduces search work dramatically; combines well with compression (PQ); scales to huge collections.',
+    cons:'Needs a training/clustering phase; recall depends heavily on nprobe — too few probes and true neighbors in a neighboring cell get missed.',
+    knobs:['nlist = number of coarse clusters','nprobe = how many clusters get searched per query']
+  },
+  hnsw:{
+    desc:'Vectors sit in a multi-layer navigable graph — few nodes at the top, all nodes at the bottom. Search enters at the sparse top layer, greedily walks to whichever neighbor is closer to the query, and drops down a layer each time it hits a local minimum. At the bottom layer it keeps a candidate list of size efSearch instead of stopping at the very first minimum.',
+    pros:'Excellent latency/recall trade-off; no training phase required; strong general-purpose default.',
+    cons:'Memory hungry (stores graph edges per vector); index construction and updates cost more; M / efConstruction / efSearch all need tuning.',
+    knobs:['M = neighbors per node','efConstruction = build-time search width','efSearch = query-time candidate-list size (shown here)']
+  }
+};
+
+let state = {method:'flat', params:{}};
+function initParams(id){
+  const m = METHODS.find(x=>x.id===id);
+  state.params = {};
+  m.params.forEach(p=>{ state.params[p]=PARAM_DEFS[p].def; });
+}
+
+function dist(a,b){ return Math.hypot(a.x-b.x, a.y-b.y); }
+
+// ---------- drawing helpers ----------
+function clear(){ ctx.clearRect(0,0,W,H); }
+function drawPoint(p,color,r,alpha){
+  ctx.globalAlpha = alpha===undefined?1:alpha;
+  ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fillStyle=color; ctx.fill();
+  ctx.globalAlpha=1;
+}
+function drawLine(a,b,color,width,alpha,dash){
+  ctx.globalAlpha = alpha===undefined?1:alpha;
+  ctx.strokeStyle=color; ctx.lineWidth=width||1;
+  ctx.setLineDash(dash||[]);
+  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.globalAlpha=1;
+}
+function drawQuery(){
+  ctx.beginPath(); ctx.arc(query.x,query.y,9,0,Math.PI*2);
+  ctx.strokeStyle=ACCENT; ctx.lineWidth=3; ctx.stroke();
+  ctx.beginPath(); ctx.arc(query.x,query.y,3,0,Math.PI*2); ctx.fillStyle=ACCENT; ctx.fill();
+}
+
+// ---------- render per method ----------
+function renderFlat(){
+  clear();
+  const k = state.params.k;
+  const withD = points.map(p=>({p, d:dist(p,query)})).sort((a,b)=>a.d-b.d);
+  points.forEach(p=>drawLine(query,p,LINE,1,0.35));
+  withD.slice(0,k).forEach((o,i)=>drawLine(query, o.p, ACCENT, 2, 0.8));
+  points.forEach(p=>drawPoint(p, INKSOFT, 4, 0.5));
+  withD.slice(0,k).forEach((o,i)=>drawPoint(o.p, ACCENT, 6));
+  drawQuery();
+  document.getElementById('stats').innerHTML = `<span>compared <b>${points.length}</b> / ${points.length} vectors</span><span>top-${k} found</span>`;
+}
+
+function kmeansCentroids(nlist){
+  // simple deterministic centroid pick: farthest-point seeding
+  let cs = [points[0]];
+  while (cs.length < nlist){
+    let best=null,bestD=-1;
+    points.forEach(p=>{
+      const d = Math.min(...cs.map(c=>dist(p,c)));
+      if (d>bestD){bestD=d;best=p;}
+    });
+    cs.push({x:best.x,y:best.y});
+  }
+  // a couple lloyd iterations
+  for (let it=0; it<3; it++){
+    const groups = cs.map(()=>[]);
+    points.forEach(p=>{
+      let bi=0,bd=Infinity;
+      cs.forEach((c,i)=>{ const d=dist(p,c); if(d<bd){bd=d;bi=i;} });
+      groups[bi].push(p);
+    });
+    cs = cs.map((c,i)=> groups[i].length? {x:groups[i].reduce((s,p)=>s+p.x,0)/groups[i].length, y:groups[i].reduce((s,p)=>s+p.y,0)/groups[i].length} : c);
+  }
+  return cs;
+}
+
+function renderIVF(){
+  clear();
+  const {nlist, nprobe, k} = state.params;
+  const centroids = kmeansCentroids(nlist);
+  const assign = points.map(p=>{
+    let bi=0,bd=Infinity;
+    centroids.forEach((c,i)=>{ const d=dist(p,c); if(d<bd){bd=d;bi=i;} });
+    return bi;
+  });
+  // draw all points faint, colored by cluster
+  points.forEach((p,i)=> drawPoint(p, COLORS[assign[i]%COLORS.length], 4, 0.22));
+  centroids.forEach((c,i)=>{
+    ctx.beginPath(); ctx.moveTo(c.x-7,c.y); ctx.lineTo(c.x+7,c.y); ctx.moveTo(c.x,c.y-7); ctx.lineTo(c.x,c.y+7);
+    ctx.strokeStyle = COLORS[i%COLORS.length]; ctx.lineWidth=2; ctx.stroke();
+  });
+  // nearest nprobe centroids to query
+  const cd = centroids.map((c,i)=>({i,d:dist(c,query)})).sort((a,b)=>a.d-b.d).slice(0,nprobe);
+  const probedSet = new Set(cd.map(o=>o.i));
+  const candidates = points.filter((p,i)=>probedSet.has(assign[i]));
+  candidates.forEach(p=>drawPoint(p, INK, 5, 0.85));
+  const withD = candidates.map(p=>({p,d:dist(p,query)})).sort((a,b)=>a.d-b.d).slice(0,k);
+  withD.forEach(o=>{ drawLine(query,o.p,ACCENT,2,0.85); drawPoint(o.p,ACCENT,6); });
+  drawQuery();
+  document.getElementById('stats').innerHTML = `<span>clusters <b>${nlist}</b></span><span>probed <b>${nprobe}</b></span><span>candidates <b>${candidates.length}</b> / ${points.length}</span><span>top-${k} of candidates</span>`;
+}
+
+function buildHNSWish(){
+  // multi-layer graph: layer 0 = all points, each higher layer keeps ~1/3 of the previous layer's nodes
+  const layers = [];
+  let cur = points.map((_,i)=>i);
+  layers.push(cur);
+  while (cur.length > 4){
+    const next = cur.filter((_,idx)=> idx % 3 === 0);
+    if (next.length === cur.length) break;
+    layers.push(next);
+    cur = next;
+  }
+  // layers[0] = bottom (all), layers[last] = top (sparsest)
+  const M = 4;
+  const edgesPerLayer = layers.map(layerIdxs=>{
+    const edges = {};
+    layerIdxs.forEach(i=>{
+      const nn = layerIdxs
+        .filter(j=>j!==i)
+        .map(j=>({j, d:dist(points[i],points[j])}))
+        .sort((a,b)=>a.d-b.d)
+        .slice(0,M);
+      edges[i] = nn.map(o=>o.j);
+    });
+    return edges;
+  });
+  return {layers, edgesPerLayer};
+}
+
+function renderHNSW(){
+  clear();
+  const {efSearch, k} = state.params;
+  const {layers, edgesPerLayer} = buildHNSWish();
+  const topLayerIdx = layers.length - 1;
+
+  // draw all points faint
+  points.forEach(p=>drawPoint(p, INKSOFT, 3.5, 0.35));
+  // draw bottom-layer edges very faint for texture
+  const bottomEdges = edgesPerLayer[0];
+  Object.keys(bottomEdges).forEach(i=>{
+    bottomEdges[i].forEach(j=> drawLine(points[i], points[j], LINE, 1, 0.25));
+  });
+
+  // entry point: a fixed node in the top (sparsest) layer
+  let entry = layers[topLayerIdx][0];
+  let cur = entry;
+  const pathByLayer = [];
+
+  for (let L = topLayerIdx; L >= 1; L--){
+    const edges = edgesPerLayer[L];
+    let localPath = [cur];
+    let improved = true;
+    while (improved){
+      improved = false;
+      let best = cur, bestD = dist(points[cur], query);
+      (edges[cur]||[]).forEach(j=>{
+        const d = dist(points[j], query);
+        if (d < bestD - 0.001){ bestD = d; best = j; improved = true; }
+      });
+      if (improved){ cur = best; localPath.push(cur); }
+    }
+    pathByLayer.push({layer:L, path:localPath});
+    // drop to next layer down, starting from same node (guaranteed to exist since layers are subsets)
+  }
+
+  // bottom layer (L=0): beam search with candidate list size efSearch
+  const edges0 = edgesPerLayer[0];
+  let visited = new Set([cur]);
+  let candidates = [{i:cur, d:dist(points[cur],query)}];
+  let frontier = [cur];
+  let localPath0 = [cur];
+  let steps = 0;
+  while (frontier.length && steps < 40){
+    steps++;
+    // expand the frontier node closest to query
+    frontier.sort((a,b)=> dist(points[a],query) - dist(points[b],query));
+    const node = frontier.shift();
+    (edges0[node]||[]).forEach(j=>{
+      if (!visited.has(j)){
+        visited.add(j);
+        const d = dist(points[j], query);
+        candidates.push({i:j, d});
+        frontier.push(j);
+        localPath0.push(j);
+      }
+    });
+    candidates.sort((a,b)=>a.d-b.d);
+    if (candidates.length > efSearch) candidates = candidates.slice(0, efSearch);
+    if (candidates.length >= efSearch && frontier.every(f=> dist(points[f],query) > candidates[candidates.length-1].d)) break;
+  }
+  pathByLayer.push({layer:0, path:localPath0});
+
+  // draw traversal per layer, higher layers in accent-purple, bottom layer beam in teal
+  const layerColor = {0:'#3d8f8a'};
+  for (let L=topLayerIdx; L>=1; L--) layerColor[L] = '#8a5fbf';
+
+  pathByLayer.forEach(({layer, path})=>{
+    for (let i=0;i<path.length-1;i++){
+      drawLine(points[path[i]], points[path[i+1]], layerColor[layer], 2.2, 0.75);
+    }
+    path.forEach(idx=> drawPoint(points[idx], layerColor[layer], 4.5, 0.8));
+  });
+
+  // final top-k from candidate list
+  const topk = candidates.slice(0,k);
+  topk.forEach(o=>{ drawLine(query, points[o.i], ACCENT, 2.4, 0.9); drawPoint(points[o.i], ACCENT, 6.5); });
+  drawPoint(points[entry], INK, 6, 0.9);
+  drawQuery();
+
+  document.getElementById('stats').innerHTML = `<span>layers <b>${layers.length}</b></span><span>entry → top-1 hops <b>${pathByLayer.slice(0,-1).reduce((s,p)=>s+p.path.length-1,0)}</b></span><span>bottom-layer nodes visited <b>${visited.size}</b> / ${points.length}</span><span>candidate list (efSearch) <b>${efSearch}</b> → top-${k} shown</span>`;
+}
+
+function render(){
+  const m = METHODS.find(x=>x.id===state.method);
+  document.getElementById('stageTitle').textContent = m.name;
+  document.getElementById('stageDesc').textContent = INFO[m.id].desc;
+  if (m.id==='flat') renderFlat();
+  else if (m.id==='ivf') renderIVF();
+  else if (m.id==='hnsw') renderHNSW();
+
+  const pc = document.getElementById('pcTable');
+  pc.innerHTML = `<tr><th>Pros</th><th>Cons</th></tr><tr><td class="good">${INFO[m.id].pros}</td><td class="bad">${INFO[m.id].cons}</td></tr>`;
+
+  const kb = document.getElementById('knobsBox');
+  kb.innerHTML = '';
+  INFO[m.id].knobs.forEach(k=>{
+    const el = document.createElement('span'); el.className='knob'; el.textContent = k;
+    kb.appendChild(el);
+  });
+}
+
+function renderMethods(){
+  const el = document.getElementById('methods');
+  el.innerHTML = '';
+  METHODS.forEach(m=>{
+    const btn = document.createElement('div');
+    btn.className = 'method-btn' + (m.id===state.method?' active':'');
+    btn.innerHTML = `<span class="m-tag">${m.tag}</span><span class="m-name">${m.name}</span>`;
+    btn.onclick = ()=>{ state.method=m.id; initParams(m.id); renderAll(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderControls(){
+  const el = document.getElementById('controls');
+  el.innerHTML = '';
+  const m = METHODS.find(x=>x.id===state.method);
+  m.params.forEach(p=>{
+    const def = PARAM_DEFS[p];
+    const wrap = document.createElement('div'); wrap.className='ctrl';
+    wrap.innerHTML = `<label>${def.label}</label><input type="range" min="${def.min}" max="${def.max}" step="${def.step}" value="${state.params[p]}"><span class="val">${state.params[p]}</span>`;
+    const input = wrap.querySelector('input'), val = wrap.querySelector('.val');
+    input.oninput = ()=>{ state.params[p]=Number(input.value); val.textContent=input.value; render(); };
+    el.appendChild(wrap);
+  });
+  const reshuffle = document.createElement('div'); reshuffle.className='ctrl';
+  reshuffle.innerHTML = `<label>Points</label><button id="reshuffleBtn">New random set</button>`;
+  el.appendChild(reshuffle);
+}
+
+function reshufflePoints(){
+  const seed = Date.now() % 100000;
+  const r2 = mulberry32(seed);
+  function g2(){ let u=0,v=0; while(u===0)u=r2(); while(v===0)v=r2(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+  points = [];
+  BLOBS.forEach((b,bi)=>{
+    for(let i=0;i<22;i++){
+      let x=b.cx+g2()*b.sd, y=b.cy+g2()*b.sd;
+      x=Math.max(20,Math.min(W-20,x)); y=Math.max(20,Math.min(H-20,y));
+      points.push({x,y,blob:bi});
+    }
+  });
+  render();
+}
+
+function renderAll(){ renderMethods(); renderControls(); render(); document.getElementById('reshuffleBtn').onclick = reshufflePoints; }
+
+canvas.addEventListener('click', (e)=>{
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = W/rect.width, scaleY = H/rect.height;
+  query = {x:(e.clientX-rect.left)*scaleX, y:(e.clientY-rect.top)*scaleY};
+  render();
+});
+
+initParams(state.method);
+renderAll();
+</script>
+</body>
+</html>

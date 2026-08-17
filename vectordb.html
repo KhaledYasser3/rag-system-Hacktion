@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vector Databases — Visual Guide</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#182033;--muted:#667085;--line:#e5e7ef;--a:#5b5bd6;--good:#16845b;--bad:#c64b4b;--shadow:0 10px 30px #18203312}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:25px 20px 60px}.hero{background:linear-gradient(135deg,#20234b,#5b5bd6);color:#fff;border-radius:24px;padding:42px;box-shadow:var(--shadow)}
+h1{font-size:42px;line-height:1.1;margin:0 0 12px}.hero p{max-width:850px;color:#e9eaff;font-size:17px}
+nav{position:sticky;top:10px;z-index:3;margin:20px 0;padding:9px;background:#fffffff0;backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;display:flex;gap:5px;flex-wrap:wrap}
+nav a{padding:7px 10px;border-radius:8px;color:var(--ink);text-decoration:none}nav a:hover{background:#eef0ff;color:var(--a)}
+section{margin:35px 0}h2{font-size:29px;margin-bottom:8px}h3{margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:21px;margin:13px 0;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:13px}.two{grid-template-columns:repeat(auto-fit,minmax(360px,1fr))}
+.muted{color:var(--muted)}.good{color:var(--good)}.bad{color:var(--bad)}
+.flow{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px 0}.box{padding:13px 16px;border:1px solid #dcdfff;background:#f6f7ff;border-radius:12px;text-align:center;font-weight:650}.arrow{font-size:22px;color:var(--a)}
+.callout{border-left:4px solid var(--a);background:#f0f1ff;padding:12px 15px;border-radius:8px}
+pre{background:#171a27;color:#e9ebf5;padding:17px;border-radius:12px;overflow:auto}code{font-family:ui-monospace,Consolas,monospace}
+table{width:100%;border-collapse:collapse}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f2f4f8}
+details{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin:8px 0}summary{cursor:pointer;font-weight:700}
+.kpi{font-size:27px;font-weight:800}footer{text-align:center;color:var(--muted);margin-top:45px}
+@media(max-width:650px){h1{font-size:31px}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="wrap">
+
+<header class="hero">
+<div>RAG • SEARCH • EMBEDDINGS</div>
+<h1>Vector Databases</h1>
+<p>A practical visual guide to vector storage, similarity search, ANN indexes, metadata filtering, scaling, evaluation, and the trade-offs between popular choices.</p>
+</header>
+
+<nav>
+<a href="#what">What</a><a href="#rag">RAG flow</a><a href="#similarity">Similarity</a><a href="#indexes">Indexes</a><a href="#dbs">DBs</a><a href="#compare">Compare</a><a href="#filter">Filtering</a><a href="#scale">Storage</a><a href="#eval">Evaluation</a><a href="#choose">Choose</a>
+</nav>
+
+<section id="what"><h2>1. What is a vector database?</h2>
+<div class="card">
+<p>A vector database stores <b>vectors</b> and efficiently finds vectors that are similar to a query vector. In RAG, a vector normally represents a document chunk.</p>
+<div class="flow"><div class="box">Text chunk</div><div class="arrow">→</div><div class="box">Embedding model<br>384 / 768 / 1536…</div><div class="arrow">→</div><div class="box">Vector DB<br>vector + metadata</div></div>
+<div class="callout"><b>Important:</b> the embedding model converts text into vectors. The vector database mainly stores, indexes, filters, and searches those vectors.</div>
+</div>
+<div class="grid">
+<div class="card"><h3>Vector</h3><p><code>[0.12, -0.44, 0.71, ...]</code>. A fixed-dimensional numerical representation.</p></div>
+<div class="card"><h3>Metadata</h3><p>Examples: document_id, page, tenant_id, user_id, language, timestamp, permissions.</p></div>
+<div class="card"><h3>Payload</h3><p>The chunk text itself or a pointer to where the text is stored.</p></div>
+</div></section>
+
+<section id="rag"><h2>2. How it fits into RAG</h2>
+<div class="card">
+<div class="flow"><div class="box">Question</div><div class="arrow">→</div><div class="box">Query embedding</div><div class="arrow">→</div><div class="box">Filter + vector search</div><div class="arrow">→</div><div class="box">Top K</div><div class="arrow">→</div><div class="box">Reranker</div><div class="arrow">→</div><div class="box">LLM</div></div>
+<pre><code>INGESTION
+document → parse → chunk → embed → store → index
+
+QUERY
+question → embed → metadata filter → ANN search
+         → top K → optional rerank → LLM</code></pre>
+</div></section>
+
+<section id="similarity"><h2>3. Similarity and distance</h2>
+<div class="grid two">
+<div class="card"><h3>Cosine similarity</h3><pre><code>cos(A,B) = A·B / (||A|| ||B||)</code></pre><p>Measures angle. Common for semantic embeddings. Higher is more similar.</p></div>
+<div class="card"><h3>Dot product</h3><pre><code>score = A · B</code></pre><p>Fast. If vectors are normalized, its ranking is equivalent to cosine similarity.</p></div>
+<div class="card"><h3>Euclidean / L2</h3><pre><code>d(A,B) = sqrt(Σ(Ai-Bi)²)</code></pre><p>Straight-line distance. Lower is closer.</p></div>
+</div>
+<div class="card"><h3>Exact vs Approximate Nearest Neighbor</h3>
+<table><tr><th>Approach</th><th>How</th><th>Pros</th><th>Cons</th></tr>
+<tr><td>Exact</td><td>Compare with every vector.</td><td class="good">Maximum recall; simple.</td><td class="bad">Gets expensive as N grows.</td></tr>
+<tr><td>ANN</td><td>Use an index to avoid checking everything.</td><td class="good">Much faster at scale.</td><td class="bad">Approximation/tuning can reduce recall.</td></tr></table>
+</div></section>
+
+<section id="indexes"><h2>4. Main vector indexes</h2>
+<div class="card"><h3>HNSW — graph-based search</h3>
+<div class="flow"><div class="box">Vectors</div><div class="arrow">→</div><div class="box">Graph layers</div><div class="arrow">→</div><div class="box">Traverse nearby nodes</div><div class="arrow">→</div><div class="box">Nearest vectors</div></div>
+<p>HNSW connects nearby vectors in a navigable graph. Search starts at coarse/high layers and moves toward detailed layers.</p>
+<table><tr><th class="good">Pros</th><th class="bad">Cons</th></tr><tr><td>Excellent latency/recall trade-off; no training phase; strong general-purpose default.</td><td>Memory hungry; index construction/update cost; parameters need tuning.</td></tr></table>
+<p><b>Important knobs:</b> <code>M</code>, <code>efConstruction</code>, and search-time <code>efSearch</code>. More search effort generally improves recall but costs latency.</p>
+</div>
+
+<div class="card"><h3>IVF — inverted file</h3>
+<div class="flow"><div class="box">All vectors</div><div class="arrow">→</div><div class="box">Clusters / centroids</div><div class="arrow">→</div><div class="box">Search selected lists</div></div>
+<p>Vectors are assigned to coarse regions. A query searches only some regions rather than the entire dataset.</p>
+<table><tr><th class="good">Pros</th><th class="bad">Cons</th></tr><tr><td>Reduces search work; useful with compression; scalable.</td><td>Requires training/centroids; recall depends on probe count; more tuning.</td></tr></table>
+</div>
+
+<div class="card"><h3>Product Quantization — PQ</h3>
+<p>PQ compresses vectors into compact codes. It saves memory and can speed distance calculations, but introduces approximation error.</p>
+<table><tr><th class="good">Pros</th><th class="bad">Cons</th></tr><tr><td>Large memory savings; useful for very large collections.</td><td>Information loss can reduce recall; configuration is more complex.</td></tr></table>
+</div>
+
+<div class="card"><h3>Flat / brute force</h3><p>Compare the query with every vector. It is often too slow for huge datasets, but is extremely useful as a <b>ground-truth baseline</b> when evaluating ANN recall.</p></div>
+</section>
+
+<section id="dbs"><h2>5. Popular choices</h2>
+<div class="grid">
+<div class="card"><h3>Qdrant</h3><p>Vector-first database with strong payload filtering and HNSW-based retrieval.</p><p class="good"><b>Good for:</b> production RAG/search.</p><p class="bad"><b>Trade-off:</b> another service to operate.</p></div>
+<div class="card"><h3>Milvus</h3><p>Purpose-built vector database designed for large-scale vector workloads and multiple index/storage options.</p><p class="good"><b>Good for:</b> large collections and specialized vector infrastructure.</p><p class="bad"><b>Trade-off:</b> operational complexity.</p></div>
+<div class="card"><h3>Weaviate</h3><p>Feature-rich vector search platform with semantic/hybrid search and metadata capabilities.</p><p class="good"><b>Good for:</b> full-featured semantic search.</p><p class="bad"><b>Trade-off:</b> larger platform surface.</p></div>
+<div class="card"><h3>Chroma</h3><p>Developer-friendly vector store commonly used for prototypes and smaller applications.</p><p class="good"><b>Good for:</b> local development and simple RAG.</p><p class="bad"><b>Trade-off:</b> validate production scaling needs.</p></div>
+<div class="card"><h3>FAISS</h3><p>A similarity-search library, not a complete database.</p><p class="good"><b>Good for:</b> local indexes, experiments, custom retrieval.</p><p class="bad"><b>Trade-off:</b> you build persistence, metadata, API, tenancy and operations around it.</p></div>
+<div class="card"><h3>pgvector</h3><p>Vector similarity search inside PostgreSQL.</p><p class="good"><b>Good for:</b> applications already using Postgres.</p><p class="bad"><b>Trade-off:</b> a dedicated vector system may be preferable for some very large/specialized workloads.</p></div>
+</div></section>
+
+<section id="compare"><h2>6. Quick comparison</h2>
+<div class="card"><table>
+<tr><th>Option</th><th>Type</th><th>Best fit</th><th>Main strength</th><th>Main trade-off</th></tr>
+<tr><td>Qdrant</td><td>Vector DB</td><td>Production RAG/search</td><td>Filtering + vector-first design</td><td>Separate service</td></tr>
+<tr><td>Milvus</td><td>Vector DB</td><td>Large-scale vectors</td><td>Scale + index choices</td><td>Operations</td></tr>
+<tr><td>Weaviate</td><td>Vector DB</td><td>Feature-rich semantic search</td><td>Integrated search features</td><td>Platform complexity</td></tr>
+<tr><td>Chroma</td><td>Vector store</td><td>Prototype / small app</td><td>Developer simplicity</td><td>Validate scale</td></tr>
+<tr><td>FAISS</td><td>Library</td><td>Custom/local retrieval</td><td>Control + speed</td><td>Not a complete DB</td></tr>
+<tr><td>pgvector</td><td>Postgres extension</td><td>Existing Postgres app</td><td>Relational + vector together</td><td>Not ideal for every workload</td></tr>
+</table></div></section>
+
+<section id="filter"><h2>7. Metadata filtering</h2>
+<div class="card"><p>Real RAG usually needs <b>vector similarity + filters</b>.</p>
+<pre><code>query:
+  "What is the refund policy?"
+
+filter:
+  tenant_id = "company_A"
+  document_type = "policy"
+  language = "en"
+  user_allowed = true
+
+then:
+  similarity search over allowed candidates
+  → top K</code></pre>
+<div class="callout"><b>Security matters:</b> tenant/user authorization should be enforced as part of retrieval constraints, not as an afterthought after results are returned.</div>
+</div></section>
+
+<section id="scale"><h2>8. Storage and scaling</h2>
+<div class="card"><p>For raw FP32 vectors:</p>
+<pre><code>raw bytes ≈ number_of_vectors × dimensions × 4</code></pre>
+<p>Example: 1,000,000 chunks × 384 dimensions:</p>
+<pre><code>1,000,000 × 384 × 4
+= 1,536,000,000 bytes
+≈ 1.54 GB</code></pre>
+<p>Actual storage is larger because of indexes, metadata, IDs, segments/WAL, replicas and database overhead.</p></div>
+<div class="grid">
+<div class="card"><div class="kpi">N</div><p>Number of chunk vectors.</p></div>
+<div class="card"><div class="kpi">D</div><p>Embedding dimension.</p></div>
+<div class="card"><div class="kpi">4 B</div><p>FP32 bytes per dimension.</p></div>
+<div class="card"><div class="kpi">N × D × bytes</div><p>Raw vector estimate.</p></div>
+</div></section>
+
+<section id="eval"><h2>9. Evaluation</h2>
+<div class="card"><table>
+<tr><th>Metric</th><th>Question</th></tr>
+<tr><td><b>Recall@K</b></td><td>Did top K contain the relevant chunk(s)?</td></tr>
+<tr><td><b>Precision@K</b></td><td>How much of top K was relevant?</td></tr>
+<tr><td><b>Latency</b></td><td>How long does retrieval take?</td></tr>
+<tr><td><b>Throughput</b></td><td>How many queries per second?</td></tr>
+<tr><td><b>Storage / memory</b></td><td>How expensive is the data + index?</td></tr>
+<tr><td><b>Filtered recall</b></td><td>Does retrieval remain good with real filters?</td></tr>
+</table></div>
+<div class="card"><h3>The core ANN trade-off</h3><div class="flow"><div class="box">More search effort</div><div class="arrow">→</div><div class="box">Higher recall</div><div class="arrow">+</div><div class="box">Higher latency</div></div><p>A very fast retriever that misses the answer is not useful for RAG. Benchmark recall and latency together.</p></div>
+</section>
+
+<section id="choose"><h2>10. Which should you choose?</h2>
+<div class="card">
+<details open><summary>I already use PostgreSQL</summary><p>Start by evaluating <b>pgvector</b>. One database can hold relational data, metadata and vectors.</p></details>
+<details><summary>I want a dedicated production vector service</summary><p><b>Qdrant</b> is a strong candidate, especially when payload filtering is important.</p></details>
+<details><summary>I have a very large vector workload</summary><p>Benchmark Qdrant, Milvus, Weaviate and managed services using your real data, filters, latency target and query distribution.</p></details>
+<details><summary>I am experimenting locally</summary><p><b>FAISS</b> or <b>Chroma</b> are convenient. FAISS gives lower-level control; Chroma gives a more database-like developer experience.</p></details>
+<details><summary>I need keyword + semantic search</summary><p>Use <b>hybrid retrieval</b>: combine lexical/BM25-style retrieval with vector retrieval, then optionally rerank.</p></details>
+</div></section>
+
+<section><h2>11. The mental model</h2>
+<div class="card"><div class="flow">
+<div class="box">Documents</div><div class="arrow">→</div><div class="box">Parse</div><div class="arrow">→</div><div class="box">Chunk</div><div class="arrow">→</div><div class="box">Embed</div><div class="arrow">→</div><div class="box">Vector DB</div>
+</div><div class="flow">
+<div class="box">Query</div><div class="arrow">→</div><div class="box">Embed</div><div class="arrow">→</div><div class="box">Filter + ANN</div><div class="arrow">→</div><div class="box">Top K</div><div class="arrow">→</div><div class="box">Rerank</div><div class="arrow">→</div><div class="box">LLM</div>
+</div></div></section>
+
+<section><h2>12. Common misconceptions</h2>
+<div class="grid">
+<div class="card"><h3>❌ Vector DB creates embeddings</h3><p>Usually your application calls the embedding model; the DB stores/searches the resulting vectors.</p></div>
+<div class="card"><h3>❌ Similarity = correctness</h3><p>A high similarity score is a retrieval signal, not proof that the chunk contains the answer.</p></div>
+<div class="card"><h3>❌ Top-10 is always best</h3><p>K depends on chunking, corpus, reranking and the LLM context budget.</p></div>
+<div class="card"><h3>❌ ANN is always necessary</h3><p>For small collections, exact search can be simple and perfectly adequate.</p></div>
+</div></section>
+
+<footer>Self-contained Vector Database Visual Guide</footer>
+</div></body></html>
