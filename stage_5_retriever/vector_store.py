@@ -1,98 +1,199 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Vector Store
+  STAGE 5: RETRIEVER FRAMEWORK -- Vector Store  (LOAD-ONLY)
 =============================================================================
-  Abstract Vector Store interface and FAISS implementation for loading
-  vector indices and chunk payloads.
+  Loads a pre-built FAISS index (vector_index.faiss) and its companion
+  metadata store (metadata.pkl).
+
+  THIS MODULE NEVER BUILDS OR REBUILDS THE INDEX.
+
+  If the index does not exist, a clear RuntimeError is raised directing the
+  user to run the offline builder:
+
+      python build_faiss_index.py
+
+  Architecture
+  ------------
+  BaseVectorStore   -- abstract interface (swap FAISS -> Chroma/Qdrant later)
+  FAISSVectorStore  -- concrete FAISS implementation
 =============================================================================
 """
 
 from __future__ import annotations
 
-import os
-import json
 import logging
-import numpy as np
-import faiss
+import os
+import pickle
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any, Tuple
+from typing import List
+
+import faiss
+
 from stage_5_retriever.config import RetrieverConfig, DEFAULT_CONFIG
 
 logger = logging.getLogger("VectorStore")
 
 
+# ---------------------------------------------------------------------------
+# Abstract interface
+# ---------------------------------------------------------------------------
+
 class BaseVectorStore(ABC):
-    """Abstract interface for Vector Database stores (FAISS, Chroma, Qdrant)."""
+    """Abstract contract for all vector database backends."""
 
     @abstractmethod
     def load_or_build(self) -> None:
-        """Loads existing index from disk or builds index from embeddings.json."""
+        """
+        Load the pre-built index from disk.
+        Implementations MUST NOT build or rebuild the index here.
+        """
         pass
 
     @abstractmethod
     def get_chunk_by_index(self, idx: int) -> dict:
-        """Returns full chunk record dictionary by index position."""
+        """Return the full chunk payload dict for a given FAISS index position."""
         pass
 
     @abstractmethod
     def count(self) -> int:
-        """Returns total number of indexed vectors."""
+        """Return the total number of vectors in the loaded index."""
         pass
 
 
-class FAISSVectorStore(BaseVectorStore):
-    """FAISS-based Vector Store using inner-product (cosine) similarity indexing."""
+# ---------------------------------------------------------------------------
+# FAISS implementation
+# ---------------------------------------------------------------------------
 
-    def __init__(self, cfg: RetrieverConfig = DEFAULT_CONFIG):
+class FAISSVectorStore(BaseVectorStore):
+    """
+    Production FAISS vector store.
+
+    Startup sequence (Stage B -- Online Retriever):
+        1. faiss.read_index(vector_index.faiss)
+        2. pickle.load(metadata.pkl)
+        3. Cross-validate count and dimension
+        4. Ready to serve queries
+
+    The store intentionally exposes NO build logic.
+    Index construction lives exclusively in build_faiss_index.py.
+    """
+
+    def __init__(self, cfg: RetrieverConfig = DEFAULT_CONFIG) -> None:
         self.cfg = cfg
         self.index: faiss.IndexFlatIP | None = None
         self.records: List[dict] = []
         self.dim: int = cfg.embedding_dimension
 
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
     def load_or_build(self) -> None:
-        """Loads FAISS index from disk or builds new index from embeddings.json."""
-        if not os.path.exists(self.cfg.embeddings_json_path):
-            raise FileNotFoundError(f"Embeddings file not found: {self.cfg.embeddings_json_path}")
+        """
+        Load the pre-built FAISS index and metadata from disk.
 
-        logger.info(f"Loading vector records from {self.cfg.embeddings_json_path}...")
-        with open(self.cfg.embeddings_json_path, "r", encoding="utf-8") as f:
-            self.records = json.load(f)
-
-        if not self.records:
-            raise ValueError("embeddings.json is empty!")
-
-        # Extract embeddings matrix
-        raw_matrix = []
-        for r in self.records:
-            vec = r.get("embedding", [])
-            if not vec or len(vec) != self.dim:
-                raise ValueError(f"Vector length mismatch for chunk '{r.get('chunk_id')}': expected {self.dim}, got {len(vec)}")
-            raw_matrix.append(vec)
-
-        matrix_np = np.array(raw_matrix, dtype=np.float32)
-
-        # L2-normalize vectors for exact Cosine Similarity via Inner Product
-        norms = np.linalg.norm(matrix_np, axis=1, keepdims=True)
-        norms[norms == 0] = 1e-10
-        normalized_matrix = matrix_np / norms
-
-        # Create FAISS IndexFlatIP
-        self.index = faiss.IndexFlatIP(self.dim)
-        self.index.add(normalized_matrix)
-
-        # Save index to disk if path configured
-        try:
-            faiss.write_index(self.index, self.cfg.vector_index_path)
-            logger.info(f"FAISS vector index built successfully: {self.count()} vectors (Dim: {self.dim}) saved to {self.cfg.vector_index_path}")
-        except Exception as e:
-            logger.warning(f"Could not save FAISS index to {self.cfg.vector_index_path}: {e}")
+        Raises
+        ------
+        RuntimeError
+            If vector_index.faiss is missing.
+        RuntimeError
+            If metadata.pkl is missing.
+        RuntimeError
+            If vector count != metadata record count (index corruption).
+        RuntimeError
+            If index dimension does not match expected dimension.
+        """
+        self._load_faiss_index()
+        self._load_metadata()
+        self._validate_store()
+        logger.info(
+            "VectorStore ready: %d vectors (dim=%d)", self.index.ntotal, self.index.d
+        )
 
     def get_chunk_by_index(self, idx: int) -> dict:
-        """Returns raw payload record dictionary for vector index position."""
+        """Return the raw payload record for a given FAISS position."""
         if 0 <= idx < len(self.records):
             return self.records[idx]
-        raise IndexError(f"Vector index {idx} out of range [0, {len(self.records)})")
+        raise IndexError(
+            f"Index {idx} is out of range [0, {len(self.records)})."
+        )
 
     def count(self) -> int:
-        """Returns total vector count in index."""
-        return self.index.ntotal if self.index else 0
+        """Return total vector count inside the loaded FAISS index."""
+        return self.index.ntotal if self.index is not None else 0
+
+    # ------------------------------------------------------------------
+    # Private helpers
+    # ------------------------------------------------------------------
+
+    def _load_faiss_index(self) -> None:
+        """Read the persisted FAISS index from disk."""
+        path = self.cfg.vector_index_path
+        if not os.path.exists(path):
+            raise RuntimeError(
+                f"\n[VectorStore] FAISS index not found: '{path}'\n\n"
+                "The index must be built before starting the retriever.\n"
+                "Run the offline index builder first:\n\n"
+                "    python build_faiss_index.py\n"
+            )
+        self.index = faiss.read_index(path)
+        logger.info("FAISS index loaded from '%s'  (%d vectors, dim=%d)",
+                    path, self.index.ntotal, self.index.d)
+
+    def _load_metadata(self) -> None:
+        """Load the chunk payload store from the companion pickle file."""
+        path = self.cfg.metadata_pkl_path
+        if not os.path.exists(path):
+            raise RuntimeError(
+                f"\n[VectorStore] Metadata store not found: '{path}'\n\n"
+                "The metadata file is generated alongside the FAISS index.\n"
+                "Rebuild both by running:\n\n"
+                "    python build_faiss_index.py\n"
+            )
+        with open(path, "rb") as fh:
+            self.records = pickle.load(fh)
+        logger.info("Metadata loaded from '%s'  (%d records)", path, len(self.records))
+
+    def _validate_store(self) -> None:
+        """
+        Cross-validate FAISS index and metadata after loading.
+        Aborts startup on any inconsistency to prevent silent retrieval errors.
+        """
+        errors: List[str] = []
+
+        if self.index.ntotal != len(self.records):
+            errors.append(
+                f"Count mismatch: FAISS has {self.index.ntotal} vectors "
+                f"but metadata has {len(self.records)} records. "
+                f"The index may be corrupted. Rebuild with: python build_faiss_index.py"
+            )
+
+        if self.index.d != self.dim:
+            errors.append(
+                f"Dimension mismatch: FAISS index is {self.index.d}-dim, "
+                f"config expects {self.dim}-dim. "
+                f"Rebuild with: python build_faiss_index.py"
+            )
+
+        chunk_ids = [r.get("chunk_id") for r in self.records]
+        duplicate_ids = [cid for cid in chunk_ids if chunk_ids.count(cid) > 1]
+        if duplicate_ids:
+            errors.append(
+                f"Duplicate chunk_ids in metadata: {list(set(duplicate_ids))[:5]}"
+            )
+
+        missing_content = [r.get("chunk_id") for r in self.records if not r.get("content")]
+        if missing_content:
+            errors.append(
+                f"Records with missing content field: {missing_content[:5]}"
+            )
+
+        if errors:
+            for err in errors:
+                logger.error("  [FAIL] %s", err)
+            raise RuntimeError(
+                "VectorStore startup validation FAILED:\n  - "
+                + "\n  - ".join(errors)
+            )
+
+        logger.info("Store validation passed.")

@@ -27,6 +27,7 @@ class RetrieverConfig:
     embeddings_json_path: str = "embeddings.json"
     chunks_json_path: str = "chunks.json"
     vector_index_path: str = "vector_index.faiss"
+    metadata_pkl_path: str = "metadata.pkl"
 
     # Search & Retrieval Hyperparameters
     top_k_initial: int = 20           # Initial candidate retrieval count from FAISS
