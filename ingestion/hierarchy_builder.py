@@ -1114,13 +1114,14 @@ def hierarchy_stats(doc: DocumentNode) -> dict:
 
 if __name__ == "__main__":
     import os
-    sys.path.insert(0, os.path.dirname(__file__))
+    import sys
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
     _configure_utf8_console()
 
     from ingestion.parser import advanced_parse_pdf
 
-    PDF = "9789241550284-eng.pdf"
+    PDF = os.path.join("data", "pdfs", "9789241550284-eng.pdf")
     _safe_print(f"[Hierarchy Builder] Parsing PDF: {PDF} ...")
     parsed_docs, _ = advanced_parse_pdf(PDF)
     _safe_print(f"[Hierarchy Builder] Pages received: {len(parsed_docs)}")

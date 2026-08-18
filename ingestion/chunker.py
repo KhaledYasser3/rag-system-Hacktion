@@ -640,10 +640,14 @@ def print_chunk_statistics(doc, chunks: List[SemanticChunk]) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
     from ingestion.parser import advanced_parse_pdf
     from ingestion.hierarchy_builder import HierarchyBuilder
 
-    PDF = "9789241550284-eng.pdf"
+    PDF = os.path.join("data", "pdfs", "9789241550284-eng.pdf")
     print(f"[Semantic Chunker] Parsing PDF: {PDF} ...")
     parsed_docs, _ = advanced_parse_pdf(PDF)
 

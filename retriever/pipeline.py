@@ -9,9 +9,15 @@
 
 from __future__ import annotations
 
+import os
+import sys
 import time
 import logging
 from typing import Optional, List
+
+# Ensure project root directory is in Python path for clean script & module execution
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from config.settings import RetrieverConfig, DEFAULT_CONFIG
 from shared.models import Query, RetrievedChunk, SearchResult
 from retriever.prompt_builder import QueryProcessor

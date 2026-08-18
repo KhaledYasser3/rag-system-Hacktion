@@ -9,6 +9,10 @@
 
 import os
 import sys
+
+# Ensure project root directory is in Python path for clean script & module execution
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from ingestion.parser import advanced_parse_pdf
 from ingestion.cleaner import clean_text
 from ingestion.hierarchy_builder import HierarchyBuilder
