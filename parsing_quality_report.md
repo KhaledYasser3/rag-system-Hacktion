@@ -11,9 +11,9 @@
   * General Tables: 29
 
 ## ⚡ Runtime Performance Profile
-- **Total Execution Time**: 9.31 seconds
+- **Total Execution Time**: 9.42 seconds
 - **Throughput Rate**: 0.13 seconds/page
-- **Peak RAM Allocation**: 76.67 MB
+- **Peak RAM Allocation**: 76.70 MB
 
 ## 🛠️ Layout & Parsing Structure
 - **Multi-Column Segmentation Blocks**: 1318
