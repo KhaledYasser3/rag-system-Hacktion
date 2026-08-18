@@ -1,9 +1,10 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Query Processor
+  RETRIEVER FRAMEWORK — Prompt & Query Builder
 =============================================================================
   Preprocesses user query strings (lowercasing, whitespace cleanup,
-  punctuation normalization, medical synonym expansion interface).
+  punctuation normalization, medical synonym expansion interface) and
+  constructs structured prompts for generation.
 =============================================================================
 """
 
@@ -12,7 +13,7 @@ from __future__ import annotations
 import re
 from abc import ABC, abstractmethod
 from typing import List, Dict, Set
-from stage_5_retriever.models import Query
+from shared.models import Query, RetrievedChunk
 
 
 class SynonymExpander(ABC):
@@ -63,15 +64,11 @@ class QueryProcessor:
             raise ValueError("Query string cannot be empty.")
 
         cleaned = raw_query.strip()
-
-        # Lowercase normalization
         lowered = cleaned.lower()
 
-        # Punctuation & extra space cleanup
         normalized = re.sub(r"\s+", " ", lowered)
         normalized = re.sub(r"[^\w\s\-\?:.,]", "", normalized).strip()
 
-        # Medical Synonym Expansion
         expanded = self.synonym_expander.expand(normalized) if self.synonym_expander else []
 
         return Query(
@@ -80,3 +77,35 @@ class QueryProcessor:
             normalized_query=normalized,
             expanded_terms=expanded
         )
+
+
+def build_rag_prompt(query: str, retrieved_chunks: List[RetrievedChunk]) -> str:
+    """
+    Constructs a structured prompt instructing the LLM to generate a clinical response
+    with explicit PDF page citations.
+    """
+    context_str = ""
+    for idx, chunk in enumerate(retrieved_chunks, start=1):
+        p_start = chunk.metadata.get("page_start", "N/A")
+        p_end = chunk.metadata.get("page_end", p_start)
+        page_ref = f"Page {p_start}" if p_start == p_end else f"Pages {p_start}-{p_end}"
+        chapter = chunk.metadata.get("chapter", "General")
+        section = chunk.metadata.get("section", "")
+        
+        context_str += f"--- [Source #{idx}: WHO Guidelines {page_ref} | {chapter} > {section}] ---\n"
+        context_str += f"{chunk.content}\n\n"
+
+    prompt = f"""You are an expert medical AI assistant helping physicians diagnose and treat diabetes based strictly on official WHO Guidelines.
+
+### CONTEXT FROM WHO GUIDELINES:
+{context_str}
+
+### QUESTION / CLINICAL SCENARIO:
+{query}
+
+### INSTRUCTIONS:
+1. Provide a concise, clear clinical summary and treatment recommendation.
+2. Explicitly cite the exact page numbers from the WHO Guidelines for every recommendation or clinical claim (e.g., "[WHO Guidelines Page 12]").
+3. If the context does not contain enough information to answer the question, state that clearly.
+"""
+    return prompt

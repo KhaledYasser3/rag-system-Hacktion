@@ -60,8 +60,8 @@ class PipelineConfig:
     """Centralized configuration settings for the Embedding Pipeline."""
     model_name: str = "nomic-embed-text"
     ollama_host: str = "http://localhost:11434"
-    input_path: str = "chunks.json"
-    output_path: str = "embeddings.json"
+    input_path: str = os.path.join("data", "chunks", "chunks.json")
+    output_path: str = os.path.join("data", "embeddings", "embeddings.json")
     batch_size: int = 32
     timeout_seconds: int = 30
     max_retries: int = 3

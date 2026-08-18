@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Data Models
+  SHARED DATA MODELS
 =============================================================================
   Dataclass definitions representing queries, search candidates, final
   retrieved chunks, search results, benchmark queries, and evaluation metrics.

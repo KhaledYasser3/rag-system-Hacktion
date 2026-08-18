@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Test & Benchmark Suite
+  RETRIEVER FRAMEWORK — Test & Benchmark Suite
 =============================================================================
   Runs clinical benchmark queries against MedicalRetriever and computes
   Recall@5, Recall@10, Precision@5, MRR, Hit Rate, nDCG, and Latency report.
@@ -12,13 +12,13 @@ from __future__ import annotations
 import os
 import sys
 
-# Ensure parent directory is in Python path for clean imports
+# Ensure project root directory is in Python path for clean imports
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from stage_5_retriever.config import RetrieverConfig
-from stage_5_retriever.models import BenchmarkQuery
-from stage_5_retriever.retriever import MedicalRetriever
-from stage_5_retriever.evaluator import RetrievalEvaluator
+from config.settings import RetrieverConfig
+from shared.models import BenchmarkQuery
+from retriever.pipeline import MedicalRetriever
+from retriever.evaluator import RetrievalEvaluator
 
 
 BENCHMARK_QUERIES = [

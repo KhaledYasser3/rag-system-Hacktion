@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Configuration Module
+  CONFIGURATION MODULE
 =============================================================================
   Centralized settings and hyperparameters for vector indexing, query
   processing, FAISS similarity search, reranking, and context building.
@@ -16,7 +16,7 @@ from typing import Tuple
 
 @dataclass
 class RetrieverConfig:
-    """Centralized configuration parameters for Stage 5 Retriever Framework."""
+    """Centralized configuration parameters for Retriever Framework."""
 
     # Embedding Model & Server Settings
     embedding_model: str = "nomic-embed-text"
@@ -24,10 +24,10 @@ class RetrieverConfig:
     embedding_dimension: int = 768
 
     # Paths
-    embeddings_json_path: str = "embeddings.json"
-    chunks_json_path: str = "chunks.json"
-    vector_index_path: str = "vector_index.faiss"
-    metadata_pkl_path: str = "metadata.pkl"
+    embeddings_json_path: str = os.path.join("data", "embeddings", "embeddings.json")
+    chunks_json_path: str = os.path.join("data", "chunks", "chunks.json")
+    vector_index_path: str = os.path.join("data", "vector_db", "vector_index.faiss")
+    metadata_pkl_path: str = os.path.join("data", "vector_db", "metadata.pkl")
 
     # Search & Retrieval Hyperparameters
     top_k_initial: int = 20           # Initial candidate retrieval count from FAISS

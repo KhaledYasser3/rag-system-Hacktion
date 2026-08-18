@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Metrics Calculations
+  RETRIEVER FRAMEWORK — Metrics Calculations
 =============================================================================
   Pure mathematical metric calculations for Information Retrieval (IR)
   evaluations: Recall@K, Precision@K, MRR, Hit Rate, nDCG@K.
@@ -58,13 +58,11 @@ def calculate_ndcg_at_k(retrieved_ids: List[str], ground_truth_ids: List[str], k
 
     truth_set = set(ground_truth_ids)
 
-    # Calculate DCG@K
     dcg = 0.0
     for i, cid in enumerate(retrieved_ids[:k], start=1):
         if cid in truth_set:
             dcg += 1.0 / math.log2(i + 1)
 
-    # Calculate Ideal DCG@K (IDCG@K)
     idcg = sum(1.0 / math.log2(i + 1) for i in range(1, min(len(truth_set), k) + 1))
 
     return (dcg / idcg) if idcg > 0 else 0.0

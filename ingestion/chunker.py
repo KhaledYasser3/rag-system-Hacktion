@@ -640,8 +640,8 @@ def print_chunk_statistics(doc, chunks: List[SemanticChunk]) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    from professional_parser import advanced_parse_pdf
-    from hierarchy_builder import HierarchyBuilder
+    from ingestion.parser import advanced_parse_pdf
+    from ingestion.hierarchy_builder import HierarchyBuilder
 
     PDF = "9789241550284-eng.pdf"
     print(f"[Semantic Chunker] Parsing PDF: {PDF} ...")
@@ -658,8 +658,8 @@ if __name__ == "__main__":
     chunks = chunker.build_chunks(doc)
 
     # Export chunks to disk
-    export_chunks(chunks, json_path="chunks.json", jsonl_path="chunks.jsonl")
-    print(f"[Semantic Chunker] Saved {len(chunks)} chunks to chunks.json and chunks.jsonl")
+    export_chunks(chunks, json_path="data/chunks/chunks.json", jsonl_path="data/chunks/chunks.jsonl")
+    print(f"[Semantic Chunker] Saved {len(chunks)} chunks to data/chunks/chunks.json and data/chunks/chunks.jsonl")
 
     # Print summary statistics and validation report
     print_chunk_statistics(doc, chunks)

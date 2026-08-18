@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Vector Search
+  RETRIEVER FRAMEWORK — Vector Search
 =============================================================================
   Performs fast similarity search using FAISS vector store.
   Returns Top-K raw candidate chunks and similarity scores without reranking.
@@ -12,8 +12,8 @@ from __future__ import annotations
 import logging
 import numpy as np
 from typing import List, Tuple, Dict, Any
-from stage_5_retriever.config import RetrieverConfig, DEFAULT_CONFIG
-from stage_5_retriever.vector_store import FAISSVectorStore
+from config.settings import RetrieverConfig, DEFAULT_CONFIG
+from retriever.vector_store import FAISSVectorStore
 
 logger = logging.getLogger("VectorSearch")
 

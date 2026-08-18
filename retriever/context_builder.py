@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Context Builder
+  RETRIEVER FRAMEWORK — Context Builder
 =============================================================================
   Assembles final Top-K retrieved chunks from ranked search candidates,
   performing deduplication, relevance/page sorting, metadata preservation,
@@ -12,8 +12,8 @@ from __future__ import annotations
 
 import logging
 from typing import List, Tuple, Dict, Set
-from stage_5_retriever.config import RetrieverConfig, DEFAULT_CONFIG
-from stage_5_retriever.models import RetrievedChunk
+from config.settings import RetrieverConfig, DEFAULT_CONFIG
+from shared.models import RetrievedChunk
 
 logger = logging.getLogger("ContextBuilder")
 

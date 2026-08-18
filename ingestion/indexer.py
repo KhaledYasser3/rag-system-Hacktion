@@ -42,9 +42,9 @@ logger = logging.getLogger("IndexBuilder")
 # ---------------------------------------------------------------------------
 # Constants -- mirror RetrieverConfig defaults
 # ---------------------------------------------------------------------------
-EMBEDDINGS_JSON_PATH: str = "embeddings.json"
-VECTOR_INDEX_PATH: str = "vector_index.faiss"
-METADATA_PKL_PATH: str = "metadata.pkl"
+EMBEDDINGS_JSON_PATH: str = os.path.join("data", "embeddings", "embeddings.json")
+VECTOR_INDEX_PATH: str = os.path.join("data", "vector_db", "vector_index.faiss")
+METADATA_PKL_PATH: str = os.path.join("data", "vector_db", "metadata.pkl")
 EXPECTED_DIMENSION: int = 768
 
 # Payload fields to keep in metadata (embeddings are intentionally excluded)

@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Pipeline Orchestrator
+  RETRIEVER FRAMEWORK — Pipeline Orchestrator (Retrieval Entry Point)
 =============================================================================
   Orchestrates query processing, embedding, vector search, reranking, and
   context building without embedding business logic inside the orchestrator.
@@ -12,14 +12,14 @@ from __future__ import annotations
 import time
 import logging
 from typing import Optional, List
-from stage_5_retriever.config import RetrieverConfig, DEFAULT_CONFIG
-from stage_5_retriever.models import Query, RetrievedChunk, SearchResult
-from stage_5_retriever.query_processor import QueryProcessor
-from stage_5_retriever.query_embedder import QueryEmbedder
-from stage_5_retriever.vector_store import FAISSVectorStore
-from stage_5_retriever.vector_search import VectorSearchEngine
-from stage_5_retriever.reranker import BaseReranker, IdentityReranker
-from stage_5_retriever.context_builder import ContextBuilder
+from config.settings import RetrieverConfig, DEFAULT_CONFIG
+from shared.models import Query, RetrievedChunk, SearchResult
+from retriever.prompt_builder import QueryProcessor
+from retriever.query_embedder import QueryEmbedder
+from retriever.vector_store import FAISSVectorStore
+from retriever.search import VectorSearchEngine
+from retriever.reranker import BaseReranker, IdentityReranker
+from retriever.context_builder import ContextBuilder
 
 logger = logging.getLogger("RetrieverPipeline")
 
@@ -99,3 +99,14 @@ class MedicalRetriever:
             total_initial_found=len(candidates),
             latency_breakdown_ms=latencies
         )
+
+
+if __name__ == "__main__":
+    import sys
+    question = sys.argv[1] if len(sys.argv) > 1 else "What is the recommended second-line treatment for type 2 diabetes?"
+    print(f"Executing Medical Retriever for query: '{question}'...")
+    retriever = MedicalRetriever()
+    result = retriever.retrieve(question)
+    print(f"Retrieved {len(result.chunks)} chunks in {result.latency_breakdown_ms.get('total_ms', 0):.2f} ms.")
+    for i, c in enumerate(result.chunks, 1):
+        print(f"\n[Rank {i} | Score {c.score:.4f} | Page {c.page_start}] {c.content[:200]}...")

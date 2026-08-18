@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Reranker Module
+  RETRIEVER FRAMEWORK — Reranker Module
 =============================================================================
   Defines abstract Reranker interface and Identity Reranker implementation.
   Supports future integration of CrossEncoders, BGE Reranker, or Jina Reranker.
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import List, Tuple
-from stage_5_retriever.models import Query
+from shared.models import Query
 
 
 class BaseReranker(ABC):

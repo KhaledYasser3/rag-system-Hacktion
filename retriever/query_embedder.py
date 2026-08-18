@@ -1,6 +1,6 @@
 """
 =============================================================================
-  STAGE 5: RETRIEVER FRAMEWORK — Query Embedder
+  RETRIEVER FRAMEWORK — Query Embedder
 =============================================================================
   Generates 768-dimensional query vector embeddings using local Ollama
   (nomic-embed-text) with exponential retries and error handling.
@@ -15,8 +15,8 @@ import urllib.request
 import urllib.error
 import logging
 from typing import List, Union, Optional
-from stage_5_retriever.config import RetrieverConfig, DEFAULT_CONFIG
-from stage_5_retriever.models import Query
+from config.settings import RetrieverConfig, DEFAULT_CONFIG
+from shared.models import Query
 
 logger = logging.getLogger("QueryEmbedder")
 

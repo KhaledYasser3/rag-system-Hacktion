@@ -1118,7 +1118,7 @@ if __name__ == "__main__":
 
     _configure_utf8_console()
 
-    from professional_parser import advanced_parse_pdf
+    from ingestion.parser import advanced_parse_pdf
 
     PDF = "9789241550284-eng.pdf"
     _safe_print(f"[Hierarchy Builder] Parsing PDF: {PDF} ...")
