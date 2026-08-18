@@ -9,6 +9,6 @@
 - **Tables Extracted**: 47
 
 ## ⚡ Runtime Profile
-- **Total Execution Time**: 8.70 seconds
-- **Throughput Rate**: 0.12 seconds/page
+- **Total Execution Time**: 12.66 seconds
+- **Throughput Rate**: 0.18 seconds/page
 - **Peak RAM Allocation**: 77.00 MB

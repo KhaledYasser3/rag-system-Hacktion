@@ -21,9 +21,14 @@
 
 from __future__ import annotations
 
+import os
+import sys
 import hashlib
 import logging
 from typing import List, Dict, Any, Optional
+
+# Ensure project root is in python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from ingestion.chunking.models import ContentType, StructuralBlock, StructureAwareChunk
 from ingestion.chunking.config import ChunkingConfig
@@ -190,3 +195,18 @@ class ChunkingPipeline:
             blocks.append(s_block)
 
         return blocks
+
+
+if __name__ == "__main__":
+    from ingestion.chunker import run_chunking_evaluation
+    from ingestion.parser import advanced_parse_pdf
+    from ingestion.hierarchy_builder import HierarchyBuilder
+
+    PDF_PATH = os.path.join("data", "pdfs", "9789241550284-eng.pdf")
+    print(f"[Chunking Pipeline CLI] Parsing PDF: {PDF_PATH} ...")
+    parsed_docs, _ = advanced_parse_pdf(PDF_PATH)
+
+    builder = HierarchyBuilder()
+    doc_tree = builder.build(parsed_docs)
+
+    run_chunking_evaluation(doc_tree)
