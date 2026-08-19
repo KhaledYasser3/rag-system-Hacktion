@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "src"
 from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 from rag_system.retriever.pipeline import MedicalRetriever
@@ -43,6 +43,18 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize retriever: {e}")
     retriever = None
+
+
+@app.route("/", methods=["GET"])
+def index():
+    """Serve the main index.html frontend."""
+    return send_from_directory("ui", "index.html")
+
+
+@app.route("/<path:path>", methods=["GET"])
+def static_files(path):
+    """Serve static assets from the ui/ folder."""
+    return send_from_directory("ui", path)
 
 
 @app.route("/api/health", methods=["GET"])
@@ -147,9 +159,19 @@ def query():
 
 
 if __name__ == "__main__":
+    import webbrowser
+    from threading import Timer
+
+    def open_browser():
+        logger.info("Opening browser dashboard at http://localhost:5000 ...")
+        webbrowser.open_new("http://localhost:5000")
+
+    # Start the browser timer (delay of 1.5s to let the server bind)
+    Timer(1.5, open_browser).start()
+
     print("\n" + "=" * 60)
-    print("  DOCUMENT RAG AI — Flask API Server")
-    print("  API running at: http://localhost:5000")
-    print("  Open ui/index.html in your browser")
+    print("  ✨ WHO DIABETES RAG SYSTEM IS READY!")
+    print("  👉 Portal dashboard: http://localhost:5000")
     print("=" * 60 + "\n")
+    
     app.run(host="0.0.0.0", port=5000, debug=False)
