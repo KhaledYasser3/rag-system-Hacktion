@@ -71,10 +71,11 @@ def query():
     if not retriever:
         return jsonify({"error": "Retriever not initialized. Run python scripts/ingest.py first."}), 500
 
-    data = request.get_json(force=True)
+    data = request.json or {}
     question = data.get("question", "").strip()
     top_k = int(data.get("top_k", 5))
-    threshold = float(data.get("threshold", 0.30))
+    threshold = float(data.get("threshold", 0.20))
+    model_choice = data.get("model_choice", "Cloud API (Groq)")
 
     if not question:
         return jsonify({"error": "question field is required"}), 400
@@ -103,14 +104,19 @@ def query():
         logger.info(f"Retrieved {len(chunks)} chunks for question (lang={lang}).")
 
         # 2. Generate answer via LLM
+        colab_url = os.environ.get("COLAB_TUNNEL_URL", "http://localhost:8000").strip()
+        
         generator = MedicalGenerator(
             groq_api_key=os.environ.get("GROQ_API_KEY", ""),
             groq_model="openai/gpt-oss-120b",
-            ollama_host="http://localhost:11434",
-            ollama_model="llama3"
+            ollama_host=colab_url
         )
-        answer = generator.generate_answer(question, chunks)
-        model_used = "Ollama (llama3 local)" if generator.used_fallback else "Groq (GPT-OSS-120B)"
+        answer = generator.generate_answer(question, chunks, model_choice=model_choice)
+        
+        if model_choice == "Qwen 3B (Colab Server)":
+            model_used = "Qwen 3B (Colab Server)"
+        else:
+            model_used = "Ollama (llama3 local)" if generator.used_fallback else "Groq (GPT-OSS-120B)"
 
         # 3. Serialize chunks for JSON response
         chunks_data = []

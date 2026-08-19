@@ -420,6 +420,17 @@
     </div>
   </div>
 
+  <!-- Model Selection -->
+  <div>
+    <p class="section-title">Model Selection</p>
+    <div class="param-block" style="margin-bottom: 15px;">
+      <select id="model-choice" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 14px; background-color: white; color: #1e293b; outline: none; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <option value="Cloud API (Groq)" selected>Cloud API (Groq)</option>
+        <option value="Qwen 3B (Colab Server)">Qwen 3B (Colab Server)</option>
+      </select>
+    </div>
+  </div>
+
   <!-- Parameters -->
   <div>
     <p class="section-title">RAG Parameters</p>
@@ -560,6 +571,7 @@ async function submitQuery(question) {
 
   const top_k    = parseInt(document.getElementById("topk").value);
   const threshold = parseFloat(document.getElementById("threshold").value);
+  const model_choice = document.getElementById("model-choice").value;
 
   const msgs = document.getElementById("messages");
   const btn  = document.getElementById("send-btn");
@@ -577,7 +589,7 @@ async function submitQuery(question) {
     const res  = await fetch(`${API}/api/query`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, top_k, threshold })
+      body: JSON.stringify({ question, top_k, threshold, model_choice })
     });
     const data = await res.json();
 
@@ -587,6 +599,7 @@ async function submitQuery(question) {
       msgs.appendChild(makeBubble("bot", "❌ Error: " + data.error));
     } else {
       document.getElementById("model-badge").textContent =
+        data.model_used?.includes("Qwen") ? "💻 Colab Qwen 3B" : 
         data.model_used?.includes("Groq") ? "🟢 Groq · GPT-OSS-120B" : "🟡 Local Ollama";
       msgs.appendChild(makeBotBubble(data));
     }

@@ -167,7 +167,17 @@ with st.sidebar:
         
     st.markdown("---")
     
-    # 3.1 Hyperparameters sliders
+    # 3.1 Model Selection Controls
+    st.header("🤖 Model Selection")
+    model_choice = st.selectbox(
+        "Generation Model",
+        options=["Cloud API (Groq)", "Qwen 3B (Colab Server)"],
+        index=0,
+        help="Select whether to use the high-performance Groq Cloud API or your custom-tuned Qwen 3B model running on Google Colab."
+    )
+    st.markdown("---")
+
+    # 3.2 Hyperparameters sliders
     st.header("🎛️ RAG Parameters")
     
     similarity_threshold = st.slider(
@@ -330,24 +340,29 @@ if user_query:
             
             # LLM Text Generation
             t_gen_start = time.time()
+            
             generator = MedicalGenerator(
                 groq_api_key=groq_api_key,
-                groq_model="llama-3.3-70b-versatile",
-                ollama_host="http://localhost:11434",
-                ollama_model="llama3"
+                groq_model="openai/gpt-oss-120b"
             )
             
-            answer_text = generator.generate_answer(user_query, retrieved_chunks)
+            answer_text = generator.generate_answer(
+                query=user_query,
+                chunks=retrieved_chunks,
+                model_choice=model_choice
+            )
             
             gen_latency_ms = (time.time() - t_gen_start) * 1000
             latency["generation_ms"] = gen_latency_ms
             latency["total_ms"] += gen_latency_ms
             
             # Connection Status HTML
-            if generator.used_fallback:
+            if model_choice == "Qwen 3B (Colab Server)":
+                status_html = """<div style="margin-top: 10px;"><span style="color: #2563eb; font-weight: bold; background-color: #dbeafe; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">💻 Colab: Using custom Qwen 3B (MedQuad)</span></div>"""
+            elif generator.used_fallback:
                 status_html = """<div style="margin-top: 10px;"><span style="color: #d97706; font-weight: bold; background-color: #fef3c7; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">⚠️ Fallback: Using local Ollama model (llama3)</span></div>"""
             else:
-                status_html = """<div style="margin-top: 10px;"><span style="color: #059669; font-weight: bold; background-color: #d1fae5; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">🟢 Connected: Using Groq Cloud API (Llama 70B)</span></div>"""
+                status_html = """<div style="margin-top: 10px;"><span style="color: #059669; font-weight: bold; background-color: #d1fae5; padding: 4px 10px; border-radius: 9999px; font-size: 12px;">🟢 Connected: Using Groq Cloud API (GPT-OSS-120B)</span></div>"""
             
             # Metrics HTML
             total_time_ms = latency.get("total_ms", 0.0)
