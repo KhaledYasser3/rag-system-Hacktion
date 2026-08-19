@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag_system"
+version = "0.1.0"
+description = "Medical Retrieval-Augmented Generation (RAG) AI Assistant"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "faiss-cpu>=1.7.4",
+    "pdfplumber>=0.10.0",
+    "pytesseract>=0.3.10",
+    "tiktoken>=0.5.0",
+    "pillow>=10.0.0",
+    "numpy>=1.24.0",
+    "qdrant-client>=1.19.0",
+    "fastembed>=0.2.0",
+    "google-generativeai>=0.3.0",
+    "openai>=1.0.0",
+    "cohere>=5.0.0",
+    "groq>=0.4.0",
+    "streamlit>=1.30.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["rag_system*"]

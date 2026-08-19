@@ -36,6 +36,9 @@ media/
 # ChromaDB / vector store data (generated at runtime)
 chroma_db/
 *.db
+data/qdrant_db/
+data/qdrant_storage/
+data/embeddings/embeddings.json
 
 # OS
 .DS_Store

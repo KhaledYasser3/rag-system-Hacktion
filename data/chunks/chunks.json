@@ -43,10 +43,10 @@
     "chapter": "Front Matter & Executive Overview",
     "section": "",
     "subsection": "",
-    "content": "## Front Matter & Executive Overview\n\nIf you wish to reuse material from this work that is attributed to a third party, such as tables, figures or images, it is your responsibility to determine whether permission is needed for that reuse and to obtain permission from the copyright holder. The risk of claims resulting from infringement of any third-party-owned component in the work rests solely with the user. General disclaimers. The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of WHO concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. The mention of specific companies or of certain manufacturers’ products does not imply that they are endorsed or recommended by WHO in preference to others of a similar nature that are not mentioned. Errors and omissions excepted, the names of proprietary products are distinguished by initial capital letters. All reasonable precautions have been taken by WHO to verify the information contained in this publication. However, the published material is being distributed without warranty of any kind, either expressed or implied. The responsibility for the interpretation and use of the material lies with the reader. In no event shall WHO be liable for damages arising from its use.\n\nContents\nAbbreviations .......................................................................................................................................... 3\nGlossary ................................................................................................................................................... 4\nExecutive summary ................................................................................................................................. 6\n    - Introduction .................................................................................................................................... 8\n\n- Methods for developing the guidelines ........................................................................................... 10\n\n2.6. Funding……………………………………………………………………………………………………………………………..13\n    - Recommendations ........................................................................................................................ 13\n3.1. Hypoglycaemic agents for second-line treatment in type 2 diabetes .................................. 13\n\n3.2. Hypoglycaemic agents for third-line treatment in type 2 diabetes ...................................... 16\n\n- Research gaps ............................................................................................................................... 21\n\n- Publication, implementation and evaluation ............................................................................... 22\n\nReferences ............................................................................................................................................ 24",
+    "content": "## Front Matter & Executive Overview\n\nIf you wish to reuse material from this work that is attributed to a third party, such as tables, figures or images, it is your responsibility to determine whether permission is needed for that reuse and to obtain permission from the copyright holder. The risk of claims resulting from infringement of any third-party-owned component in the work rests solely with the user. General disclaimers. The designations employed and the presentation of the material in this publication do not imply the expression of any opinion whatsoever on the part of WHO concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. Dotted and dashed lines on maps represent approximate border lines for which there may not yet be full agreement. The mention of specific companies or of certain manufacturers’ products does not imply that they are endorsed or recommended by WHO in preference to others of a similar nature that are not mentioned. Errors and omissions excepted, the names of proprietary products are distinguished by initial capital letters. All reasonable precautions have been taken by WHO to verify the information contained in this publication. However, the published material is being distributed without warranty of any kind, either expressed or implied. The responsibility for the interpretation and use of the material lies with the reader. In no event shall WHO be liable for damages arising from its use.\n\nContents\nAbbreviations .......................................................................................................................................... 3\nGlossary ................................................................................................................................................... 4\nExecutive summary ................................................................................................................................. 6\n - Introduction .................................................................................................................................... 8\n\n- Methods for developing the guidelines ........................................................................................... 10\n\n2.6. Funding……………………………………………………………………………………………………………………………..13\n - Recommendations ........................................................................................................................ 13\n3.1. Hypoglycaemic agents for second-line treatment in type 2 diabetes .................................. 13\n\n3.2. Hypoglycaemic agents for third-line treatment in type 2 diabetes ...................................... 16\n\n- Research gaps ............................................................................................................................... 21\n\n- Publication, implementation and evaluation ............................................................................... 22\n\nReferences ............................................................................................................................................ 24",
     "page_start": 3,
     "page_end": 5,
-    "token_count": 432,
+    "token_count": 430,
     "table_references": [],
     "figure_references": []
   },
@@ -82,10 +82,10 @@
     "chapter": "Glossary",
     "section": "",
     "subsection": "",
-    "content": "## Glossary\n\n| Column 1 |\n| --- |\n| Cardiovascular diseases (CVDs) |\n| A group of disorders of the heart and blood vessels that include coronary heart disease and |\n| cerebrovascular disease. |\n\nDiabetic ketoacidosis and hyperosmolar hyperglycaemia\nLife-threatening conditions characterized by fluid and electrolyte depletion, high blood glucose\nlevels and metabolic acidosis (metabolic acidosis may be absent in hyperosmolar hyperglycaemia).\nDipeptidyl peptidase-4 inhibitors (DPP-4 inhibitors or gliptins)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They suppress the degradation |\n| --- |\n| of incretins by blocking the action of the enzyme dipeptidyl-peptidase 4. This stimulates insulin |\n| secretion and suppresses glucagon release. |\n\nHbA1c\nHaemoglobin glycated by non-enzymatic attachment of glucose to haemoglobin. The concentration\nof HbA1c is the most commonly used measure of chronic glycaemia in clinical trials and diabetes\nmanagement. It is considered to reflect the integrated mean glucose level over the previous 8–12\nweeks.\nHypoglycaemia\nPotentially life-threatening low concentration of blood glucose, most frequently a side-effect of\npharmacological treatment. There is no universally agreed definition. In studies the definitions of\nhypoglycaemia are most frequently in the range <4 mmol/L to ≤ 2.8 mmol/L. Severe hypoglycaemia\nis most frequently defined as a symptomatic condition that requires the assistance of a third person\nfor resuscitative actions.\n\n| Insulin analogues |\n| --- |\n| Insulins different from any occurring in nature and derived from human insulin by modifying its |\n| structure to change the pharmacokinetic profile. |\n\n\n\n| Metformin |\n| --- |\n| A biguanide oral hypoglycemic agent used in treating type 2 diabetes. It decreases glucose |\n| production by the liver and increases the insulin sensitivity of body tissues. |\n\n\n\n| Neutral Protamine Hagedorn (NPH or isophane) insulin |\n| --- |\n| An intermediate-acting insulin preparation used in type 1 and type 2 diabetes. It is produced by |\n| crystallizing zinc-insulin-protamines at neutral pH. It is called neutral protamine Hagedorn for |\n| inventor Hans Christian Hagedorn. |",
+    "content": "## Glossary\n\n| Column 1 |\n| --- |\n| Cardiovascular diseases (CVDs) |\n| A group of disorders of the heart and blood vessels that include coronary heart disease and |\n| cerebrovascular disease. |\n\nDiabetic ketoacidosis and hyperosmolar hyperglycaemia\nLife-threatening conditions characterized by fluid and electrolyte depletion, high blood glucose\nlevels and metabolic acidosis (metabolic acidosis may be absent in hyperosmolar hyperglycaemia).\nDipeptidyl peptidase-4 inhibitors (DPP-4 inhibitors or gliptins)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They suppress the degradation |\n| --- |\n| of incretins by blocking the action of the enzyme dipeptidyl-peptidase 4. This stimulates insulin |\n| secretion and suppresses glucagon release. |\n\nHbA1c\nHaemoglobin glycated by non-enzymatic attachment of glucose to haemoglobin. The concentration\nof HbA1c is the most commonly used measure of chronic glycaemia in clinical trials and diabetes\nmanagement. It is considered to reflect the integrated mean glucose level over the previous 8–12\nweeks.\nHypoglycaemia\nPotentially life-threatening low concentration of blood glucose, most frequently a side-effect of\npharmacological treatment. There is no universally agreed definition. In studies the definitions of\nhypoglycaemia are most frequently in the range <4 mmol/L to ≤ 2.8 mmol/L. Severe hypoglycaemia\nis most frequently defined as a symptomatic condition that requires the assistance of a third person\nfor resuscitative actions.\n\n| Insulin analogues |\n| --- |\n| Insulins different from any occurring in nature and derived from human insulin by modifying its |\n| structure to change the pharmacokinetic profile. |\n\n| Metformin |\n| --- |\n| A biguanide oral hypoglycemic agent used in treating type 2 diabetes. It decreases glucose |\n| production by the liver and increases the insulin sensitivity of body tissues. |\n\n| Neutral Protamine Hagedorn (NPH or isophane) insulin |\n| --- |\n| An intermediate-acting insulin preparation used in type 1 and type 2 diabetes. It is produced by |\n| crystallizing zinc-insulin-protamines at neutral pH. It is called neutral protamine Hagedorn for |\n| inventor Hans Christian Hagedorn. |",
     "page_start": 7,
     "page_end": 7,
-    "token_count": 522,
+    "token_count": 520,
     "table_references": [
       "Table Page 7",
       "Table Page 7",
@@ -99,10 +99,10 @@
     "chapter": "Glossary",
     "section": "",
     "subsection": "",
-    "content": "## Glossary\n\nSodium-glucose co-transporters type 2 inhibitors (SGLT-2 inhibitors)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They lower blood glucose by causing the |\n| --- |\n| kidneys to remove glucose from the body through the urine. |\n\n\n\n| Sulfonylureas |\n| --- |\n| Oral hypoglycemic agents used in treating type 2 diabetes. They stimulate insulin secretion |\n\npancreas.\n\nThiazolidinediones (glitazones)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They work by lowering insulin resistance |\n| --- |\n| – a core physiologic defect in those with type 2 diabetes. |\n\n\n\n| Type 1 diabetes |\n| --- |\n| Diabetes caused by the destruction of pancreatic beta-cells, resulting in lack of insulin production by |\n| the pancreas and need for insulin injections for survival. |\n\n\n\n| Type 2 diabetes |\n| --- |\n| Diabetes characterized by various degrees of disorders of insulin action in the body and insulin |\n| secretion by the pancreas. Insulin injections are not needed for survival, but might be needed for |\n| controlling blood glucose levels. |\n\nExecutive summary Diabetes is a chronic, progressive disease characterized by elevated blood glucose levels. Diabetes can lead to complications such as cardiovascular disease, damage to eyes, kidneys and nerves, and premature death. Globally, more than 400 million adults live with diabetes, and diabetes directly caused 1.6 million deaths in 2015. Blood glucose management has an important role in preventing the development and progression of complications in both type 1 and type 2 diabetes. The objective of the guidelines is to provide public health guidance on pharmacological agents for managing hyperglycaemia in type 1 and type 2 diabetes for use in primary health-care in lowresource settings. These guidelines update the WHO Package of Essential NCD Interventions (WHO PEN) for primary care in low-resources settings recommendations for managing hyperglycaemia, reviewing several newer oral agents: dipeptidyl peptidase-4 inhibitors (DPP-4 inhibitors), sodiumglucose co-transporter 2 inhibitors (SGLT-2 inhibitors) and thiazolidinediones (TZDs). These agents have formerly been reviewed as first-line treatment options by the WHO Expert Committee on the Selection and Use of Essential Medicines and were not found to be superior to metformin and sulfonylurea. These guidelines consider their use as second- and third- line treatment for hyperglycaemia in type 2 diabetes. The guidelines also present new recommendations on the selection of type of insulin (analogue versus human insulin) for adults with type 1 diabetes and in adults with type 2 diabetes for whom insulin is indicated. WHO PEN recommendations on other aspects of diabetes treatment have not been updated because priority was given to the area where the majority of changes in evidence and practice have occurred since the publication of WHO PEN. The guidelines were developed in accordance with the WHO Handbook for Guideline Development.",
+    "content": "## Glossary\n\nSodium-glucose co-transporters type 2 inhibitors (SGLT-2 inhibitors)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They lower blood glucose by causing the |\n| --- |\n| kidneys to remove glucose from the body through the urine. |\n\n| Sulfonylureas |\n| --- |\n| Oral hypoglycemic agents used in treating type 2 diabetes. They stimulate insulin secretion |\n\npancreas.\n\nThiazolidinediones (glitazones)\n\n| Oral hypoglycaemic agents used in treating type 2 diabetes. They work by lowering insulin resistance |\n| --- |\n| – a core physiologic defect in those with type 2 diabetes. |\n\n| Type 1 diabetes |\n| --- |\n| Diabetes caused by the destruction of pancreatic beta-cells, resulting in lack of insulin production by |\n| the pancreas and need for insulin injections for survival. |\n\n| Type 2 diabetes |\n| --- |\n| Diabetes characterized by various degrees of disorders of insulin action in the body and insulin |\n| secretion by the pancreas. Insulin injections are not needed for survival, but might be needed for |\n| controlling blood glucose levels. |\n\nExecutive summary Diabetes is a chronic, progressive disease characterized by elevated blood glucose levels. Diabetes can lead to complications such as cardiovascular disease, damage to eyes, kidneys and nerves, and premature death. Globally, more than 400 million adults live with diabetes, and diabetes directly caused 1.6 million deaths in 2015. Blood glucose management has an important role in preventing the development and progression of complications in both type 1 and type 2 diabetes. The objective of the guidelines is to provide public health guidance on pharmacological agents for managing hyperglycaemia in type 1 and type 2 diabetes for use in primary health-care in lowresource settings. These guidelines update the WHO Package of Essential NCD Interventions (WHO PEN) for primary care in low-resources settings recommendations for managing hyperglycaemia, reviewing several newer oral agents: dipeptidyl peptidase-4 inhibitors (DPP-4 inhibitors), sodiumglucose co-transporter 2 inhibitors (SGLT-2 inhibitors) and thiazolidinediones (TZDs). These agents have formerly been reviewed as first-line treatment options by the WHO Expert Committee on the Selection and Use of Essential Medicines and were not found to be superior to metformin and sulfonylurea. These guidelines consider their use as second- and third- line treatment for hyperglycaemia in type 2 diabetes. The guidelines also present new recommendations on the selection of type of insulin (analogue versus human insulin) for adults with type 1 diabetes and in adults with type 2 diabetes for whom insulin is indicated. WHO PEN recommendations on other aspects of diabetes treatment have not been updated because priority was given to the area where the majority of changes in evidence and practice have occurred since the publication of WHO PEN. The guidelines were developed in accordance with the WHO Handbook for Guideline Development.",
     "page_start": 7,
     "page_end": 9,
-    "token_count": 632,
+    "token_count": 629,
     "table_references": [
       "Table Page 7",
       "Table Page 8"
@@ -172,10 +172,10 @@
     "chapter": "Glossary",
     "section": "1.2 Target audience",
     "subsection": "",
-    "content": "## Glossary\n### 1.2 Target audience\n\nThis guideline targets policy-makers, national diabetes programme managers, procurement officers ,\nclinicians and health care professionals responsible for developing local protocols for treating\ndiabetes that will be used in primary care units in low-resource settings. The recommendations in\nthe guideline would be also relevant for decisions at secondary and tertiary health care levels, and\nwhere national recommendations and protocols do not exist. Other potential users include\ninstitutions for education of health care workers, as well as nongovernmental organizations (NGOs)\nand relief agencies, to guide resource allocation.\n    - Methods for developing the guidelines\n\nWHO established three groups to develop these guidelines:\n    - An internal WHO Guideline Steering Group to coordinate the guideline development process.\n    - A Guidelines Development Group (hereafter referred to as the Guideline Group) composed\nof diabetes physicians and endocrinologists, researchers and academics, programme\nmanagers and representatives of patients’ groups to review the evidence and develop\nrecommendations. WHO selected members of the Guideline Group based on relevant\nexpertise but also considered appropriate representation by region and sex.\n    - An External Peer Review Group composed of technical experts, representatives of diabetes\npatient groups, and ministries of health from low-resource countries to provide peer review\nof the guidelines.",
+    "content": "## Glossary\n### 1.2 Target audience\n\nThis guideline targets policy-makers, national diabetes programme managers, procurement officers ,\nclinicians and health care professionals responsible for developing local protocols for treating\ndiabetes that will be used in primary care units in low-resource settings. The recommendations in\nthe guideline would be also relevant for decisions at secondary and tertiary health care levels, and\nwhere national recommendations and protocols do not exist. Other potential users include\ninstitutions for education of health care workers, as well as nongovernmental organizations (NGOs)\nand relief agencies, to guide resource allocation.\n - Methods for developing the guidelines\n\nWHO established three groups to develop these guidelines:\n - An internal WHO Guideline Steering Group to coordinate the guideline development process.\n - A Guidelines Development Group (hereafter referred to as the Guideline Group) composed\nof diabetes physicians and endocrinologists, researchers and academics, programme\nmanagers and representatives of patients’ groups to review the evidence and develop\nrecommendations. WHO selected members of the Guideline Group based on relevant\nexpertise but also considered appropriate representation by region and sex.\n - An External Peer Review Group composed of technical experts, representatives of diabetes\npatient groups, and ministries of health from low-resource countries to provide peer review\nof the guidelines.",
     "page_start": 13,
     "page_end": 13,
-    "token_count": 265,
+    "token_count": 261,
     "table_references": [],
     "figure_references": []
   },
@@ -228,10 +228,10 @@
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "2.4 Quality of evidence and strength of recommendations",
     "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 2.4 Quality of evidence and strength of recommendations\n\nThe Guideline Group examined the quality of evidence and formulated the recommendations using\nthe GRADE methodology (18) . In the GRADE process, the quality of a body of evidence is defined as\nthe extent to which one can be confident that the reported estimates of effect (desirable or\nundesirable) available from the evidence are close to the actual effects of interest. The strength of\nthe recommendations reflects the degree of confidence of the Guideline Group that the desirable\neffects (e.g. beneficial health outcomes) of the recommendations outweigh the undesirable effects\n(e.g. adverse effects). Systematic review authors or members of the Steering Group with the help of\nthe methodologist developed Summary of findings tables. For standard meta-analyses, the quality of\nthe evidence was captured in Summary of findings tables. For network meta-analysis, the evidence\nwas summarized in treatment matrices that allow comparison of all evaluated treatments (19) . With\n\nthe help of the methodologist, the quality of the evidence derived from network meta-analysis was\nevaluated using approaches described in two existing papers (20, 21) .\nThe following levels of assessment of the evidence were used in the GRADE profiles:\n\n| Evidence level | Column 2 | Rationale | Column 4 |\n| --- | --- | --- | --- |\n|  |  |  |  |\n| High  | Further research is very unlikely to change our confidence in the estimate of effect. |  |  |\n| Moderate  | Further research is likely to have an important impact on our confidence in the effect and may change the estimate. |  |  |\n| Low  | Further research is very likely to have an impact on the estimate of effect and is likely to change the estimate. |  |  |\n| Very low  | Any estimate of effect is very uncertain. |  |  |",
+    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 2.4 Quality of evidence and strength of recommendations\n\nThe Guideline Group examined the quality of evidence and formulated the recommendations using\nthe GRADE methodology (18) . In the GRADE process, the quality of a body of evidence is defined as\nthe extent to which one can be confident that the reported estimates of effect (desirable or\nundesirable) available from the evidence are close to the actual effects of interest. The strength of\nthe recommendations reflects the degree of confidence of the Guideline Group that the desirable\neffects (e.g. beneficial health outcomes) of the recommendations outweigh the undesirable effects\n(e.g. adverse effects). Systematic review authors or members of the Steering Group with the help of\nthe methodologist developed Summary of findings tables. For standard meta-analyses, the quality of\nthe evidence was captured in Summary of findings tables. For network meta-analysis, the evidence\nwas summarized in treatment matrices that allow comparison of all evaluated treatments (19) . With\n\nthe help of the methodologist, the quality of the evidence derived from network meta-analysis was\nevaluated using approaches described in two existing papers (20, 21) .\nThe following levels of assessment of the evidence were used in the GRADE profiles:\n\n| Evidence level | Column 2 | Rationale | Column 4 |\n| --- | --- | --- | --- |\n| | | | |\n| High  | Further research is very unlikely to change our confidence in the estimate of effect. | | |\n| Moderate  | Further research is likely to have an important impact on our confidence in the effect and may change the estimate. | | |\n| Low  | Further research is very likely to have an impact on the estimate of effect and is likely to change the estimate. | | |\n| Very low  | Any estimate of effect is very uncertain. | | |\n\nThe recommendations in these guidelines were graded into two categories:\n A strong recommendation is one for which the Guideline Group was confident that the\ndesirable effects of adhering to the recommendation outweigh the undesirable effects.\n A weak or conditional recommendation is one for which the Guideline Group concluded\nthat the desirable effects of adhering to the recommendation probably outweigh the\nundesirable effects, but the Guideline Group was not confident about these trade-offs.",
     "page_start": 14,
     "page_end": 15,
-    "token_count": 455,
+    "token_count": 535,
     "table_references": [
       "Table Page 15"
     ],
@@ -239,19 +239,6 @@
   },
   {
     "chunk_id": "chk_e3c85f0e_0016",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
-    "section": "2.4 Quality of evidence and strength of recommendations",
-    "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 2.4 Quality of evidence and strength of recommendations\n\nThe recommendations in these guidelines were graded into two categories:\n A strong recommendation is one for which the Guideline Group was confident that the\ndesirable effects of adhering to the recommendation outweigh the undesirable effects.\n A weak or conditional recommendation is one for which the Guideline Group concluded\nthat the desirable effects of adhering to the recommendation probably outweigh the\nundesirable effects, but the Guideline Group was not confident about these trade-offs.",
-    "page_start": 15,
-    "page_end": 15,
-    "token_count": 126,
-    "table_references": [],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0017",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "2.5 Deciding upon recommendations",
@@ -264,20 +251,20 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0018",
+    "chunk_id": "chk_e3c85f0e_0017",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "2.6 Funding",
     "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 2.6 Funding\n\nThe development of these guidelines was financially supported by the US Centers for Disease\nControl and Prevention and the World Health Organization.\n    - Recommendations\nThe Guideline Group developed recommendations for oral hypoglycaemic agents for second- and\nthird-line treatment in type 2 diabetes, for insulin in patients with type 2 diabetes for whom insulin\nis indicated, and for insulin for treating patients with type 1 diabetes.",
+    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 2.6 Funding\n\nThe development of these guidelines was financially supported by the US Centers for Disease\nControl and Prevention and the World Health Organization.\n - Recommendations\nThe Guideline Group developed recommendations for oral hypoglycaemic agents for second- and\nthird-line treatment in type 2 diabetes, for insulin in patients with type 2 diabetes for whom insulin\nis indicated, and for insulin for treating patients with type 1 diabetes.",
     "page_start": 16,
     "page_end": 16,
-    "token_count": 112,
+    "token_count": 111,
     "table_references": [],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0019",
+    "chunk_id": "chk_e3c85f0e_0018",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.1 Hypoglycaemic agents for second-line treatment in type 2 diabetes",
@@ -290,7 +277,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0020",
+    "chunk_id": "chk_e3c85f0e_0019",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.1 Hypoglycaemic agents for second-line treatment in type 2 diabetes",
@@ -303,7 +290,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0021",
+    "chunk_id": "chk_e3c85f0e_0020",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.1 Hypoglycaemic agents for second-line treatment in type 2 diabetes",
@@ -316,7 +303,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0022",
+    "chunk_id": "chk_e3c85f0e_0021",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.1 Hypoglycaemic agents for second-line treatment in type 2 diabetes",
@@ -329,20 +316,20 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0023",
+    "chunk_id": "chk_e3c85f0e_0022",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.2 Hypoglycaemic agents for third-line treatment in type 2 diabetes",
     "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 3.2 Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n- Introduce human insulin treatment to patients with type 2 diabetes who do not achieve\nglycaemic control with metformin and/or sulfonylurea (strong recommendation, very lowquality evidence).\n    - If insulin is unsuitable, a DPP-4 inhibitor, SGLT-2 inhibitor or a TZD may be added (weak\nrecommendation, very low-quality evidence).\nRemark\nInsulin treatment could be unsuitable when circumstances make its use difficult (e.g. persons who live\nalone and are dependent on others to inject them with insulin).\n\nThe evidence summary for third line treatment (medicines added to metformin and sulfonylurea)\nwas obtained from a systematic review and network meta-analysis that was published in 2016 (12).\nFive trials evaluated triple therapy. The network meta-analysis included DPP-4 inhibitors, SGLT-2\ninhibitors, TZDs, basal insulin (medicines of interest to this guideline) as well as meglitinides, alphaglucosidase inhibitors, GLP-1 agonists, and basal-bolus insulin (medicines not of interest for these\nguidelines).\nAll drug classes lowered HbA1c to a similar extent. TZDs (mean difference: -0.86%, 95% CI: -0.25, -\n1.48) and basal insulin (mean difference: -0.86%, 95% CI: -0.18, -1.55) were the only two medicines\nthat performed significantly better than placebo in lowering HbA1c. DPP-4 inhibitors (mean\ndifference: -0.23kg, 95% CI: -0.46, 0.00) and SGLT-2 inhibitors (mean difference: -0.33kg, 95% CI: -\n0.59, -0.07) were associated with a lower body weight compared to TZDs. There were very few\nevents of CVD mortality and no significant differences between treatments. Insufficient observations\nwere available to generate evidence networks for CVD incidence. There were no data for the critical\noutcomes severe hypoglycaemia and quality of life. Treatment matrices, including the comparisons\nof all treatments with each other and GRADE quality assessment, are reported in Appendix 9.",
+    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 3.2 Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n- Introduce human insulin treatment to patients with type 2 diabetes who do not achieve\nglycaemic control with metformin and/or sulfonylurea (strong recommendation, very lowquality evidence).\n - If insulin is unsuitable, a DPP-4 inhibitor, SGLT-2 inhibitor or a TZD may be added (weak\nrecommendation, very low-quality evidence).\nRemark\nInsulin treatment could be unsuitable when circumstances make its use difficult (e.g. persons who live\nalone and are dependent on others to inject them with insulin).\n\nThe evidence summary for third line treatment (medicines added to metformin and sulfonylurea)\nwas obtained from a systematic review and network meta-analysis that was published in 2016 (12).\nFive trials evaluated triple therapy. The network meta-analysis included DPP-4 inhibitors, SGLT-2\ninhibitors, TZDs, basal insulin (medicines of interest to this guideline) as well as meglitinides, alphaglucosidase inhibitors, GLP-1 agonists, and basal-bolus insulin (medicines not of interest for these\nguidelines).\nAll drug classes lowered HbA1c to a similar extent. TZDs (mean difference: -0.86%, 95% CI: -0.25, -\n1.48) and basal insulin (mean difference: -0.86%, 95% CI: -0.18, -1.55) were the only two medicines\nthat performed significantly better than placebo in lowering HbA1c. DPP-4 inhibitors (mean\ndifference: -0.23kg, 95% CI: -0.46, 0.00) and SGLT-2 inhibitors (mean difference: -0.33kg, 95% CI: -\n0.59, -0.07) were associated with a lower body weight compared to TZDs. There were very few\nevents of CVD mortality and no significant differences between treatments. Insufficient observations\nwere available to generate evidence networks for CVD incidence. There were no data for the critical\noutcomes severe hypoglycaemia and quality of life. Treatment matrices, including the comparisons\nof all treatments with each other and GRADE quality assessment, are reported in Appendix 9.",
     "page_start": 19,
     "page_end": 19,
-    "token_count": 527,
+    "token_count": 526,
     "table_references": [],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0024",
+    "chunk_id": "chk_e3c85f0e_0023",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.2 Hypoglycaemic agents for third-line treatment in type 2 diabetes",
@@ -355,7 +342,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0025",
+    "chunk_id": "chk_e3c85f0e_0024",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.2 Hypoglycaemic agents for third-line treatment in type 2 diabetes",
@@ -368,20 +355,20 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0026",
+    "chunk_id": "chk_e3c85f0e_0025",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.3 Insulin",
     "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 3.3 Insulin\n\n- Use human insulin to control blood glucose levels in adults with type 1 diabetes, and in\nadults with type 2 diabetes for whom insulin is indicated (strong recommendation, lowquality evidence).\nRemarks\nRecommendation 4 covers both short-acting (regular human insulin – RHI) and intermediate-acting\nhuman insulin (NPH insulin). The recommendation is strong because evidence of better effectiveness\nof insulin analogues is lacking and human insulin has a better resource-use profile.\n    - Consider long-acting insulin analogues to control blood glucose levels in adults with type 1\nor type 2 diabetes who have frequent severe hypoglycaemia with human insulin (weak\nrecommendation, moderate-quality evidence for severe hypoglycaemia).\nRemarks\nRecommendation 5 is a weak recommendation reflecting the lack of, or very low-quality, evidence for\nany of the long-term outcomes such as chronic diabetes complications and mortality, and the\nconsiderable higher costs for long-acting insulin analogues compared to intermediate-acting human\ninsulin.\n\nTwo recent, high-quality systematic reviews and preliminary results from a Cochrane Review update\nwere used to answer the questions. The first systematic review compared long-acting insulin\nanalogues to intermediate-acting human insulin for type 1 diabetes (11) and the second systematic\nreview compared a short-acting insulin analogue to a short-acting human insulin for type 1 diabetes\n(13) . The third systematic review evaluated long-acting insulin analogues versus NPH insulin for type\n2 diabetes (42).\nLong-acting insulin analogues in type 1 diabetes\nThe population in the review consisted of non-pregnant adults with type 1 diabetes. The systematic\nreview included a network meta-analysis comparing different treatment regimens (e.g. insulin\ndetemir, insulin glargine, NPH) and in different administration frequencies (e.g. once daily, twice\ndaily, four times daily) (11). For the purpose of the guideline development, NPH administered twice\ndaily was considered to be usual care (that is, the reference standard). Glargine once a day and\ndetemir once or twice a day were the relevant interventions. Because direct pair-wise meta-analyses",
+    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 3.3 Insulin\n\n- Use human insulin to control blood glucose levels in adults with type 1 diabetes, and in\nadults with type 2 diabetes for whom insulin is indicated (strong recommendation, lowquality evidence).\nRemarks\nRecommendation 4 covers both short-acting (regular human insulin – RHI) and intermediate-acting\nhuman insulin (NPH insulin). The recommendation is strong because evidence of better effectiveness\nof insulin analogues is lacking and human insulin has a better resource-use profile.\n - Consider long-acting insulin analogues to control blood glucose levels in adults with type 1\nor type 2 diabetes who have frequent severe hypoglycaemia with human insulin (weak\nrecommendation, moderate-quality evidence for severe hypoglycaemia).\nRemarks\nRecommendation 5 is a weak recommendation reflecting the lack of, or very low-quality, evidence for\nany of the long-term outcomes such as chronic diabetes complications and mortality, and the\nconsiderable higher costs for long-acting insulin analogues compared to intermediate-acting human\ninsulin.\n\nTwo recent, high-quality systematic reviews and preliminary results from a Cochrane Review update\nwere used to answer the questions. The first systematic review compared long-acting insulin\nanalogues to intermediate-acting human insulin for type 1 diabetes (11) and the second systematic\nreview compared a short-acting insulin analogue to a short-acting human insulin for type 1 diabetes\n(13) . The third systematic review evaluated long-acting insulin analogues versus NPH insulin for type\n2 diabetes (42).\nLong-acting insulin analogues in type 1 diabetes\nThe population in the review consisted of non-pregnant adults with type 1 diabetes. The systematic\nreview included a network meta-analysis comparing different treatment regimens (e.g. insulin\ndetemir, insulin glargine, NPH) and in different administration frequencies (e.g. once daily, twice\ndaily, four times daily) (11). For the purpose of the guideline development, NPH administered twice\ndaily was considered to be usual care (that is, the reference standard). Glargine once a day and\ndetemir once or twice a day were the relevant interventions. Because direct pair-wise meta-analyses",
     "page_start": 21,
     "page_end": 21,
-    "token_count": 489,
+    "token_count": 488,
     "table_references": [],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0027",
+    "chunk_id": "chk_e3c85f0e_0026",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.3 Insulin",
@@ -394,7 +381,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0028",
+    "chunk_id": "chk_e3c85f0e_0027",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.3 Insulin",
@@ -407,7 +394,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0029",
+    "chunk_id": "chk_e3c85f0e_0028",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.3 Insulin",
@@ -420,7 +407,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0030",
+    "chunk_id": "chk_e3c85f0e_0029",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "3.3 Insulin",
@@ -433,20 +420,20 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0031",
+    "chunk_id": "chk_e3c85f0e_0030",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "4.2 Insulin",
     "subsection": "",
-    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 4.2 Insulin\n\nEpidemiological research into the burden of diabetes (particularly type 1 diabetes) in low-income\ncountries is needed. Estimates of the number of children and adults with type 1 diabetes in many\ncountries are likely inaccurate, leading to difficulties in procurement because of uncertainties about\nthe number of people who are in need of insulin.\n    - Publication, implementation and evaluation\n\nThe guideline will be available to download from the WHO website. S ystematic reviews and evidence\nused for the development of the guideline are published in peer-reviewed journals or available\nonline.\n\nWHO regional and country offices, through their contacts with ministries of health, will encourage\nimplementation at country level. WHO will provide technical assistance if substantial country\nadaptation is needed.\nThe updated recommendations will be part of the technical package of the recently launched WHO\nGlobal Hearts Initiative, built on the WHO PEN – an initiative to improve prevention of CVD in\nprimary health care.",
+    "content": "## Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and\n### 4.2 Insulin\n\nEpidemiological research into the burden of diabetes (particularly type 1 diabetes) in low-income\ncountries is needed. Estimates of the number of children and adults with type 1 diabetes in many\ncountries are likely inaccurate, leading to difficulties in procurement because of uncertainties about\nthe number of people who are in need of insulin.\n - Publication, implementation and evaluation\n\nThe guideline will be available to download from the WHO website. S ystematic reviews and evidence\nused for the development of the guideline are published in peer-reviewed journals or available\nonline.\n\nWHO regional and country offices, through their contacts with ministries of health, will encourage\nimplementation at country level. WHO will provide technical assistance if substantial country\nadaptation is needed.\nThe updated recommendations will be part of the technical package of the recently launched WHO\nGlobal Hearts Initiative, built on the WHO PEN – an initiative to improve prevention of CVD in\nprimary health care.",
     "page_start": 25,
     "page_end": 25,
-    "token_count": 218,
+    "token_count": 217,
     "table_references": [],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0032",
+    "chunk_id": "chk_e3c85f0e_0031",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1 lists the contributors in each group. Appendix 2 describes the process for declaring and",
     "section": "5.3 Evaluation",
@@ -459,7 +446,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0033",
+    "chunk_id": "chk_e3c85f0e_0032",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "References",
     "section": "",
@@ -472,22 +459,22 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0034",
+    "chunk_id": "chk_e3c85f0e_0033",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "References",
     "section": "",
     "subsection": "",
-    "content": "## References\n\n| 15. Bucher HC Guyatt GH, Griffith LE, Walter SD. The results of direct and indirect treatment comparisons |\n| --- |\n| in meta-analysis of randomized controlled trials. Journal of Clinical Epidemiology. 1997;50(6):683-91. |\n\n- Mills EJ, Thorlund K, Ioannidis JP. Demystifying trial networks and network meta-analysis. British\nMedical Journal. 2013;346:f2914.\n    - Kanters S, Ford N, Druyts E, Thorlund K, Mills EJ, Bansback N. Use of network meta-analysis in clinical\nguidelines. Bulletin of the World Health Organization. 2016;94:782–784.\n    - Guyatt GH, Oxman AD, Vist GE, Kunz R, Falck-Ytter Y, Alonso-Coello P, et al. GRADE: an emerging\nconsensus on rating quality of evidence and strength of recommendations. British Medical Journal.\n2008;336:924.\n\n- Tan SH, Cooper NJ, Bujkiewicz S, Welton NJ, Caldwell DM, Sutton AJ. Novel presentational approaches were developed for reporting network meta-analysis. Journal of Clinical Epidemiology. 2014;67:672– 680. - Puhan AM, Schünemann H, Murad MH, Tianjing L, Brignardello-Petersens R, Singh JA et al. A GRADE Working Group approach for rating the quality of treatment effect estimates from network metaanalysis. British Medical Journal. 2014;349:g5630. - Salanti G, Del Giovane C, Chaimani A, Caldwell DM, Higgins JPT. Evaluating the quality of evidence from a network meta-analysis. PLos One 2014;9:e99682. - Stahl M, Berger W. Higher incidence of severe hypoglycaemia leading to hospital admission in Type 2 diabetic patients treated with long-acting versus short-acting sulphonylureas. Diabetes Medicine. 1999;16(7):586–90. - Van Staa T, Abenhaim L, Monette J. Rates of hypoglycaemia in users of sulfonylureas. Journal of Clinical Epidemiology. 1997;50(6):735–741. - Zinman B, Wanner C, Lachin JM, Fitchett D, Bluhmki E, Hantel S, et al. Empagliflozin, cardiovascular outcomes, and mortality in type 2 diabetes. New England Journal of Medicine. 2015;26:373(22)2117– 28. - Drug Patent Watch (https://www.drugpatentwatch.com/p/tradename/JANUVIA accessed 15 September 2017). - Beale S, Bagust A, Shearer AT, Martin A, Hulme L.",
+    "content": "## References\n\n| 15. Bucher HC Guyatt GH, Griffith LE, Walter SD. The results of direct and indirect treatment comparisons |\n| --- |\n| in meta-analysis of randomized controlled trials. Journal of Clinical Epidemiology. 1997;50(6):683-91. |\n\n- Mills EJ, Thorlund K, Ioannidis JP. Demystifying trial networks and network meta-analysis. British\nMedical Journal. 2013;346:f2914.\n - Kanters S, Ford N, Druyts E, Thorlund K, Mills EJ, Bansback N. Use of network meta-analysis in clinical\nguidelines. Bulletin of the World Health Organization. 2016;94:782–784.\n - Guyatt GH, Oxman AD, Vist GE, Kunz R, Falck-Ytter Y, Alonso-Coello P, et al. GRADE: an emerging\nconsensus on rating quality of evidence and strength of recommendations. British Medical Journal.\n2008;336:924.\n\n- Tan SH, Cooper NJ, Bujkiewicz S, Welton NJ, Caldwell DM, Sutton AJ. Novel presentational approaches were developed for reporting network meta-analysis. Journal of Clinical Epidemiology. 2014;67:672– 680. - Puhan AM, Schünemann H, Murad MH, Tianjing L, Brignardello-Petersens R, Singh JA et al. A GRADE Working Group approach for rating the quality of treatment effect estimates from network metaanalysis. British Medical Journal. 2014;349:g5630. - Salanti G, Del Giovane C, Chaimani A, Caldwell DM, Higgins JPT. Evaluating the quality of evidence from a network meta-analysis. PLos One 2014;9:e99682. - Stahl M, Berger W. Higher incidence of severe hypoglycaemia leading to hospital admission in Type 2 diabetic patients treated with long-acting versus short-acting sulphonylureas. Diabetes Medicine. 1999;16(7):586–90. - Van Staa T, Abenhaim L, Monette J. Rates of hypoglycaemia in users of sulfonylureas. Journal of Clinical Epidemiology. 1997;50(6):735–741. - Zinman B, Wanner C, Lachin JM, Fitchett D, Bluhmki E, Hantel S, et al. Empagliflozin, cardiovascular outcomes, and mortality in type 2 diabetes. New England Journal of Medicine. 2015;26:373(22)2117– 28. - Drug Patent Watch (https://www.drugpatentwatch.com/p/tradename/JANUVIA accessed 15 September 2017). - Beale S, Bagust A, Shearer AT, Martin A, Hulme L.",
     "page_start": 27,
     "page_end": 28,
-    "token_count": 609,
+    "token_count": 607,
     "table_references": [
       "Table Page 27"
     ],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0035",
+    "chunk_id": "chk_e3c85f0e_0034",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "References",
     "section": "",
@@ -500,7 +487,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0036",
+    "chunk_id": "chk_e3c85f0e_0035",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "References",
     "section": "",
@@ -513,7 +500,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0037",
+    "chunk_id": "chk_e3c85f0e_0036",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1. Acknowledgements",
     "section": "",
@@ -528,7 +515,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0038",
+    "chunk_id": "chk_e3c85f0e_0037",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1. Acknowledgements",
     "section": "",
@@ -543,7 +530,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0039",
+    "chunk_id": "chk_e3c85f0e_0038",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 1. Acknowledgements",
     "section": "",
@@ -556,7 +543,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0040",
+    "chunk_id": "chk_e3c85f0e_0039",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 2. Managing declarations of interest and conflicts of interest",
     "section": "",
@@ -569,7 +556,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0041",
+    "chunk_id": "chk_e3c85f0e_0040",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 3: PICO questions and ranked outcomes",
     "section": "",
@@ -585,7 +572,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0042",
+    "chunk_id": "chk_e3c85f0e_0041",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 3: PICO questions and ranked outcomes",
     "section": "",
@@ -604,7 +591,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0043",
+    "chunk_id": "chk_e3c85f0e_0042",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 3: PICO questions and ranked outcomes",
     "section": "",
@@ -620,7 +607,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0044",
+    "chunk_id": "chk_e3c85f0e_0043",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 4. Methods for identification of recent high-quality systematic",
     "section": "",
@@ -633,7 +620,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0045",
+    "chunk_id": "chk_e3c85f0e_0044",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 4. Methods for identification of recent high-quality systematic",
     "section": "",
@@ -646,17 +633,32 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0046",
+    "chunk_id": "chk_e3c85f0e_0045",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 4. Methods for identification of recent high-quality systematic",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 4. Methods for identification of recent high-quality systematic\n\nAssessing the Methodological Quality of Systematic Reviews (AMSTAR) quality assessment\n\n| Study | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | Sum | Column 14 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Tricco (2014) | 1 | 1 | 1 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 10 |  |\n| Fullerton (2016) | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 10 | Not explicitly stated that there was a protocol |\n| Palmer (2016) | 1 | 1 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 8 | Not explicitly stated that a supplementary and grey literature search was carried out. |\n\nThe CADTH review and the Horvath review were not prospectively assessed for quality because the\nsystematic reviews were still underway and results were only available shortly before the Guideline\nGroup meeting.\nAMSTAR criteria\n    - Was an ‘a priori’ design provided?\n    - Was there duplicate study selection and data extraction?\n    - Was a comprehensive literature search performed?\n    - Was the status of publication (i.e. grey literature) used as an inclusion criterion?\n    - Was a list of studies (included and excluded) provided?\n    - Were the characteristics of the included studies provided?\n    - Was the scientific quality of the included studies assessed and documented?\n    - Was the scientific quality of the included studies used appropriately in formulating conclusions?\n    - Were the methods used to combine the findings of studies appropriate?\n    - Was the likelihood of publication bias assessed?\n    - Was the conflict of interest included?",
+    "content": "## Appendix 4. Methods for identification of recent high-quality systematic\n\nAssessing the Methodological Quality of Systematic Reviews (AMSTAR) quality assessment\n\n| Study | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | Sum | Column 14 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Tricco (2014) | 1 | 1 | 1 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 10 | |\n| Fullerton (2016) | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 10 | Not explicitly stated that there was a protocol |\n| Palmer (2016) | 1 | 1 | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 8 | Not explicitly stated that a supplementary and grey literature search was carried out. |\n\nThe CADTH review and the Horvath review were not prospectively assessed for quality because the\nsystematic reviews were still underway and results were only available shortly before the Guideline\nGroup meeting.\nAMSTAR criteria\n - Was an ‘a priori’ design provided?\n - Was there duplicate study selection and data extraction?\n - Was a comprehensive literature search performed?\n - Was the status of publication (i.e. grey literature) used as an inclusion criterion?\n - Was a list of studies (included and excluded) provided?\n - Were the characteristics of the included studies provided?\n - Was the scientific quality of the included studies assessed and documented?\n - Was the scientific quality of the included studies used appropriately in formulating conclusions?\n - Were the methods used to combine the findings of studies appropriate?\n - Was the likelihood of publication bias assessed?\n - Was the conflict of interest included?",
     "page_start": 39,
     "page_end": 39,
-    "token_count": 446,
+    "token_count": 434,
     "table_references": [
       "Table Page 39"
+    ],
+    "figure_references": []
+  },
+  {
+    "chunk_id": "chk_e3c85f0e_0046",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
+    "section": "",
+    "subsection": "",
+    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\ndiabetes Treatment matrices were developed using data from the systematic review and network metaanalysis carried out by the Methods and Applications Group for Indirect Treatment Comparisons (MAGIC) for the Canadian Agency for Drugs and Technologies in Health (CADTH) ( 6). The comparisons between medicines should be read from right to left and the estimate is in the cell in common between the column-defined treatment and the row-defined treatment. For binary outcome data (hypoglycaemic events, mortality), an odds ratio < 1 favours the column-defined treatment and an odds ratio >1 favors the row-defined treatment. A mean difference (HbA1c, body weight) < 0 indicates that that the column-defined treatment is associated with a lower HbA1c level or body weight than the row-defined treatment. A mean difference > 0 indicates that the columndefined treatment is associated with a higher HbA1c level or body weight than the row-defined treatment. For example, reading Table 1 on HbA1c from right to left, DPP-4 inhibitors added to metformin were associated with higher HbA1c compared to sulfonylurea added to metformin (0.12, 95% CrI: 0.01, 0.24). And when reading Table 2 from right to left, DPP-4 inhibitors added to metformin was associated with an odds ratio of severe hypoglycaemia of 0.14 (95% CrI: 0.07, 0.26) compared to sulfonylurea added to metformin. The treatment matrices also contain the quality of evidence assessed by the GRADE methodology.\n\nAbbreviations: CrI = credible interval; DPP-4 = dipeptidyl peptidase-4 inhibitor; SGLT-2 = sodiumglucose co-transporters type 2 inhibitor; SU = sulfonylurea; TZD = thiazolidinedione.\n\n| SU | 1,2 -0.07  (-0.20,0.07) | 1 0.12  (0.01,0.24) | 2 0.04  (- 0.16,0.24) | -0.15 (-0.45,0.17) | 0.70 (0.58,0.83) | Column 7 | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| | TZD | 0.19 (0.05,0.33) | 0.11 (-0.11,0.32) | 2 -0.08  (-0.40,0.25) | 0.77 (0.63,0.92) | | |\n| | | DPP-4 inhibitor | 1,2 -0.09  (-0.28,0.10) | 2 -0.27  (-0.57,0.04) | 1 0.58  (0.48,0.68) | | |",
+    "page_start": 40,
+    "page_end": 41,
+    "token_count": 751,
+    "table_references": [
+      "Table 1: HbA1c (mean difference in change from baseline with 95% credible interval)"
     ],
     "figure_references": []
   },
@@ -666,12 +668,13 @@
     "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\ndiabetes Treatment matrices were developed using data from the systematic review and network metaanalysis carried out by the Methods and Applications Group for Indirect Treatment Comparisons (MAGIC) for the Canadian Agency for Drugs and Technologies in Health (CADTH) ( 6). The comparisons between medicines should be read from right to left and the estimate is in the cell in common between the column-defined treatment and the row-defined treatment. For binary outcome data (hypoglycaemic events, mortality), an odds ratio < 1 favours the column-defined treatment and an odds ratio >1 favors the row-defined treatment. A mean difference (HbA1c, body weight) < 0 indicates that that the column-defined treatment is associated with a lower HbA1c level or body weight than the row-defined treatment. A mean difference > 0 indicates that the columndefined treatment is associated with a higher HbA1c level or body weight than the row-defined treatment. For example, reading Table 1 on HbA1c from right to left, DPP-4 inhibitors added to metformin were associated with higher HbA1c compared to sulfonylurea added to metformin (0.12, 95% CrI: 0.01, 0.24). And when reading Table 2 from right to left, DPP-4 inhibitors added to metformin was associated with an odds ratio of severe hypoglycaemia of 0.14 (95% CrI: 0.07, 0.26) compared to sulfonylurea added to metformin. The treatment matrices also contain the quality of evidence assessed by the GRADE methodology.\n\nAbbreviations: CrI = credible interval; DPP-4 = dipeptidyl peptidase-4 inhibitor; SGLT-2 = sodiumglucose co-transporters type 2 inhibitor; SU = sulfonylurea; TZD = thiazolidinedione.\n\n| SU | 1,2 -0.07  (-0.20,0.07) | 1 0.12  (0.01,0.24) | 2 0.04  (- 0.16,0.24) | -0.15 (-0.45,0.17) | 0.70 (0.58,0.83) | Column 7 | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n|  | TZD | 0.19 (0.05,0.33) | 0.11 (-0.11,0.32) | 2 -0.08  (-0.40,0.25) | 0.77 (0.63,0.92) |  |  |\n|  |  | DPP-4 inhibitor | 1,2 -0.09  (-0.28,0.10) | 2 -0.27  (-0.57,0.04) | 1 0.58  (0.48,0.68) |  |  |",
-    "page_start": 40,
+    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\n| SU | 1,2 -0.07  (-0.20,0.07) | 1 0.12  (0.01,0.24) | 2 0.04  (- 0.16,0.24) | -0.15 (-0.45,0.17) | 0.70 (0.58,0.83) | Column 7 | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | SGLT-2 inhibitor | 2 -0.18  (-0.53,0.18) | 0.67  (0.49,0.84) | | |\n| | | | | Basal insulin | 0.85 (0.53,1.16) | | |\n| | | | | | | Placebo | |\n| | | | | | | | |\n| DPP-4 |\n| --- |\n| inhibitor |\n| SGLT-2 |\n| --- |\n| inhibitor |\n\n| SU | 2 0.36  (0.04,2.65) | 1 0.14  (0.07,0.26) | 0.09  (0.02,0.44) | 0.52 (0.10,2.83) | 0.16 (0.06,0.45) |\n| --- | --- | --- | --- | --- | --- |\n| | TZD | 0.39 (0.05,3.13) | 0.26 (0.03,3.03) | 2 1.37  (0.15,30.36) | 0.43 (0.06,3.33) |\n| | | DPP-4 inhibitor | 1,2 0.66  (0.15,2.98) | 2 3.61  (0.74,20.31) | 1,2 1.10  (0.41,2.94) |",
+    "page_start": 41,
     "page_end": 41,
-    "token_count": 758,
+    "token_count": 598,
     "table_references": [
-      "Table 1: HbA1c (mean difference in change from baseline with 95% credible interval)"
+      "Table 1: HbA1c (mean difference in change from baseline with 95% credible interval)",
+      "Table 2: Severe hypoglycaemia (odds ratio with 95% credible interval)"
     ],
     "figure_references": []
   },
@@ -681,13 +684,13 @@
     "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\n| SU | 1,2 -0.07  (-0.20,0.07) | 1 0.12  (0.01,0.24) | 2 0.04  (- 0.16,0.24) | -0.15 (-0.45,0.17) | 0.70 (0.58,0.83) | Column 7 | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  | SGLT-2 inhibitor | 2 -0.18  (-0.53,0.18) | 0.67  (0.49,0.84) |  |  |\n|  |  |  |  | Basal insulin | 0.85 (0.53,1.16) |  |  |\n|  |  |  |  |  |  | Placebo |  |\n|  |  |  |  |  |  |  |  |\n| DPP-4 |\n| --- |\n| inhibitor |\n| SGLT-2 |\n| --- |\n| inhibitor |\n\n| SU | 2 0.36  (0.04,2.65) | 1 0.14  (0.07,0.26) | 0.09  (0.02,0.44) | 0.52 (0.10,2.83) | 0.16 (0.06,0.45) |\n| --- | --- | --- | --- | --- | --- |\n|  | TZD | 0.39 (0.05,3.13) | 0.26 (0.03,3.03) | 2 1.37  (0.15,30.36) | 0.43 (0.06,3.33) |\n|  |  | DPP-4 inhibitor | 1,2 0.66  (0.15,2.98) | 2 3.61  (0.74,20.31) | 1,2 1.10  (0.41,2.94) |",
+    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\n| SU | 2 0.36  (0.04,2.65) | 1 0.14  (0.07,0.26) | 0.09  (0.02,0.44) | 0.52 (0.10,2.83) | 0.16 (0.06,0.45) |\n| --- | --- | --- | --- | --- | --- |\n| | | | SGLT-2 inhibitor | 2 5.25  (0.73,56.37) | 2 1.64  (0.42,7.69) |\n| | | | | Basal insulin | 0.32 (0.04,1.54) |\n| | | | | | Placebo |\n| DPP-4 |\n| --- |\n| inhibitor |\n| SGLT-2 |\n| --- |\n| inhibitor |\n| Placebo |\n| --- |\n| |\n\n| SU | 1.09 (0.48,1.70) | -1.93 (-2.37,-1.49) | -4.32 (-5.00,-3.66) | 0.65 (-0.57,1.95) | -2.11 (-2.63,-1.59) |\n| --- | --- | --- | --- | --- | --- |\n| | TZD | -3.02 (-3.61,-2.43) | -5.41 (-6.18,-4.63) | -0.44 (-1.70,0.90) | -3.20 (-3.82,-2.57) |\n| | | DPP-4 inhibitor | -2.39 (-2.98,-1.80) | 2.59 (1.41,3.82) | -0.18 (-0.58,0.22) |\n| | | | SGLT-2 inhibitor | 4.98 (3.68,6.31) | 2.21 (1.67,2.75) |\n| | | | | Basal insulin | -2.76 (-4.01,-1.56) |\n| | | | | | Placebo |\n\n| DPP-4 |\n| --- |\n| inhibitor |\n\n| SGLT-2 |\n| --- |\n| inhibitor |",
     "page_start": 41,
-    "page_end": 41,
-    "token_count": 627,
+    "page_end": 42,
+    "token_count": 573,
     "table_references": [
-      "Table 1: HbA1c (mean difference in change from baseline with 95% credible interval)",
-      "Table 2: Severe hypoglycaemia (odds ratio with 95% credible interval)"
+      "Table 2: Severe hypoglycaemia (odds ratio with 95% credible interval)",
+      "Table 3: Body weight in kg (mean difference in change from baseline with 95% credible interval)"
     ],
     "figure_references": []
   },
@@ -697,13 +700,12 @@
     "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\n| SU | 2 0.36  (0.04,2.65) | 1 0.14  (0.07,0.26) | 0.09  (0.02,0.44) | 0.52 (0.10,2.83) | 0.16 (0.06,0.45) |\n| --- | --- | --- | --- | --- | --- |\n|  |  |  | SGLT-2 inhibitor | 2 5.25  (0.73,56.37) | 2 1.64  (0.42,7.69) |\n|  |  |  |  | Basal insulin | 0.32 (0.04,1.54) |\n|  |  |  |  |  | Placebo |\n| DPP-4 |\n| --- |\n| inhibitor |\n| SGLT-2 |\n| --- |\n| inhibitor |\n| Placebo |\n| --- |\n|  |\n\n| SU | 1.09 (0.48,1.70) | -1.93 (-2.37,-1.49) | -4.32 (-5.00,-3.66) | 0.65 (-0.57,1.95) | -2.11 (-2.63,-1.59) |\n| --- | --- | --- | --- | --- | --- |\n|  | TZD | -3.02 (-3.61,-2.43) | -5.41 (-6.18,-4.63) | -0.44 (-1.70,0.90) | -3.20 (-3.82,-2.57) |\n|  |  | DPP-4 inhibitor | -2.39 (-2.98,-1.80) | 2.59 (1.41,3.82) | -0.18 (-0.58,0.22) |\n|  |  |  | SGLT-2 inhibitor | 4.98 (3.68,6.31) | 2.21 (1.67,2.75) |\n|  |  |  |  | Basal insulin | -2.76 (-4.01,-1.56) |\n|  |  |  |  |  | Placebo |\n\n\n\n| DPP-4 |\n| --- |\n| inhibitor |\n\n\n\n| SGLT-2 |\n| --- |\n| inhibitor |",
-    "page_start": 41,
+    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\nTable 4: CVD mortality in patients with established CVD or at high risk for cardiovascular events\n(odds ratio with 95% credible interval)\n\n| Column 1 | SU | Column 3 | - | - | - | - | Column 8 | - |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | | | |\n| | | | TZD | 1.16 (0.19,6.67) | 0.70 (0.09,5.56) | - | | 1.20 (0.27,5.00) |\n| | | | | DPP-4 inhibitor | 234 0.60  (0.10,3.72) | - | | 1234 1.03  (0.37,3.03) |\n| | | | | | SGLT-2 inhibitor | - | | 234 1.72  (0.39,7.14) |\n| | | | | | | | Basal insulin | - |\n| | | | | | | | | Placebo |\n\n| SGLT-2 |\n| --- |\n| inhibitor |",
+    "page_start": 42,
     "page_end": 42,
-    "token_count": 603,
+    "token_count": 311,
     "table_references": [
-      "Table 2: Severe hypoglycaemia (odds ratio with 95% credible interval)",
-      "Table 3: Body weight in kg (mean difference in change from baseline with 95% credible interval)"
+      "Table Caption"
     ],
     "figure_references": []
   },
@@ -711,27 +713,12 @@
     "chunk_id": "chk_e3c85f0e_0050",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n\nTable 4: CVD mortality in patients with established CVD or at high risk for cardiovascular events\n(odds ratio with 95% credible interval)\n\n| Column 1 | SU | Column 3 | - | - | - | - | Column 8 | - |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  |  |  |  |\n|  |  |  | TZD | 1.16 (0.19,6.67) | 0.70 (0.09,5.56) | - |  | 1.20 (0.27,5.00) |\n|  |  |  |  | DPP-4 inhibitor | 234 0.60  (0.10,3.72) | - |  | 1234 1.03  (0.37,3.03) |\n|  |  |  |  |  | SGLT-2 inhibitor | - |  | 234 1.72  (0.39,7.14) |\n|  |  |  |  |  |  |  | Basal insulin | - |\n|  |  |  |  |  |  |  |  | Placebo |\n\n\n\n| SGLT-2 |\n| --- |\n| inhibitor |",
-    "page_start": 42,
-    "page_end": 42,
-    "token_count": 351,
-    "table_references": [
-      "Table Caption"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0051",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 5. Hypoglycaemic agents for second-line treatment in type 2",
     "section": "Summary of judgments",
     "subsection": "",
-    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n### Summary of judgments\n\n| Column 1 | Favours sulfonylurea | Probably favours sulfonylurea | Choose either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Probably favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  |  | X |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  |  | X |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  | X |  |  |\n| Resource use | X |  |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity |  | X |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n\n| Column 1 | Favours sulfonylurea | Probably favours sulfonylurea | Choose either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Probably favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n|  | We recommend sulfonylurea over DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using sulfonylurea over DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones over sulfonylurea | We recommend DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones over sulfonylurea |\n| Type of recommendation | X |  |  |  |  |",
+    "content": "## Appendix 5. Hypoglycaemic agents for second-line treatment in type 2\n### Summary of judgments\n\n| Column 1 | Favours sulfonylurea | Probably favours sulfonylurea | Choose either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Probably favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  |  | X |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  |  | X |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  | X |  |  |\n| Resource use | X |  |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity |  | X |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n\n| Column 1 | Favours sulfonylurea | Probably favours sulfonylurea | Choose either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Probably favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | Favours DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| | We recommend sulfonylurea over DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using sulfonylurea over DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using either sulfonylurea or DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones | We suggest using DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones over sulfonylurea | We recommend DPP-4 inhibitor, SGLT-2 inhibitor, or glitazones over sulfonylurea |\n| Type of recommendation | X |  |  |  |  |",
     "page_start": 43,
     "page_end": 43,
-    "token_count": 583,
+    "token_count": 582,
     "table_references": [
       "Table Page 43",
       "Table Page 43"
@@ -739,7 +726,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0052",
+    "chunk_id": "chk_e3c85f0e_0051",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 6. Price of Defined Daily Dose* of blood glucose-lowering",
     "section": "",
@@ -755,7 +742,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0053",
+    "chunk_id": "chk_e3c85f0e_0052",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 7: Cost-effectiveness of medicines to treat Type 1 and Type 2",
     "section": "",
@@ -768,7 +755,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0054",
+    "chunk_id": "chk_e3c85f0e_0053",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 7: Cost-effectiveness of medicines to treat Type 1 and Type 2",
     "section": "",
@@ -781,7 +768,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0055",
+    "chunk_id": "chk_e3c85f0e_0054",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 7: Cost-effectiveness of medicines to treat Type 1 and Type 2",
     "section": "",
@@ -794,7 +781,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0056",
+    "chunk_id": "chk_e3c85f0e_0055",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 7: Cost-effectiveness of medicines to treat Type 1 and Type 2",
     "section": "",
@@ -807,7 +794,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0057",
+    "chunk_id": "chk_e3c85f0e_0056",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "",
@@ -820,15 +807,31 @@
     "figure_references": []
   },
   {
+    "chunk_id": "chk_e3c85f0e_0057",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 8. Reviews of patient treatment preferences",
+    "section": "",
+    "subsection": "",
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n\nA total of nine studies were included in this review, five for objective one, and four for objective two. Of the five studies included for objective one, three were trials (4 – 7) and two\n\n(Table 1). A variety of tools were used to evaluate treatment satisfaction and well-being (11 – 16) .\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| | Randomised Controlled Trials | | | | | |\n| Aljabri et al. (2004) (4) | | Canada | RCT | Pioglitazone group Sex: 60% male, 40% female Age (years): 59 ± 9 BMI: 26 ± 9 HbA1c (%): 9.7 ± 1.5 Duration of DM (years): 9 ± 6 Insulin group Sex: 61% male, 39% female Age (years): 57 ± 14 BMI: 25 ± 6 HbA1c (%): 10.1 ± 1.4 Duration of DM (years): 11 ± 8 | Pioglitazone and usual OHAs Bedtime NPH and usual OHAs | |\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Gerstein et al (2006) (5) & Houlden et al. (2007) (6)* | | Canada | RCT | Oral OHA (intensified) Sex: 30% male, 70% female Age (years): 56.8 ± 10.1 BMI: 31.5 ± 4.6 HbA1c (%): 8.5 ± 1 Duration of DM (years): 8.2 ± 6.5 Insulin glargine + OHA Sex: 32% male, 68% female Age (years): 56.3 ± 9.4 BMI: 31.1 ± 4.4 HbA1c (%): 8.6 ± 1 Duration of DM (years): 7.6 ± 5.4 | Oral OHA (intensified) – combination of metformin, insulin secretagogues or rosiglitazone Addition of insulin glargine to existing OHA | |",
+    "page_start": 48,
+    "page_end": 49,
+    "token_count": 557,
+    "table_references": [
+      "Table Caption",
+      "Table Caption"
+    ],
+    "figure_references": []
+  },
+  {
     "chunk_id": "chk_e3c85f0e_0058",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n\nA total of nine studies were included in this review, five for objective one, and four for objective two. Of the five studies included for objective one, three were trials (4 – 7) and two\n\n(Table 1). A variety of tools were used to evaluate treatment satisfaction and well-being (11 – 16) .\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n|  | Randomised Controlled Trials |  |  |  |  |  |\n| Aljabri et al. (2004) (4) |  | Canada | RCT | Pioglitazone group Sex: 60% male, 40% female Age (years): 59 ± 9 BMI: 26 ± 9 HbA1c (%): 9.7 ± 1.5 Duration of DM (years): 9 ± 6 Insulin group Sex: 61% male, 39% female Age (years): 57 ± 14 BMI: 25 ± 6 HbA1c (%): 10.1 ± 1.4 Duration of DM (years): 11 ± 8 | Pioglitazone and usual OHAs Bedtime NPH and usual OHAs |  |\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Gerstein et al (2006) (5) & Houlden et al. (2007) (6)* |  | Canada | RCT | Oral OHA (intensified) Sex: 30% male, 70% female Age (years): 56.8 ± 10.1 BMI: 31.5 ± 4.6 HbA1c (%): 8.5 ± 1 Duration of DM (years): 8.2 ± 6.5 Insulin glargine + OHA Sex: 32% male, 68% female Age (years): 56.3 ± 9.4 BMI: 31.1 ± 4.4 HbA1c (%): 8.6 ± 1 Duration of DM (years): 7.6 ± 5.4 | Oral OHA (intensified) – combination of metformin, insulin secretagogues or rosiglitazone Addition of insulin glargine to existing OHA |  |",
-    "page_start": 48,
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Vinik et al. (2007) (7) | | USA | RCT | Rosiglitazone group Sex: 58% male, 42% female Age (years): 55.3 ± 11.4 BMI: 33.6 ± 6.3 HbA1c (%): 8.7 ± 1.0 Duration of DM (years): 8.1 ± 5.1 Insulin group Sex: 45% male, 55% female Age (years): 55.9 ± 10.5 BMI: 34.6 ± 7.0 HbA1c (%): 8.8 ± 1.0 Duration of DM (years): 8.5 ± 5.8 | Addition of insulin glargine to sulfonylurea and metformin Addition of rosiglitazone to sulfonylurea and metformin | |\n| | Single-Arm Trials | | | | | |\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Tsukube et al (2015) (8) | | Japan | Single-arm trial | Sex**: 61% male, 39% female Age (years): 62.3 BMI: 24.9 HbA1c (%): 9.4 Duration of DM (years): <5 years (15%), 5-<10 years (18%) 10+ years (45%), unknown (22%) | Addition of insulin glargine to existing OHA | |\n| Wilson et al. (2004) (9) | | New Zealand | Single-arm trial | Sex: 60% male, 40% female Age (years): 60.5 BMI: 30.9 ± 6.0 HbA1c (%): 9.69 ± 1.61 Duration of DM (years): unknown | Addition of insulin to OHA | |",
+    "page_start": 49,
     "page_end": 49,
-    "token_count": 567,
+    "token_count": 499,
     "table_references": [
       "Table Caption",
       "Table Caption"
@@ -841,22 +844,6 @@
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Vinik et al. (2007) (7) |  | USA | RCT | Rosiglitazone group Sex: 58% male, 42% female Age (years): 55.3 ± 11.4 BMI: 33.6 ± 6.3 HbA1c (%): 8.7 ± 1.0 Duration of DM (years): 8.1 ± 5.1 Insulin group Sex: 45% male, 55% female Age (years): 55.9 ± 10.5 BMI: 34.6 ± 7.0 HbA1c (%): 8.8 ± 1.0 Duration of DM (years): 8.5 ± 5.8 | Addition of insulin glargine to sulfonylurea and metformin Addition of rosiglitazone to sulfonylurea and metformin |  |\n|  | Single-Arm Trials |  |  |  |  |  |\n\n| Study (Year) | Column 2 | Country/Re gion | Study Type | Patient Characteristics | Interventions Assessed | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Tsukube et al (2015) (8) |  | Japan | Single-arm trial | Sex**: 61% male, 39% female Age (years): 62.3 BMI: 24.9 HbA1c (%): 9.4 Duration of DM (years): <5 years (15%), 5-<10 years (18%) 10+ years (45%), unknown (22%) | Addition of insulin glargine to existing OHA |  |\n| Wilson et al. (2004) (9) |  | New Zealand | Single-arm trial | Sex: 60% male, 40% female Age (years): 60.5 BMI: 30.9 ± 6.0 HbA1c (%): 9.69 ± 1.61 Duration of DM (years): unknown | Addition of insulin to OHA |  |",
-    "page_start": 49,
-    "page_end": 49,
-    "token_count": 511,
-    "table_references": [
-      "Table Caption",
-      "Table Caption"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0060",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 8. Reviews of patient treatment preferences",
-    "section": "",
-    "subsection": "",
     "content": "## Appendix 8. Reviews of patient treatment preferences\n\n- Both trials were part of the INSIGHT study and were included as one trial\n** Patient characteristic information taken from original ALOHA2 study as this study was a sub-analysis (10)\n\nTrial results The first RCT found an improvement in treatment satisfaction with the addition of insulin glargine to existing OHA regimens compared to optimization of OHA alone (5, 6) (Table 2). At baseline, both groups had high levels of perceived hyperglycaemia, low levels of perceived hypoglycaemia, and similar treatment satisfaction and quality of life. Both groups experienced significant increases in treatment satisfaction, but the increase was significantly larger in the glargine group. It is possible that this was related to better glycaemic control, as those in the glargine group were 1.68 times as likely to achieve two consecutive HbA1c results of </= 6.5%, the clinical end goal of the trial. However, the authors also suggested that a greater sense of empowerment may have accounted for at least part of the larger increase, as patients were trained to titrate their insulin dose based on their blood glucose readings (5, 6) . There was no difference between groups in frequency of hypoglycaemia, and those in the glargine group had a 1.9 kg greater increase in weight than the oral OHA group – a significant difference (5, 6) . The second RCT examined the addition of rosiglitazone compared to insulin glargine to existing treatment with metformin and a sulfonylurea. Both groups experienced an increase in health-related quality of life, with significantly greater improvement in the glargine group (7) . The glargine group also experienced significant improvements in symptom distress scores and perception in general health. More specifically, patients in the glargine group experienced significantly greater improvements in mood symptoms, ophthalmologic symptoms, ophthalmologic distress, and fatigue distress (7) . HbA1c decline was similar between the two groups, but those with higher baseline\n\nlevels (≥ 9.5%) experienced greater declines on insulin as compared to rosiglitazone (7) . This suggests that those with higher HbA1c levels benefit even more from a treatment regimen involving insulin than one with OHAs alone. The third RCT found no difference in satisfaction between groups when comparing the addition of pioglitazone to usual OHAs compared to the addition of bedtime NPH insulin, with high levels of satisfaction in both groups (4) (Table 2). Although there were no statistically significant differences in any of the satisfaction domains, those in the insulin group rated their satisfaction with understanding diabetes and the convenience of treatment higher, and they reported feeling less frequent hypoglycaemia. Both groups were very similar in their satisfaction with continuing current treatment, and with the likelihood of recommending the treatment to others (4) . Participants in both single-arm studies reported increased treatment satisfaction when insulin was added to their existing OHA compared to when they were using OHAs alone (8, 9) . However, in one study, satisfaction was related to glycaemic control, with those achieving HbA1c of less than 7% being more satisfied (8) (Table 2).",
     "page_start": 49,
     "page_end": 50,
@@ -865,7 +852,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0061",
+    "chunk_id": "chk_e3c85f0e_0060",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "",
@@ -881,7 +868,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0062",
+    "chunk_id": "chk_e3c85f0e_0061",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "",
@@ -896,7 +883,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0063",
+    "chunk_id": "chk_e3c85f0e_0062",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -911,7 +898,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0064",
+    "chunk_id": "chk_e3c85f0e_0063",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -924,7 +911,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0065",
+    "chunk_id": "chk_e3c85f0e_0064",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -937,7 +924,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0066",
+    "chunk_id": "chk_e3c85f0e_0065",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -950,7 +937,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0067",
+    "chunk_id": "chk_e3c85f0e_0066",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -963,7 +950,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0068",
+    "chunk_id": "chk_e3c85f0e_0067",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
@@ -976,17 +963,33 @@
     "figure_references": []
   },
   {
+    "chunk_id": "chk_e3c85f0e_0068",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 8. Reviews of patient treatment preferences",
+    "section": "Discussion",
+    "subsection": "",
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Study (Year) | Column 2 | Column 3 | Country/Region | Column 5 | Study Type | Insulin Assessed | Blinding (Y/N) | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | Rapid | acting analogue vs. short acting human insulin | | | | | | |\n| Bott et al. (2003) | | | German-speaking countries | | Randomised, open- label trial | Rapid acting analogue Short acting human | N | |\n| DeVries et al. (2003) | | | Oceania, Europe and South Africa | | Randomised, open- label trial | Rapid acting analogue Short acting human | N | |\n| Gale et al. (2000) | | | United Kingdom | | Randomised, crossover trial | Rapid acting analogue Short acting human | Y | |\n| Home et al. (2000) | | | Europe | | Randomised, open- label trial | Rapid acting analogue Short acting human | N | |\n| Kotsanos et al. (1997) | | | Canada, France, Germany, USA | | Randomised, crossover trial | Rapid acting analogue Short acting human | N | |\n| Melki et al. (1998) | | | France | | Randomised, crossover trial | Rapid acting analogue Short acting human | N | |\n| Renner et al. (1999) | | | Germany | | Randomised, crossover trial | Rapid acting analogue Short acting human | N | |\n\n| Study (Year) | Column 2 | Column 3 | Country/Region | Column 5 | Study Type | Insulin Assessed | Blinding (Y/N) | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Tamas et al. (2001) | | | Belgium, Croatia, Czech Republic, France, Hungary, Israel, Macedonia, Poland, Russian Federation, Slovenia, Spain | | Randomised, open- label trial | Rapid acting analogue Short acting human | N | |\n| | Long acting analogue vs. intermediate acting human insulin | | | | | | | |\n| Chatterjee et al. (2007) | | | United Kingdom | | Randomised, crossover trial | Long acting analogue Intermediate acting human | N | |",
+    "page_start": 56,
+    "page_end": 56,
+    "token_count": 506,
+    "table_references": [
+      "Table Caption",
+      "Table Caption"
+    ],
+    "figure_references": []
+  },
+  {
     "chunk_id": "chk_e3c85f0e_0069",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Study (Year) | Column 2 | Column 3 | Country/Region | Column 5 | Study Type | Insulin Assessed | Blinding (Y/N) | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  | Rapid | acting analogue vs. short acting human insulin |  |  |  |  |  |  |\n| Bott et al. (2003) |  |  | German-speaking countries |  | Randomised, open- label trial | Rapid acting analogue Short acting human | N |  |\n| DeVries et al. (2003) |  |  | Oceania, Europe and South Africa |  | Randomised, open- label trial | Rapid acting analogue Short acting human | N |  |\n| Gale et al. (2000) |  |  | United Kingdom |  | Randomised, crossover trial | Rapid acting analogue Short acting human | Y |  |\n| Home et al. (2000) |  |  | Europe |  | Randomised, open- label trial | Rapid acting analogue Short acting human | N |  |\n| Kotsanos et al. (1997) |  |  | Canada, France, Germany, USA |  | Randomised, crossover trial | Rapid acting analogue Short acting human | N |  |\n| Melki et al. (1998) |  |  | France |  | Randomised, crossover trial | Rapid acting analogue Short acting human | N |  |\n\n| Study (Year) | Column 2 | Column 3 | Country/Region | Column 5 | Study Type | Insulin Assessed | Blinding (Y/N) | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Renner et al. (1999) |  |  | Germany |  | Randomised, crossover trial | Rapid acting analogue Short acting human | N |  |\n| Tamas et al. (2001) |  |  | Belgium, Croatia, Czech Republic, France, Hungary, Israel, Macedonia, Poland, Russian Federation, Slovenia, Spain |  | Randomised, open- label trial | Rapid acting analogue Short acting human | N |  |\n|  | Long acting analogue vs. intermediate acting human insulin |  |  |  |  |  |  |  |\n| Chatterjee et al. (2007) |  |  | United Kingdom |  | Randomised, crossover trial | Long acting analogue Intermediate acting human | N |  |",
-    "page_start": 56,
-    "page_end": 56,
-    "token_count": 557,
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Gallen & Carter (2004) | Column 2 | United Kingdom | Audit | Long acting analogue Intermediate acting human | N | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Manini et al. (2007) | | Italy | Prospective Cohort | Long acting analogue Intermediate acting human | N | |\n| Witthaus et al. (2001) | | Europe | Randomised, controlled trial | Long acting analogue Intermediate acting human | N | |\n| | Biphasic analogue insulin vs. biphasic human insulin, or basal-bolus regimen | | | | | |\n| Ashwell et al. (2008) | | United Kingdom | Randomised, crossover trial | Rapid acting analogue + long acting analogue Short acting human + intermediate acting human | N | |\n| Clements et al. (2008) | | Europe | Randomised, open- label trial | Biphasic analogue insulin Biphasic human insulin | N | |\n| Machado-Alba et al. (2016) | | Colombia | Cross-sectional | Rapid acting analogue + long acting analogue Short acting human + intermediate acting human | N | |\n| McNally et al. (2007) | | United Kingdom | Randomised, Two-period crossover | Biphasic analogue insulin Biphasic human insulin | Y | |\n\n*Blinded studies are bold\n\ndifference between groups (Table 2) (20) .\n\n| Study (Year) | Column 2 | Column 3 | N | Assessment Method | Column 6 | Insulin Preferred | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| | Rapid | acting analogue vs. short acting human insulin | | | | | |\n| Bott et al. (2003) | | | 424 | DTSQ Diabetes-Specific Quality of Life Scale (DSQOLS) | | Analogue | |\n| DeVries et al. (2003) | | | 368 | DTSQ | | Analogue | |\n| Gale et al. (2000) | | | 93 | DTSQ Well-Being Questionnaire (W-BQ28) Global Impression Questionnaire | | No difference | |\n| Home et al. (2000) | | | 1070 | DTSQ | | Analogue | |\n| Kotsanos et al. (1997) | | | 468 | Diabetes Quality of Life Clinical Trial Questionnaire (DQLCTQ) | | Analogue | |\n| Melki et al. (1998) | | | 39 | DTSQ Questionnaire on Stress in Patients with Diabetes (QSD) | | Analogue | |\n| Renner et al. (1999) | | | 113 | DTSQ | | Analogue | |\n| Tamas et al. (2001) | | | 426 | DTSQ Diabetes Health Profile (DHP) | | No difference | |\n| | Long acting analogue vs. intermediate acting human insulin | | | | | | |",
+    "page_start": 57,
+    "page_end": 57,
+    "token_count": 656,
     "table_references": [
-      "Table Caption",
+      "Table Page 57",
       "Table Caption"
     ],
     "figure_references": []
@@ -997,12 +1000,11 @@
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Gallen & Carter (2004) | Column 2 | United Kingdom | Audit | Long acting analogue Intermediate acting human | N | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| Manini et al. (2007) |  | Italy | Prospective Cohort | Long acting analogue Intermediate acting human | N |  |\n| Witthaus et al. (2001) |  | Europe | Randomised, controlled trial | Long acting analogue Intermediate acting human | N |  |\n|  | Biphasic analogue insulin vs. biphasic human insulin, or basal-bolus regimen |  |  |  |  |  |\n| Ashwell et al. (2008) |  | United Kingdom | Randomised, crossover trial | Rapid acting analogue + long acting analogue Short acting human + intermediate acting human | N |  |\n| Clements et al. (2008) |  | Europe | Randomised, open- label trial | Biphasic analogue insulin Biphasic human insulin | N |  |\n| Machado-Alba et al. (2016) |  | Colombia | Cross-sectional | Rapid acting analogue + long acting analogue Short acting human + intermediate acting human | N |  |\n| McNally et al. (2007) |  | United Kingdom | Randomised, Two-period crossover | Biphasic analogue insulin Biphasic human insulin | Y |  |\n\n*Blinded studies are bold\n\ndifference between groups (Table 2) (20) .\n\n| Study (Year) | Column 2 | Column 3 | N | Assessment Method | Column 6 | Insulin Preferred | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n|  | Rapid | acting analogue vs. short acting human insulin |  |  |  |  |  |\n| Bott et al. (2003) |  |  | 424 | DTSQ Diabetes-Specific Quality of Life Scale (DSQOLS) |  | Analogue |  |\n| DeVries et al. (2003) |  |  | 368 | DTSQ |  | Analogue |  |\n| Gale et al. (2000) |  |  | 93 | DTSQ Well-Being Questionnaire (W-BQ28) Global Impression Questionnaire |  | No difference |  |\n| Home et al. (2000) |  |  | 1070 | DTSQ |  | Analogue |  |\n| Kotsanos et al. (1997) |  |  | 468 | Diabetes Quality of Life Clinical Trial Questionnaire (DQLCTQ) |  | Analogue |  |\n| Melki et al. (1998) |  |  | 39 | DTSQ Questionnaire on Stress in Patients with Diabetes (QSD) |  | Analogue |  |\n| Renner et al. (1999) |  |  | 113 | DTSQ |  | Analogue |  |",
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Study (Year) | Column 2 | Column 3 | N | Assessment Method | Column 6 | Insulin Preferred | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Chatterjee et al. (2007) | | | 60 | DTSQ ADDQOL | | Analogue | |\n| Gallen & Carter (2004) | | | 85 | DTSQ W-BQ28 | | Analogue | |\n| Manini et al. (2007) | | | 47 | Well-Being Enquiry for Diabetics (WED) | | Analogue | |\n| Witthaus et al. (2001) | | | 517 | DTSQ W-BQ28 | | Analogue | |\n| | Biphasic analogue insulin vs. biphasic human insulin, or basal-bolus regimen | | | | | | |\n| Ashwell et al. (2008) | | | 54 | WHO Diabetes Treatment Satisfaction Questionnaire (DTSQ) Audit of Diabetes Dependent Quality of Life Questionnaire (ADDQOL) | | Analogue | |\n| Clements et al. (2008) | | | 667 | DTSQ | | No difference | |\n| Machado-Alba et al. (2016) | | | 238 | Diabetes 39 Quality of Life Survey (D-39) European Quality of Life – 5 Dimensions (EQ-5D) | | No difference | |\n| McNally et al. (2007) | | | 160 | DTSQ | | No difference | |\n\n*Blinded studies are bold\n\nNeither of the two studies comparing biphasic human and analogue insulin found a difference in patient satisfaction between groups (21, 22) . One of these studies was a double-blind study involving patients with type 2 diabetes (21) . Although the focus of this review is on patients with type 1 diabetes, it has been included here given the paucity of evidence from blinded studies. Of the studies that found a difference in treatment satisfaction between patients using human and analogue insulin, most performed further analyses to determine what treatment characteristics were associated with improved satisfaction. Treatment or dietary flexibility (3, 11, 13, 14, 18, 19) , treatment convenience (11, 14, 18, 19) , improvement in overall or diabetes-specific quality of life or well-being (2, 11, 13, 16, 18) , reduction in perceived hyperglycaemia (2, 18, 19) , reduction in perceived hypoglycaemia (11, 16, 18) , improved stability or reduced variability of blood glucose (11, 16) , and improved energy levels or reduced fatigue (2, 16) were the most-cited factors in the studies seen as contributing to improved treatment satisfaction. Patients in five studies were satisfied to continue with analogue insulin or recommend the treatment to others (3, 11, 14, 18, 19) . Other reported reasons for improved treatment satisfaction were increased physical strength (11) , increased protection from long-term complications (11), feeling better (3) , making daily activities easier (3), more balanced glucose control (3) , decreased worry and improved emotional status (16) , and reduced impact of diabetes on life (on family relationships, role functioning and social network) (16, 19) . Discussion Overall, 11 of 16 included studies reported that patients preferred analogue insulin over human",
     "page_start": 57,
-    "page_end": 57,
-    "token_count": 658,
+    "page_end": 58,
+    "token_count": 756,
     "table_references": [
-      "Table Page 57",
       "Table Caption"
     ],
     "figure_references": []
@@ -1013,14 +1015,11 @@
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n| Study (Year) | Column 2 | Column 3 | N | Assessment Method | Column 6 | Insulin Preferred | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Tamas et al. (2001) |  |  | 426 | DTSQ Diabetes Health Profile (DHP) |  | No difference |  |\n|  | Long acting analogue vs. intermediate acting human insulin |  |  |  |  |  |  |\n| Chatterjee et al. (2007) |  |  | 60 | DTSQ ADDQOL |  | Analogue |  |\n| Gallen & Carter (2004) |  |  | 85 | DTSQ W-BQ28 |  | Analogue |  |\n| Manini et al. (2007) |  |  | 47 | Well-Being Enquiry for Diabetics (WED) |  | Analogue |  |\n| Witthaus et al. (2001) |  |  | 517 | DTSQ W-BQ28 |  | Analogue |  |\n|  | Biphasic analogue insulin vs. biphasic human insulin, or basal-bolus regimen |  |  |  |  |  |  |\n| Ashwell et al. (2008) |  |  | 54 | WHO Diabetes Treatment Satisfaction Questionnaire (DTSQ) Audit of Diabetes Dependent Quality of Life Questionnaire (ADDQOL) |  | Analogue |  |\n\n| Study (Year) | Column 2 | Column 3 | N | Assessment Method | Column 6 | Insulin Preferred | Column 8 |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| Clements et al. (2008) |  |  | 667 | DTSQ |  | No difference |  |\n| Machado-Alba et al. (2016) |  |  | 238 | Diabetes 39 Quality of Life Survey (D-39) European Quality of Life – 5 Dimensions (EQ-5D) |  | No difference |  |\n| McNally et al. (2007) |  |  | 160 | DTSQ |  | No difference |  |",
-    "page_start": 57,
-    "page_end": 57,
-    "token_count": 508,
-    "table_references": [
-      "Table Caption",
-      "Table Caption"
-    ],
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\ninsulin. This was more pronounced with long- than rapid-acting analogue insulin. These results should be interpreted with caution, however, as only two of the studies were doubleblinded and there is thus a high risk of bias from patient or clinician expectations of treatment efficacy. As a group, patients who agree to participate in studies comparing novel interventions with standard ones are more likely to have a preference for the new treatment than the general population – their feelings about the group to which they have been allocated may therefore influence behaviours and appraisal of the treatment (23). It is important to note that neither of the double blinded studies found a significant difference in patient satisfaction between human and analogue insulin. There is a reluctance to perform double-blinded studies because of concerns about the different recommendations regarding pre-meal injection time for analogue and human insulin. However, multiple studies have found that patients inject at a similar time regardless of the type of insulin used (11, 24) . Only 18% of patients in one study reported following the recommended injection interval for human insulin, with the remainder injecting between 0 and 20 minutes before a meal (24) . However, blinded studies are not without drawbacks, and do not allow consideration of treatment flexibility and convenience to count towards treatment satisfaction (19) . Only one study considered patient preference and treatment satisfaction as a primary outcome (11), with all other studies focusing on clinical end points, with satisfaction as a secondary outcome. This makes it difficult to distinguish between satisfaction arising from characteristics of the treatment\n\nitself, compared to satisfaction with change or improvement in clinical end points such as HbA1c. Two studies found that treatment satisfaction was associated with decline in HbA1c (11, 13) , and one study found that patients were more likely to prefer analogue insulin if their baseline HbA1c was above the median in the study population (16). Conclusion Most studies indicate that patients prefer analogue insulin compared to human insulin. Almost all studies focused on clinical endpoints, with treatment satisfaction as a secondary outcome. Greater focus needs to be placed on the patient experience, as this affects both the perceived burden of diabetes and the likelihood of adherence to recommended treatments and achievement of optimal glycaemic control. Given the high risk of bias in almost all the included studies, higher quality evidence is required before conclusions can be formed. Future studies may consider a number of study designs that are based on the framework of a randomized control trial, but take into account patient preferences to reduce bias based on these expectations, reduce the number of drop outs, and maximise patient motivation to adhere to study protocols (23). References 1.Definition, diagnosis and classification of diabetes mellitus and its complications. Part 1: Diagnosis and classification of diabetes mellitus (WHO/NCD/NCS/99.2). Geneva: World Health Organization; 1999. - Gallen I, Carter C. Prospective audit of the introduction of insulin glargine (Lantus) into clinical practice in type 1 diabetes. Practical Diabetes International. 2004;21(3):110 – 4. - Melki V, Renard E, Lassmann-Vague V, Boivin S, Guerci B, Hanaire-Broutin H, et al. Improvement of HbA1c and blood glucose stability in IDDM patients treated with Lispro insulin analog in external pumps. Diabetes Care.",
+    "page_start": 58,
+    "page_end": 59,
+    "token_count": 708,
+    "table_references": [],
     "figure_references": []
   },
   {
@@ -1029,10 +1028,10 @@
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n*Blinded studies are bold\n\nNeither of the two studies comparing biphasic human and analogue insulin found a difference in patient satisfaction between groups (21, 22) . One of these studies was a double-blind study involving patients with type 2 diabetes (21) . Although the focus of this review is on patients with type 1 diabetes, it has been included here given the paucity of evidence from blinded studies. Of the studies that found a difference in treatment satisfaction between patients using human and analogue insulin, most performed further analyses to determine what treatment characteristics were associated with improved satisfaction. Treatment or dietary flexibility (3, 11, 13, 14, 18, 19) , treatment convenience (11, 14, 18, 19) , improvement in overall or diabetes-specific quality of life or well-being (2, 11, 13, 16, 18) , reduction in perceived hyperglycaemia (2, 18, 19) , reduction in perceived hypoglycaemia (11, 16, 18) , improved stability or reduced variability of blood glucose (11, 16) , and improved energy levels or reduced fatigue (2, 16) were the most-cited factors in the studies seen as contributing to improved treatment satisfaction. Patients in five studies were satisfied to continue with analogue insulin or recommend the treatment to others (3, 11, 14, 18, 19) . Other reported reasons for improved treatment satisfaction were increased physical strength (11) , increased protection from long-term complications (11), feeling better (3) , making daily activities easier (3), more balanced glucose control (3) , decreased worry and improved emotional status (16) , and reduced impact of diabetes on life (on family relationships, role functioning and social network) (16, 19) . Discussion Overall, 11 of 16 included studies reported that patients preferred analogue insulin over human\n\ninsulin. This was more pronounced with long- than rapid-acting analogue insulin. These results should be interpreted with caution, however, as only two of the studies were doubleblinded and there is thus a high risk of bias from patient or clinician expectations of treatment efficacy. As a group, patients who agree to participate in studies comparing novel interventions with standard ones are more likely to have a preference for the new treatment than the general population – their feelings about the group to which they have been allocated may therefore influence behaviours and appraisal of the treatment (23). It is important to note that neither of the double blinded studies found a significant difference in patient satisfaction between human and analogue insulin. There is a reluctance to perform double-blinded studies because of concerns about the different recommendations regarding pre-meal injection time for analogue and human insulin. However, multiple studies have found that patients inject at a similar time regardless of the type of insulin used (11, 24) . Only 18% of patients in one study reported following the recommended injection interval for human insulin, with the remainder injecting between 0 and 20 minutes before a meal (24) . However, blinded studies are not without drawbacks, and do not allow consideration of treatment flexibility and convenience to count towards treatment satisfaction (19) . Only one study considered patient preference and treatment satisfaction as a primary outcome (11), with all other studies focusing on clinical end points, with satisfaction as a secondary outcome. This makes it difficult to distinguish between satisfaction arising from characteristics of the treatment",
-    "page_start": 57,
-    "page_end": 58,
-    "token_count": 716,
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n1998;21(6):977 – 82. - El Naggar N, Kalra S. Switching from biphasic human insulin to premix insulin analogs: a review of the evidence regarding quality of life and adherence to medication in type 2 diabetes mellitus. Advances in Therapy. 2017;33(12):2091 – 109. - Davies MJ, Gagliardino JJ, Gray LJ, Khunti K, Mohan V, Hughes R. Real-world factors affecting adherence to insulin therapy in patients with type 1 or type 2 diabetes mellitus: a systematic review. Diabetic Medicine. 2013;30(5):512 – 24. - Monami M, Marchionni N, Mannucci E. Long-acting insulin analogues vs. NPH human insulin in type 1 diabetes. A meta-analysis. Diabetes, Obesity and Metabolism. 2009;11(4):372 – 8. - Fullerton B, Siebenhofer A, Jeitler K, Horvath K, Semlitsch T, Berghold A, et al. Short‐acting insulin analogues versus regular human insulin for adults with type 1 diabetes mellitus. The Cochrane Library. 2016. - Bradley C, Speight J. Patient perceptions of diabetes and diabetes therapy: assessing quality of life. Diabetes/Metabolism Research and Reviews. 2002;18(S3):S64 – S9. - Gale EA. A randomized, controlled trial comparing insulin Lispro with human soluble insulin in patients with type 1 diabetes on intensified insulin therapy. The UK Trial Group. Diabetic medicine: a journal of the British Diabetic Association. 2000;17(3):209 – 14. - Tamás G, Marre M, Astorga R, Dedov I, Jacobsen J, Lindholm A.\n\nGlycaemic control in type 1 diabetic patients using optimised insulin aspart or human insulin in a randomised multinational study. Diabetes Research and Clinical Practice. 2001;54(2):105 – 14. - Bott U, Ebrahim S, Hirschberger S, Skovlund SE. Effect of the rapid-acting insulin analogue insulin aspart on quality of life and treatment satisfaction in patients with Type 1 diabetes. Diabetic Medicine. 2003;20(8):626 – 34. - DeVries JH, Lindholm A, Jacobsen JL, Heine RJ, Home PD. The Tri-Continental Insulin Aspart Study Group. A randomized trial of insulin aspart with intensified basal NPH insulin supplementation in people with type 1 diabetes. Diabetic Medicine. 2003;20(4):312 – 8. - Kotsanos JG, Vignati L, Huster W, Andrejasich C, Boggs MB, Jacobson AM, et al. Health-related quality-oflife results from multinational clinical trials of insulin Lispro: Assessing benefits of a new diabetes therapy. Diabetes Care. 1997;20(6):948 – 58.",
+    "page_start": 59,
+    "page_end": 59,
+    "token_count": 661,
     "table_references": [],
     "figure_references": []
   },
@@ -1042,37 +1041,43 @@
     "chapter": "Appendix 8. Reviews of patient treatment preferences",
     "section": "Discussion",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\nitself, compared to satisfaction with change or improvement in clinical end points such as HbA1c. Two studies found that treatment satisfaction was associated with decline in HbA1c (11, 13) , and one study found that patients were more likely to prefer analogue insulin if their baseline HbA1c was above the median in the study population (16). Conclusion Most studies indicate that patients prefer analogue insulin compared to human insulin. Almost all studies focused on clinical endpoints, with treatment satisfaction as a secondary outcome. Greater focus needs to be placed on the patient experience, as this affects both the perceived burden of diabetes and the likelihood of adherence to recommended treatments and achievement of optimal glycaemic control. Given the high risk of bias in almost all the included studies, higher quality evidence is required before conclusions can be formed. Future studies may consider a number of study designs that are based on the framework of a randomized control trial, but take into account patient preferences to reduce bias based on these expectations, reduce the number of drop outs, and maximise patient motivation to adhere to study protocols (23). References 1.Definition, diagnosis and classification of diabetes mellitus and its complications. Part 1: Diagnosis and classification of diabetes mellitus (WHO/NCD/NCS/99.2). Geneva: World Health Organization; 1999. - Gallen I, Carter C. Prospective audit of the introduction of insulin glargine (Lantus) into clinical practice in type 1 diabetes. Practical Diabetes International. 2004;21(3):110 – 4. - Melki V, Renard E, Lassmann-Vague V, Boivin S, Guerci B, Hanaire-Broutin H, et al. Improvement of HbA1c and blood glucose stability in IDDM patients treated with Lispro insulin analog in external pumps. Diabetes Care.\n\n1998;21(6):977 – 82. - El Naggar N, Kalra S. Switching from biphasic human insulin to premix insulin analogs: a review of the evidence regarding quality of life and adherence to medication in type 2 diabetes mellitus. Advances in Therapy. 2017;33(12):2091 – 109. - Davies MJ, Gagliardino JJ, Gray LJ, Khunti K, Mohan V, Hughes R. Real-world factors affecting adherence to insulin therapy in patients with type 1 or type 2 diabetes mellitus: a systematic review. Diabetic Medicine. 2013;30(5):512 – 24. - Monami M, Marchionni N, Mannucci E. Long-acting insulin analogues vs. NPH human insulin in type 1 diabetes. A meta-analysis. Diabetes, Obesity and Metabolism. 2009;11(4):372 – 8. - Fullerton B, Siebenhofer A, Jeitler K, Horvath K, Semlitsch T, Berghold A, et al. Short‐acting insulin analogues versus regular human insulin for adults with type 1 diabetes mellitus. The Cochrane Library. 2016. - Bradley C, Speight J. Patient perceptions of diabetes and diabetes therapy: assessing quality of life. Diabetes/Metabolism Research and Reviews. 2002;18(S3):S64 – S9. - Gale EA. A randomized, controlled trial comparing insulin Lispro with human soluble insulin in patients with type 1 diabetes on intensified insulin therapy. The UK Trial Group. Diabetic medicine: a journal of the British Diabetic Association. 2000;17(3):209 – 14. - Tamás G, Marre M, Astorga R, Dedov I, Jacobsen J, Lindholm A.",
-    "page_start": 59,
-    "page_end": 59,
-    "token_count": 798,
+    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\n- Home PD, Lindholm A, Riis A, for the European Insulin Aspart Study Group. Insulin aspart vs. human insulin in the management of long-term blood glucose control in type 1 diabetes mellitus: a randomized controlled trial. Diabetic Medicine. 2000;17(11):762 – 70. - Renner R, Pfutzner A, Trautmann M, Harzer O, Sauter K, Landgraf R. Use of insulin lispro in continuous subcutaneous insulin infusion treatment. Results of a multicenter trial. German Humalog-CSII Study Group. Diabetes Care. 1999;22(5):784 – 8. - Manini R, Forlani G, Moscatiello S, Zannoni C, Marzocchi R, Marchesini G. Insulin glargine improves glycemic control and health-related quality of life in type 1 diabetes. Nutrition, Metabolism and Cardiovascular Diseases. 2007;17(7):493 – 8. - Chatterjee S, Jarvis-Kay J, Rengarajan T, Lawrence IG, McNally PG, Davies MJ. Glargine versus NPH insulin: Efficacy in comparison with insulin aspart in a basal bolus regimen in type 1 diabetes—The glargine and aspart study (GLASS): A randomised cross-over study. Diabetes Research and Clinical Practice. 2007;77(2):215-22. - Witthaus E, Stewart J, Bradley C. Treatment satisfaction and psychological well-being with insulin glargine compared with NPH in patients with type 1 diabetes. Diabetic Medicine. 2001;18(8):619 – 25. - Ashwell SG, Bradley C, Stephens JW, Witthaus E, Home PD. Treatment satisfaction and quality of life with\n\ninsulin glargine plus insulin lispro compared with NPH insulin plus unmodified human insulin in individuals with type 1 diabetes. Diabetes Care. 2008;31(6):1112 – 7. - Machado-Alba JE, Medina-Morales DA, Echeverri-Catano LF. Evaluation of the quality of life of patients with diabetes mellitus treated with conventional or analogue insulins. Diabetes Research and Clinical Practice. 2016;116:237 – 43. - McNally PG, Dean JD, Morris AD, Wilkinson PD, Compion G, Heller SR. Using continuous glucose monitoring to measure the frequency of low glucose values when using biphasic insulin aspart 30 compared with biphasic human insulin 30. A double-blind crossover study in individuals with type 2 diabetes. Diabetes Care. 2007;30(5):1044 – 8. - Clements MR, Tits J, Kinsley BT, Råstam J, Friberg HH, Ligthelm RJ. Improved glycaemic control of thricedaily biphasic insulin aspart compared with twice-daily biphasic human insulin; a randomized, open-label trial in patients with type 1 or type 2 diabetes. Diabetes, Obesity and Metabolism. 2008;10(3):229 – 37. - Bradley C. Designing medical and educational intervention studies: a review of some alternatives to conventional randomized controlled trials. Diabetes Care. 1993;16(2):509 – 18. - Baker E. Ahmed A, Badgandi M, Home PD. Interval between insulin injection and meal in relation to glycated haemoglobin. Practical Diabetes International. 2001;18(2):51 – 6.",
+    "page_start": 60,
+    "page_end": 60,
+    "token_count": 771,
     "table_references": [],
     "figure_references": []
   },
   {
     "chunk_id": "chk_e3c85f0e_0074",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 8. Reviews of patient treatment preferences",
-    "section": "Discussion",
+    "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
+    "section": "",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\nGlycaemic control in type 1 diabetic patients using optimised insulin aspart or human insulin in a randomised multinational study. Diabetes Research and Clinical Practice. 2001;54(2):105 – 14. - Bott U, Ebrahim S, Hirschberger S, Skovlund SE. Effect of the rapid-acting insulin analogue insulin aspart on quality of life and treatment satisfaction in patients with Type 1 diabetes. Diabetic Medicine. 2003;20(8):626 – 34. - DeVries JH, Lindholm A, Jacobsen JL, Heine RJ, Home PD. The Tri-Continental Insulin Aspart Study Group. A randomized trial of insulin aspart with intensified basal NPH insulin supplementation in people with type 1 diabetes. Diabetic Medicine. 2003;20(4):312 – 8. - Kotsanos JG, Vignati L, Huster W, Andrejasich C, Boggs MB, Jacobson AM, et al. Health-related quality-oflife results from multinational clinical trials of insulin Lispro: Assessing benefits of a new diabetes therapy. Diabetes Care. 1997;20(6):948 – 58.\n\n- Home PD, Lindholm A, Riis A, for the European Insulin Aspart Study Group. Insulin aspart vs. human insulin in the management of long-term blood glucose control in type 1 diabetes mellitus: a randomized controlled trial. Diabetic Medicine. 2000;17(11):762 – 70. - Renner R, Pfutzner A, Trautmann M, Harzer O, Sauter K, Landgraf R. Use of insulin lispro in continuous subcutaneous insulin infusion treatment. Results of a multicenter trial. German Humalog-CSII Study Group. Diabetes Care. 1999;22(5):784 – 8. - Manini R, Forlani G, Moscatiello S, Zannoni C, Marzocchi R, Marchesini G. Insulin glargine improves glycemic control and health-related quality of life in type 1 diabetes. Nutrition, Metabolism and Cardiovascular Diseases. 2007;17(7):493 – 8. - Chatterjee S, Jarvis-Kay J, Rengarajan T, Lawrence IG, McNally PG, Davies MJ. Glargine versus NPH insulin: Efficacy in comparison with insulin aspart in a basal bolus regimen in type 1 diabetes—The glargine and aspart study (GLASS): A randomised cross-over study. Diabetes Research and Clinical Practice. 2007;77(2):215-22. - Witthaus E, Stewart J, Bradley C. Treatment satisfaction and psychological well-being with insulin glargine compared with NPH in patients with type 1 diabetes. Diabetic Medicine. 2001;18(8):619 – 25. - Ashwell SG, Bradley C, Stephens JW, Witthaus E, Home PD. Treatment satisfaction and quality of life with",
-    "page_start": 59,
-    "page_end": 60,
-    "token_count": 654,
-    "table_references": [],
+    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 |  0.23  (-0.62, 1.08) |  0.12  (-1.12, 1.35) |  -0.00  (-0.61, 0.61) |  0.86  (0.25, 1.48) |\n| --- | --- | --- | --- | --- |\n| TZD | | | | |\n| | | | | |\n| | |  -0.12  (-1.52, 1.29) |  -0.23  (-1.03, 0.56) |  0.63  (-0.29, 1.55) |\n| | DPP-4 inhibitors | | | |\n| | | | | |\n\n| Column 1 |  0.23  (-0.62, 1.08) |  0.12  (-1.12, 1.35) |  -0.00  (-0.61, 0.61) |  0.86  (0.25, 1.48) |\n| --- | --- | --- | --- | --- |\n| | | |  -0.12  (-1.39, 1.15) |  0.75  (-0.32, 1.82) |\n| | | SGLT-2 inhibitors | | |\n| | | | | |\n| | | | | 0.86   (0.18, 1.55) |\n| | | | Basal insulin | |\n| | | | | |\n| | | | | |\n| | | | | Placebo |\n| | | | | |\n| SGLT-2 |\n| --- |\n| inhibitors |",
+    "page_start": 61,
+    "page_end": 61,
+    "token_count": 672,
+    "table_references": [
+      "Table 1: HbA1c (mean difference in change from baseline with 95% confidence interval)",
+      "Table 1: HbA1c (mean difference in change from baseline with 95% confidence interval)"
+    ],
     "figure_references": []
   },
   {
     "chunk_id": "chk_e3c85f0e_0075",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 8. Reviews of patient treatment preferences",
-    "section": "Discussion",
+    "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
+    "section": "",
     "subsection": "",
-    "content": "## Appendix 8. Reviews of patient treatment preferences\n### Discussion\n\ninsulin glargine plus insulin lispro compared with NPH insulin plus unmodified human insulin in individuals with type 1 diabetes. Diabetes Care. 2008;31(6):1112 – 7. - Machado-Alba JE, Medina-Morales DA, Echeverri-Catano LF. Evaluation of the quality of life of patients with diabetes mellitus treated with conventional or analogue insulins. Diabetes Research and Clinical Practice. 2016;116:237 – 43. - McNally PG, Dean JD, Morris AD, Wilkinson PD, Compion G, Heller SR. Using continuous glucose monitoring to measure the frequency of low glucose values when using biphasic insulin aspart 30 compared with biphasic human insulin 30. A double-blind crossover study in individuals with type 2 diabetes. Diabetes Care. 2007;30(5):1044 – 8. - Clements MR, Tits J, Kinsley BT, Råstam J, Friberg HH, Ligthelm RJ. Improved glycaemic control of thricedaily biphasic insulin aspart compared with twice-daily biphasic human insulin; a randomized, open-label trial in patients with type 1 or type 2 diabetes. Diabetes, Obesity and Metabolism. 2008;10(3):229 – 37. - Bradley C. Designing medical and educational intervention studies: a review of some alternatives to conventional randomized controlled trials. Diabetes Care. 1993;16(2):509 – 18. - Baker E. Ahmed A, Badgandi M, Home PD. Interval between insulin injection and meal in relation to glycated haemoglobin. Practical Diabetes International. 2001;18(2):51 – 6.",
-    "page_start": 60,
-    "page_end": 60,
-    "token_count": 381,
-    "table_references": [],
+    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 | 1 -0.23  (-0.46, 0.00) | 1 -0.33  (-0.59,-0.07) |  0.16  (-0.36,0.68) | 1 -0.28  (-0.48,-0.08) | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| TZD | | | | | | |\n| | | | | | | |\n| | | 2 -0.09  (-0.40,0.91) |  0.40  (-0.12,0.91) | 1 -0.05  (-0.11,0.21) | | |\n| | DPP-4 i | | | | | |\n| | | | | | | |\n| | | |  0.49  (-0.08,1.06) | 0.05  (-0.11,0.21) | | |\n\n| Column 1 | 1 -0.23  (-0.46, 0.00) | 1 -0.33  (-0.59,-0.07) |  0.16  (-0.36,0.68) | 1 -0.28  (-0.48,-0.08) | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| | | SGLT-2 inhibitor | | | | |\n| | | | | | | |\n| | | | |  -0.44  (-0.99,0.10) | | |\n| | | | Basal insulin | | | |\n| | | | | | | |\n| | | | | | | |\n| | | | | | Placebo | |\n| | | | | | | |",
+    "page_start": 61,
+    "page_end": 61,
+    "token_count": 628,
+    "table_references": [
+      "Table 2: Body weight in kg (mean difference in change from baseline with 95% confidence interval)",
+      "Table 2: Body weight in kg (mean difference in change from baseline with 95% confidence interval)"
+    ],
     "figure_references": []
   },
   {
@@ -1081,58 +1086,10 @@
     "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 |  0.23  (-0.62, 1.08) |  0.12  (-1.12, 1.35) |  -0.00  (-0.61, 0.61) |  0.86  (0.25, 1.48) |\n| --- | --- | --- | --- | --- |\n| TZD |  |  |  |  |\n|  |  |  |  |  |\n|  |  |  -0.12  (-1.52, 1.29) |  -0.23  (-1.03, 0.56) |  0.63  (-0.29, 1.55) |\n|  | DPP-4 inhibitors |  |  |  |\n|  |  |  |  |  |\n\n| Column 1 |  0.23  (-0.62, 1.08) |  0.12  (-1.12, 1.35) |  -0.00  (-0.61, 0.61) |  0.86  (0.25, 1.48) |\n| --- | --- | --- | --- | --- |\n|  |  |  |  -0.12  (-1.39, 1.15) |  0.75  (-0.32, 1.82) |\n|  |  | SGLT-2 inhibitors |  |  |\n|  |  |  |  |  |\n|  |  |  |  | 0.86   (0.18, 1.55) |\n|  |  |  | Basal insulin |  |\n|  |  |  |  |  |",
-    "page_start": 61,
-    "page_end": 61,
-    "token_count": 684,
-    "table_references": [
-      "Table 1: HbA1c (mean difference in change from baseline with 95% confidence interval)",
-      "Table 1: HbA1c (mean difference in change from baseline with 95% confidence interval)"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0077",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 |  0.23  (-0.62, 1.08) |  0.12  (-1.12, 1.35) |  -0.00  (-0.61, 0.61) |  0.86  (0.25, 1.48) |\n| --- | --- | --- | --- | --- |\n|  |  |  |  |  |\n|  |  |  |  | Placebo |\n|  |  |  |  |  |\n| SGLT-2 |\n| --- |\n| inhibitors |\n\n| Column 1 | 1 -0.23  (-0.46, 0.00) | 1 -0.33  (-0.59,-0.07) |  0.16  (-0.36,0.68) | 1 -0.28  (-0.48,-0.08) | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| TZD |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  | 2 -0.09  (-0.40,0.91) |  0.40  (-0.12,0.91) | 1 -0.05  (-0.11,0.21) |  |  |\n|  | DPP-4 i |  |  |  |  |  |\n|  |  |  |  |  |  |  |",
-    "page_start": 61,
-    "page_end": 61,
-    "token_count": 541,
-    "table_references": [
-      "Table 1: HbA1c (mean difference in change from baseline with 95% confidence interval)",
-      "Table 2: Body weight in kg (mean difference in change from baseline with 95% confidence interval)"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0078",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 | 1 -0.23  (-0.46, 0.00) | 1 -0.33  (-0.59,-0.07) |  0.16  (-0.36,0.68) | 1 -0.28  (-0.48,-0.08) | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  0.49  (-0.08,1.06) | 0.05  (-0.11,0.21) |  |  |\n|  |  | SGLT-2 inhibitor |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  -0.44  (-0.99,0.10) |  |  |\n|  |  |  | Basal insulin |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n\n| Column 1 | 1 -0.23  (-0.46, 0.00) | 1 -0.33  (-0.59,-0.07) |  0.16  (-0.36,0.68) | 1 -0.28  (-0.48,-0.08) | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  | Placebo |  |\n|  |  |  |  |  |  |  |",
-    "page_start": 61,
-    "page_end": 61,
-    "token_count": 550,
-    "table_references": [
-      "Table 2: Body weight in kg (mean difference in change from baseline with 95% confidence interval)",
-      "Table 2: Body weight in kg (mean difference in change from baseline with 95% confidence interval)"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0079",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 | 0.73 (0.00,136.2) | 3.69 (0.05,257. 8) | Column 4 | Column 5 | 2.13 (0.04,108.3) | 2.42 (0.15,39.1) | Column 8 | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| TZD |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |\n|  |  | 5.03 (0.24,105.1) |  |  | 2.90 (0.01,1071) | 3.30 (0.04,273.2) |  |  |\n|  | DPP-4 inhibitors |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  | 0.58 (0.00,91.8) | 0.66 (0.03,16.17) |  |  |\n|  |  |  | SGLT-2 |  |  |  |  |  |\n|  |  |  | inhibitors |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |\n\n| Column 1 | 0.73 (0.00,136.2) | 3.69 (0.05,257. 8) | Column 4 | Column 5 | 2.13 (0.04,108.3) | 2.42 (0.15,39.1) | Column 8 | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  | 1.14 (0.02,57.8) |  |  |\n|  |  |  |  |  | Basal insulin |  |  |  |\n|  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  | Placebo |  |\n|  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |",
+    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n\n| Column 1 | 0.73 (0.00,136.2) | 3.69 (0.05,257. 8) | Column 4 | Column 5 | 2.13 (0.04,108.3) | 2.42 (0.15,39.1) | Column 8 | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| TZD | | | | | | | | |\n| | | | | | | | | |\n| | | 5.03 (0.24,105.1) | | | 2.90 (0.01,1071) | 3.30 (0.04,273.2) | | |\n| | DPP-4 inhibitors | | | | | | | |\n| | | | | | | | | |\n| | | | | | 0.58 (0.00,91.8) | 0.66 (0.03,16.17) | | |\n| | | | SGLT-2 | | | | | |\n| | | | inhibitors | | | | | |\n| | | | | | | | | |\n| | | | | | | 1.14 (0.02,57.8) | | |\n| | | | | | Basal insulin | | | |\n| | | | | | | | | |\n| | | | | | | | | |\n| | | | | | | | Placebo | |\n| | | | | | | | | |\n\n| Column 1 | 0.73 (0.00,136.2) | 3.69 (0.05,257. 8) | Column 4 | Column 5 | 2.13 (0.04,108.3) | 2.42 (0.15,39.1) | Column 8 | Column 9 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | | | |",
     "page_start": 62,
     "page_end": 62,
-    "token_count": 602,
+    "token_count": 470,
     "table_references": [
       "Table 3: CVD mortality (odds ratio with 95% confidence interval)*",
       "Table 3: CVD mortality (odds ratio with 95% confidence interval)*"
@@ -1140,7 +1097,7 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0080",
+    "chunk_id": "chk_e3c85f0e_0077",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
     "section": "",
@@ -1153,18 +1110,65 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0081",
+    "chunk_id": "chk_e3c85f0e_0078",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes",
     "section": "Summary of judgments",
     "subsection": "",
-    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n### Summary of judgments\n\n| Column 1 | Favours insulin | Probably favours insulin | Choose either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | Probably favours DPP-4 I, SGLT- 2 inhibitors, or glitazones | Favours DPP-4 inhibitors, SGLT- 2 inhibitors, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  |  | X |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  | X |  |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  |  | X |  |\n| Resource use |  | X |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity |  | X |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n\n| Column 1 | Favours insulin | Probably favours insulin | Choose either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | Probably favours DPP-4 I, SGLT- 2 inhibitors, or glitazones | Favours DPP-4 inhibitors, SGLT- 2 inhibitors, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n|  | We recommend insulin over DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using insulin over DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using DPP-4 I, SGLT- 2 inhibitors, or glitazones over insulin | We recommend DPP-4 I, SGLT-2 inhibitors, or glitazones over insulin |\n| Type of recommendation | X |  |  |  |  |",
+    "content": "## Appendix 9. Hypoglycaemic agents for third-line treatment in type 2 diabetes\n### Summary of judgments\n\n| Column 1 | Favours insulin | Probably favours insulin | Choose either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | Probably favours DPP-4 I, SGLT- 2 inhibitors, or glitazones | Favours DPP-4 inhibitors, SGLT- 2 inhibitors, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  |  | X |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  | X |  |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  |  | X |  |\n| Resource use |  | X |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity |  | X |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n\n| Column 1 | Favours insulin | Probably favours insulin | Choose either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | Probably favours DPP-4 I, SGLT- 2 inhibitors, or glitazones | Favours DPP-4 inhibitors, SGLT- 2 inhibitors, or glitazones |\n| --- | --- | --- | --- | --- | --- |\n| | We recommend insulin over DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using insulin over DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using either insulin or DPP-4 I, SGLT-2 inhibitors, or glitazones | We suggest using DPP-4 I, SGLT- 2 inhibitors, or glitazones over insulin | We recommend DPP-4 I, SGLT-2 inhibitors, or glitazones over insulin |\n| Type of recommendation | X |  |  |  |  |",
     "page_start": 63,
     "page_end": 63,
-    "token_count": 545,
+    "token_count": 544,
     "table_references": [
       "Table Page 63",
       "Table Page 63"
+    ],
+    "figure_references": []
+  },
+  {
+    "chunk_id": "chk_e3c85f0e_0079",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
+    "section": "",
+    "subsection": "",
+    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Rx: % | Ctrl: % | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | Overall | | | | |\n| participants | | Risk of | Inconsis- | Indirect- | | | | (# | (# | MD (95% |\n| | Rx vs. Ctrl | | | | Imprecisionc | quality of | Importanced | | | |\n| (number of | | bias | tencya | nessb | | | | events/# | events/ | CI)d |\n| | | | | | | evidence | | | | |\n| studies) | | | | | | | | n) | # n) | |\n| | | | | | | | | | | |\n| 2040 (8 RCT) | Detemir[od/bid] vs. NPH[od/bid] | Seriouse | Not Serious | Not Serious | Not Serious | Moderate  | Critical | NA | NA | -0.04 (-0.12,0.03) |\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Rx: % | Ctrl: % | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1682 (7 RCT) | Glargine[od] vs. NPH[od/bid] | Very seriousf | Serious1 | Not Serious | Not Serious | Very Low  | Critical | NA | NA | -0.08 (-0.19,0.02) |\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence\nc If CI crossed all three cut-off points -0.25 (appreciable harm), 0.00 (absolute effect), and 0.25 (appreciable benefit), then it was downgraded to 'Very serious' if the number\nof patients was fewer than 400, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd HbA1c was classified as a critical outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Study scored high risk for allocation concealment and/or selective reporting.",
+    "page_start": 64,
+    "page_end": 64,
+    "token_count": 592,
+    "table_references": [
+      "Table 1: Summary of findings – HbA1c",
+      "Table 1: Summary of findings – HbA1c"
+    ],
+    "figure_references": []
+  },
+  {
+    "chunk_id": "chk_e3c85f0e_0080",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
+    "section": "",
+    "subsection": "",
+    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | Overall | | Rx: % (# | Ctrl: % (# | |\n| participants | | Risk of | Inconsis- | Indirect- | | | Impor- | | | OR |\n| | Rx vs. Ctrl | | | | Imprecisionc | quality of | | events /# | events /# | |\n| (Number of | | bias | tencya | nessb | | | tanced | | | (95% CI) |\n| | | | | | | evidence | | n) | n) | |\n| studies) | | | | | | | | | | |\n| | | | | | | | | | | |\n| 530 | Determir[od/bid] vs NPH[od/bid] | Seriouse | Not Serious | Not Serious | Seriousf | Low  | Critical | 1/198 (0.5%) | 1/193 (0.5%) | 0.97 (0.10–9.44) |\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence.\nc If CI crossed all three cut-off points 0.75 (appreciable harm), 1.00 (absolute effect), and 1.25 (appreciable benefit), then it was downgraded as 'Very serious' if the event\ncount was less than 300, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd Mortality was classified as an important outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Wide confidence interval including appreciable benefit and harm.",
+    "page_start": 65,
+    "page_end": 65,
+    "token_count": 463,
+    "table_references": [
+      "Table 2: Summary of findings – All-cause mortality"
+    ],
+    "figure_references": []
+  },
+  {
+    "chunk_id": "chk_e3c85f0e_0081",
+    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
+    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
+    "section": "",
+    "subsection": "",
+    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 |\n| --- | --- | --- | --- | --- | --- |\n| Number of participants | | | Rx: % (# | Ctrl: % (# | |\n| | Rx vs. Ctrl | Importance | | | Relative risk (95% CI) |\n| (Number of studies) | | | events/# n) | events/# n) | |\n| | | | | | |\n| | | | | | |\n| 534 (1) | Glargine[od] vs NPH[bid] | Critical | 1/270 (0.4%) | 0/264 (0%) | 0.34 (0.01–8.33) |\n| 130 (1) | Detemir[bid] vs NPH[bid] | Critical | 0/66 (0%) | 1/64 (1.6%) | 4.47 (0.24–82.58) |\n\n- Quality not graded due to very high level of imprecision\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | Overall | | Rx: % (# | Ctrl: % (# | |\n| participants | | Risk of | Inconsis- | Indirect- | | | Impor- | | | OR |\n| | Rx vs. Ctrl | | | | Imprecisionc | quality of | | events /# | events /# | |\n| (Number of | | bias | tencya | nessb | | | tanced | | | (95% CI) |\n| | | | | | | evidence | | n) | n) | |\n| studies) | | | | | | | | | | |\n| | | | | | | | | | | |\n| 1876 (6 RCT) | Detemir[od/bid] vs. NPH[od/bid] | Seriouse | Not Serious | Not Serious | Not Serious | Moderate  | Critical | 127/1086 (11.7%) | 132/790 (16.7%) | 0.68 (0.52, 0.89) |",
+    "page_start": 66,
+    "page_end": 67,
+    "token_count": 555,
+    "table_references": [
+      "Table 3: Summary of findings - CVD mortality*",
+      "Table 4: Summary of findings – Severe hypoglycaemia"
     ],
     "figure_references": []
   },
@@ -1174,13 +1178,13 @@
     "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Rx: % | Ctrl: % | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  | Overall |  |  |  |  |\n| participants |  | Risk of | Inconsis- | Indirect- |  |  |  | (# | (# | MD (95% |\n|  | Rx vs. Ctrl |  |  |  | Imprecisionc | quality of | Importanced |  |  |  |\n| (number of |  | bias | tencya | nessb |  |  |  | events/# | events/ | CI)d |\n|  |  |  |  |  |  | evidence |  |  |  |  |\n| studies) |  |  |  |  |  |  |  | n) | # n) |  |\n|  |  |  |  |  |  |  |  |  |  |  |\n| 2040 (8 RCT) | Detemir[od/bid] vs. NPH[od/bid] | Seriouse | Not Serious | Not Serious | Not Serious | Moderate  | Critical | NA | NA | -0.04 (-0.12,0.03) |\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Rx: % | Ctrl: % | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1682 (7 RCT) | Glargine[od] vs. NPH[od/bid] | Very seriousf | Serious1 | Not Serious | Not Serious | Very Low  | Critical | NA | NA | -0.08 (-0.19,0.02) |",
-    "page_start": 64,
-    "page_end": 64,
-    "token_count": 492,
+    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1415 (4 RCT) | Glargine[od] vs. NPH[od/bid] | Very seriousf | Not Serious | Not Serious | Seriousi | Low  | Critical | 28/702 (4.0%) | 70/714 (9.8%) | 0.48 (0.21, 1.10) |\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence\nc If CI crossed all three cut-off points 0.75 (appreciable harm), 1.00 (absolute effect), and 1.25 (appreciable benefit), then it was downgraded as 'Very serious' if the event\ncount was less than 300, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd Severe hypoglycaemia was classified as a critical outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Study scored high risk for allocation concealment and/or selective reporting\ng Study includes absolute effect and appreciable benefit.\nh Wide confidence interval including appreciable benefit and harm.\ni Study includes absolute effect and appreciable harm and/or benefit.\n\n| Column 1 | Number of | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n| | | | Impor- | Rx: % (# events/# | Ctrl: % (# | |\n| Author, Year | participants (Number | Rx vs. Ctrl | | | | OR (95% CI) |\n| | | | tance | n) | events/# n) | |\n| | of studies) | | | | | |\n| | | | | | | |\n| | | | | | | |\n| Standl (2004) | 289 (1 RCT) | Detemir[bid] vs. NPH[bid] | Critical | 11% (17/154) | 11.2% (15/134) | 0.98 (0.47–2.06) |",
+    "page_start": 67,
+    "page_end": 68,
+    "token_count": 563,
     "table_references": [
-      "Table 1: Summary of findings – HbA1c",
-      "Table 1: Summary of findings – HbA1c"
+      "Table 4: Summary of findings – Severe hypoglycaemia",
+      "Table 5: Summary of findings - Visual impairment"
     ],
     "figure_references": []
   },
@@ -1190,72 +1194,10 @@
     "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence\nc If CI crossed all three cut-off points -0.25 (appreciable harm), 0.00 (absolute effect), and 0.25 (appreciable benefit), then it was downgraded to 'Very serious' if the number\nof patients was fewer than 400, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd HbA1c was classified as a critical outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Study scored high risk for allocation concealment and/or selective reporting.\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  | Overall |  | Rx: % (# | Ctrl: % (# |  |\n| participants |  | Risk of | Inconsis- | Indirect- |  |  | Impor- |  |  | OR |\n|  | Rx vs. Ctrl |  |  |  | Imprecisionc | quality of |  | events /# | events /# |  |\n| (Number of |  | bias | tencya | nessb |  |  | tanced |  |  | (95% CI) |\n|  |  |  |  |  |  | evidence |  | n) | n) |  |\n| studies) |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |\n| 530 | Determir[od/bid] vs NPH[od/bid] | Seriouse | Not Serious | Not Serious | Seriousf | Low  | Critical | 1/198 (0.5%) | 1/193 (0.5%) | 0.97 (0.10–9.44) |",
-    "page_start": 64,
-    "page_end": 65,
-    "token_count": 523,
-    "table_references": [
-      "Table 2: Summary of findings – All-cause mortality"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0084",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence.\nc If CI crossed all three cut-off points 0.75 (appreciable harm), 1.00 (absolute effect), and 1.25 (appreciable benefit), then it was downgraded as 'Very serious' if the event\ncount was less than 300, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd Mortality was classified as an important outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Wide confidence interval including appreciable benefit and harm.\n\n| Column 1 | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 |\n| --- | --- | --- | --- | --- | --- |\n| Number of participants |  |  | Rx: % (# | Ctrl: % (# |  |\n|  | Rx vs. Ctrl | Importance |  |  | Relative risk (95% CI) |\n| (Number of studies) |  |  | events/# n) | events/# n) |  |\n|  |  |  |  |  |  |\n|  |  |  |  |  |  |\n| 534 (1) | Glargine[od] vs NPH[bid] | Critical | 1/270 (0.4%) | 0/264 (0%) | 0.34 (0.01–8.33) |\n| 130 (1) | Detemir[bid] vs NPH[bid] | Critical | 0/66 (0%) | 1/64 (1.6%) | 4.47 (0.24–82.58) |\n\n- Quality not graded due to very high level of imprecision\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  | Overall |  | Rx: % (# | Ctrl: % (# |  |\n| participants |  | Risk of | Inconsis- | Indirect- |  |  | Impor- |  |  | OR |\n|  | Rx vs. Ctrl |  |  |  | Imprecisionc | quality of |  | events /# | events /# |  |\n| (Number of |  | bias | tencya | nessb |  |  | tanced |  |  | (95% CI) |\n|  |  |  |  |  |  | evidence |  | n) | n) |  |\n| studies) |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |",
-    "page_start": 65,
-    "page_end": 67,
-    "token_count": 683,
-    "table_references": [
-      "Table 3: Summary of findings - CVD mortality*",
-      "Table 4: Summary of findings – Severe hypoglycaemia"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0085",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Number of | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Column 11 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1876 (6 RCT) | Detemir[od/bid] vs. NPH[od/bid] | Seriouse | Not Serious | Not Serious | Not Serious | Moderate  | Critical | 127/1086 (11.7%) | 132/790 (16.7%) | 0.68 (0.52, 0.89) |\n| 1415 (4 RCT) | Glargine[od] vs. NPH[od/bid] | Very seriousf | Not Serious | Not Serious | Seriousi | Low  | Critical | 28/702 (4.0%) | 70/714 (9.8%) | 0.48 (0.21, 1.10) |\n\na Significance level from the Q-test for heterogeneity.\nb All treatment comparisons and included studies were direct evidence\nc If CI crossed all three cut-off points 0.75 (appreciable harm), 1.00 (absolute effect), and 1.25 (appreciable benefit), then it was downgraded as 'Very serious' if the event\ncount was less than 300, otherwise it was classified as 'Serious'. If CI only crossed two of the cut-off points, then it was downgraded to 'Serious'.\nd Severe hypoglycaemia was classified as a critical outcome.\ne Study scored unclear risk for allocation concealment and/or selective reporting.\nf Study scored high risk for allocation concealment and/or selective reporting\ng Study includes absolute effect and appreciable benefit.\nh Wide confidence interval including appreciable benefit and harm.\ni Study includes absolute effect and appreciable harm and/or benefit.",
-    "page_start": 67,
-    "page_end": 67,
-    "token_count": 459,
-    "table_references": [
-      "Table 4: Summary of findings – Severe hypoglycaemia"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0086",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Column 1 | Number of | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 |\n| --- | --- | --- | --- | --- | --- | --- |\n|  |  |  | Impor- | Rx: % (# events/# | Ctrl: % (# |  |\n| Author, Year | participants (Number | Rx vs. Ctrl |  |  |  | OR (95% CI) |\n|  |  |  | tance | n) | events/# n) |  |\n|  | of studies) |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |\n| Standl (2004) | 289 (1 RCT) | Detemir[bid] vs. NPH[bid] | Critical | 11% (17/154) | 11.2% (15/134) | 0.98 (0.47–2.06) |\n\n| Quality assessment | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Summary of findings | Column 12 | Column 13 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  | Number of |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  | Overall |  |  | Rx: % (# | Ctrl: % (# |  |\n|  | participants |  | Risk of | Inconsis- | Indirect- | Impreci- |  |  | Impor- |  |  |  |\n| Reference |  | Rx vs. Ctrl |  |  |  |  | quality of |  |  | events/# | events/# | OR (95% CI) |\n|  | (Number of |  | bias | tency | ness | sion |  |  | tance |  |  |  |\n|  |  |  |  |  |  |  | evidence |  |  | n) | n) |  |\n|  | studies) |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |",
-    "page_start": 68,
-    "page_end": 69,
-    "token_count": 580,
-    "table_references": [
-      "Table 5: Summary of findings - Visual impairment",
-      "Table 6: Summary of findings – Other critical outcomes"
-    ],
-    "figure_references": []
-  },
-  {
-    "chunk_id": "chk_e3c85f0e_0087",
-    "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
-    "chapter": "Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes",
-    "section": "",
-    "subsection": "",
-    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Quality assessment | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Summary of findings | Column 12 | Column 13 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Progression of nephropathy |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |\n| No data |  |  |  |  |  |  |  |  | critical |  |  |  |\n| End-stage renal disease |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |\n| No data |  |  |  |  |  |  |  |  | critical |  |  |  |\n| Lower limb amputation |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |\n| No data |  |  |  |  |  |  |  |  | critical |  |  |  |\n\n| Quality assessment | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Summary of findings | Column 12 | Column 13 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Ketoacidosis |  |  |  |  |  |  |  |  |  |  |  |  |\n|  |  |  |  |  |  |  |  |  |  |  |  |  |\n| No data |  |  |  |  |  |  |  |  | critical |  |  |  |",
+    "content": "## Appendix 10. Long-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Quality assessment | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Summary of findings | Column 12 | Column 13 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | Number of | | | | | | | | | | | |\n| | | | | | | | Overall | | | Rx: % (# | Ctrl: % (# | |\n| | participants | | Risk of | Inconsis- | Indirect- | Impreci- | | | Impor- | | | |\n| Reference | | Rx vs. Ctrl | | | | | quality of | | | events/# | events/# | OR (95% CI) |\n| | (Number of | | bias | tency | ness | sion | | | tance | | | |\n| | | | | | | | evidence | | | n) | n) | |\n| | studies) | | | | | | | | | | | |\n| | | | | | | | | | | | | |\n| Progression of nephropathy | | | | | | | | | | | | |\n| | | | | | | | | | | | | |\n| No data | | | | | | | | | critical | | | |\n| End-stage renal disease | | | | | | | | | | | | |\n| | | | | | | | | | | | | |\n\n| Quality assessment | Column 2 | Column 3 | Column 4 | Column 5 | Column 6 | Column 7 | Column 8 | Column 9 | Column 10 | Summary of findings | Column 12 | Column 13 |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| No data | | | | | | | | | critical | | | |\n| Lower limb amputation | | | | | | | | | | | | |\n| | | | | | | | | | | | | |\n| No data | | | | | | | | | critical | | | |\n| Ketoacidosis | | | | | | | | | | | | |\n| | | | | | | | | | | | | |\n| No data | | | | | | | | | critical | | | |",
     "page_start": 69,
     "page_end": 69,
-    "token_count": 519,
+    "token_count": 550,
     "table_references": [
       "Table 6: Summary of findings – Other critical outcomes",
       "Table 6: Summary of findings – Other critical outcomes"
@@ -1263,15 +1205,15 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0088",
+    "chunk_id": "chk_e3c85f0e_0084",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n\n(Adapted from Fullerton B, Siebenhofer A, Jeitler K, Horvath K, Semlitsch T, Berghold A, et al. Short‐acting insulin analogues versus regular human insulin for adults with type 1 diabetes mellitus. The Cochrane\nLibrary. 2016. )\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  |  |  | the |  |  |\n|  |  |  |  |  |  | evidence |  |  |\n|  |  |  |  |  |  | (GRADE) |  |  |\n| HbA1c at end of follow-up (%) Follow-up: 24–52 weeks | The mean HbA1c ranged across control groups from 6.3% to 9.3% | The mean HbA1c in the intervention groups was 0.15% lower (0.2 to 0.1 lower) | - | 2608 (9) |  lowa |  |  | - |\n| All-cause mortality Follow-up: 24–52 weeks | See comment | See comment | See comment | See comment | See comment |  |  | Mortality was not a primary outcome in any of the included trials. Overall, there was only one death in six trials that reported on deaths as an adverse event. |\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Severe hypoglycaemic episodes (heterogeneous definitions of severe hypoglycaemia) Follow-up: 24–52 weeks | 166 per 1000 | 150 per 1000 (124 to 182) | OR 0.89 (0.71 to 1.12) | 2459 (7) |  very lowb |  |  |  |\n| Health-related quality of life Follow-up: 24–52 weeks | See comment | See comment | See comment | See comment | See comment |  |  | Health-related quality of life was either only assessed in subpopulations of three trials or insufficiently reported. Overall, there was no clear evidence for a substantial effect of short-acting insulin analogues on this outcome. |\n| Progression of nephropathy | See comment | See comment | See comment | See comment | See comment |  |  | Not reported |\n| Visual impairment | See comment | See comment | See comment | See comment | See comment |  |  | Not reported |\n| End-stage renal disease | See comment | See comment | See comment | See comment | See comment |  |  | Not reported |",
+    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n\n(Adapted from Fullerton B, Siebenhofer A, Jeitler K, Horvath K, Semlitsch T, Berghold A, et al. Short‐acting insulin analogues versus regular human insulin for adults with type 1 diabetes mellitus. The Cochrane\nLibrary. 2016. )\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | | | | | | the | | |\n| | | | | | | evidence | | |\n| | | | | | | (GRADE) | | |\n| HbA1c at end of follow-up (%) Follow-up: 24–52 weeks | The mean HbA1c ranged across control groups from 6.3% to 9.3% | The mean HbA1c in the intervention groups was 0.15% lower (0.2 to 0.1 lower) | - | 2608 (9) |  lowa | | | - |\n| All-cause mortality Follow-up: 24–52 weeks | See comment | See comment | See comment | See comment | See comment | | | Mortality was not a primary outcome in any of the included trials. Overall, there was only one death in six trials that reported on deaths as an adverse event. |\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Severe hypoglycaemic episodes (heterogeneous definitions of severe hypoglycaemia) Follow-up: 24–52 weeks | 166 per 1000 | 150 per 1000 (124 to 182) | OR 0.89 (0.71 to 1.12) | 2459 (7) |  very lowb | | | |\n| Health-related quality of life Follow-up: 24–52 weeks | See comment | See comment | See comment | See comment | See comment | | | Health-related quality of life was either only assessed in subpopulations of three trials or insufficiently reported. Overall, there was no clear evidence for a substantial effect of short-acting insulin analogues on this outcome. |\n| Progression of nephropathy | See comment | See comment | See comment | See comment | See comment | | | Not reported |\n| Visual impairment | See comment | See comment | See comment | See comment | See comment | | | Not reported |\n| End-stage renal disease | See comment | See comment | See comment | See comment | See comment | | | Not reported |\n| Lower limb amputation | See comment | See comment | See comment | See comment | See comment | | | Not reported |",
     "page_start": 70,
     "page_end": 70,
-    "token_count": 712,
+    "token_count": 699,
     "table_references": [
       "Table Page 70",
       "Table Page 70"
@@ -1279,30 +1221,30 @@
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0089",
+    "chunk_id": "chk_e3c85f0e_0085",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes",
     "section": "",
     "subsection": "",
-    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Lower limb amputation | See comment | See comment | See comment | See comment | See comment |  |  | Not reported |\n| Ketoacidosis | See comment | See comment | See comment | See comment | See comment |  |  | Not reported |\n| Regular human |\n| --- |\n| insulin |\n| Short-acting |\n| --- |\n| insulin analogues |\n| Relative |\n| --- |\n| effect (95% |\n| CI) |\n| Number of |\n| --- |\n| participants |\n| (studies) |\n\nCI : confidence interval; HbA1c : glycated haemoglobin A1c; OR : odds ratio\na Downgraded by two levels because of inconsistencies in reporting of the results and indirectness (HbA1c as a surrogate outcome measure). b Downgraded by three levels because of high risk for performance bias,\npooling of different outcome definitions and participant populations, and wide confidence intervals being compatible with both beneficial and harmful effects.",
+    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n\n| Outcomes | Regular human insulin | Short-acting insulin analogues | Relative effect (95% CI) | Number of participants (studies) | Column 6 | Quality of | Column 8 | Comments |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| Ketoacidosis | See comment | See comment | See comment | See comment | See comment | | | Not reported |\n| Regular human |\n| --- |\n| insulin |\n| Short-acting |\n| --- |\n| insulin analogues |\n| Relative |\n| --- |\n| effect (95% |\n| CI) |\n| Number of |\n| --- |\n| participants |\n| (studies) |\n\nCI : confidence interval; HbA1c : glycated haemoglobin A1c; OR : odds ratio\na Downgraded by two levels because of inconsistencies in reporting of the results and indirectness (HbA1c as a surrogate outcome measure). b Downgraded by three levels because of high risk for performance bias,\npooling of different outcome definitions and participant populations, and wide confidence intervals being compatible with both beneficial and harmful effects.",
     "page_start": 70,
     "page_end": 70,
-    "token_count": 284,
+    "token_count": 254,
     "table_references": [
       "Table Page 70"
     ],
     "figure_references": []
   },
   {
-    "chunk_id": "chk_e3c85f0e_0090",
+    "chunk_id": "chk_e3c85f0e_0086",
     "document_title": "Guidelines on second-and third-line medicines and type of insulin for the control of blood glucose levels in non-pregnant adults with diabetes mellitus",
     "chapter": "Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes",
     "section": "Summary of judgments",
     "subsection": "",
-    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n### Summary of judgments\n\n| Column 1 | Favours human insulin | Probably favours human insulin | Choose either human insulin or insulin analogues | Probably favours insulin analogues | Favours insulin analogues |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  | X |  |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  |  | X |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  | X |  |  |\n| Resource use | X |  |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity | X |  |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n|  | We recommend human insulin over insulin analogues | We suggest using human insulin over insulin analogues | We suggest using either human insulin or insulin analogues | We suggest using insulin analogues over human insulin | We recommend insulin analogues over human insulin |\n| Type of recommendation | X |  |  |  |  |",
+    "content": "## Appendix 11. Short-acting insulin analogues – summary of findings tables for critical outcomes\n### Summary of judgments\n\n| Column 1 | Favours human insulin | Probably favours human insulin | Choose either human insulin or insulin analogues | Probably favours insulin analogues | Favours insulin analogues |\n| --- | --- | --- | --- | --- | --- |\n| Problem |  | X |  |  |  |\n| Desirable effects |  |  | X |  |  |\n| Undesirable effects |  |  |  | X |  |\n| Certainty of the evidence of effects |  |  | X |  |  |\n| Values |  |  | X |  |  |\n| Resource use | X |  |  |  |  |\n| Cost-effectiveness |  | X |  |  |  |\n| Equity | X |  |  |  |  |\n| Acceptability |  |  | X |  |  |\n| Feasibility |  |  | X |  |  |\n| | We recommend human insulin over insulin analogues | We suggest using human insulin over insulin analogues | We suggest using either human insulin or insulin analogues | We suggest using insulin analogues over human insulin | We recommend insulin analogues over human insulin |\n| Type of recommendation | X |  |  |  |  |",
     "page_start": 71,
     "page_end": 71,
-    "token_count": 334,
+    "token_count": 333,
     "table_references": [
       "Table Page 71"
     ],

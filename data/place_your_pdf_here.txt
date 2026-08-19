@@ -1,0 +1,7 @@
+Put your PDF document in this directory.
+
+By default, the system looks for a file named:
+9789241550284-eng.pdf
+
+If you want to use a different PDF name, you can do so by running the ingestion command with the custom path, like this:
+python scripts/ingest.py data/your_custom_file.pdf
