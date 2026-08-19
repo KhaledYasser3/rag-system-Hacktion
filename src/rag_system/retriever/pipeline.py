@@ -23,7 +23,7 @@ from rag_system.retriever.prompt_builder import QueryProcessor
 from rag_system.retriever.query_embedder import QueryEmbedder
 from rag_system.retriever.vector_store import QdrantVectorStore
 from rag_system.retriever.search import VectorSearchEngine
-from rag_system.retriever.reranker import BaseReranker, IdentityReranker
+from rag_system.retriever.reranker import BaseReranker, IdentityReranker, CohereReranker
 from rag_system.retriever.context_builder import ContextBuilder
 
 logger = logging.getLogger("RetrieverPipeline")
